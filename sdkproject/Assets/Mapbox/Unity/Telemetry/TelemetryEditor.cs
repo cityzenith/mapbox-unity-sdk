@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace Mapbox.Unity.Telemetry
+﻿namespace Mapbox.Unity.Telemetry
 {
 	using System.Collections.Generic;
 	using System.Collections;
@@ -8,22 +7,51 @@ namespace Mapbox.Unity.Telemetry
 	using Mapbox.Unity.Utilities;
 	using UnityEngine;
 	using System.Text;
-	using UnityEditor;
+    using System.Reflection;
 
-	public class TelemetryEditor : ITelemetryLibrary
+    public class TelemetryEditor : ITelemetryLibrary
 	{
 		string _url;
 
-		static ITelemetryLibrary _instance = new TelemetryEditor();
+		static ITelemetryLibrary _instance;
 		public static ITelemetryLibrary Instance
 		{
 			get
 			{
-				return _instance;
+                if (null == _instance)
+                    _instance = new TelemetryEditor();
+
+                return _instance;
 			}
 		}
 
-		public void Initialize(string accessToken)
+        private static string applicationIdentifier;
+        private static string bundleVersion;
+        private static string bundleCode;
+
+        private TelemetryEditor()
+        {
+            string assemblyPath = Assembly.GetAssembly(typeof(Vector3)).Location; // We get the location of the UnityEngine Assembly
+            assemblyPath = assemblyPath.Replace("UnityEngine", "UnityEditor"); //UnityEditor is in the same path
+
+            //We load the editor assembly and get the method we need 
+            Assembly assembly = Assembly.LoadFrom(assemblyPath);
+            Type type = assembly.GetType("UnityEditor.PlayerSettings");
+
+            applicationIdentifier = type.GetProperty("applicationIdentifier").GetValue(null, null).ToString();
+            bundleVersion = type.GetProperty("bundleVersion").GetValue(null, null).ToString();
+            bundleCode = "0";
+
+#if UNITY_IOS
+            type = assembly.GetType("UnityEditor.PlayerSettings.iOS");
+            bundleCode = type.GetProperty("buildNumber").GetValue(null, null).ToString();
+#elif UNITY_ANDROID
+            type = assembly.GetType("UnityEditor.PlayerSettings.Android");
+            bundleCode = type.GetProperty("bundleVersionCode").GetValue(null, null).ToString();
+#endif
+        }
+
+        public void Initialize(string accessToken)
 		{
 			_url = string.Format("{0}events/v2?access_token={1}", Mapbox.Utils.Constants.EventsAPI, accessToken);
 		}
@@ -83,7 +111,14 @@ namespace Mapbox.Unity.Telemetry
 
 		static string GetUserAgent()
 		{
-			var userAgent = string.Format("{0}/{1}/{2} MapboxEventsUnityEditor/{3}",
+            string userAgent = string.Format("{0}/{1}/{2} MapboxEventsUnityEditor/{3}",
+                                          applicationIdentifier,
+                                          bundleVersion,
+                                          bundleCode,
+                                          Constants.SDK_VERSION
+                                         );
+
+            /*var userAgent = string.Format("{0}/{1}/{2} MapboxEventsUnityEditor/{3}",
 										  PlayerSettings.applicationIdentifier,
 										  PlayerSettings.bundleVersion,
 #if UNITY_IOS
@@ -95,13 +130,13 @@ namespace Mapbox.Unity.Telemetry
 #endif
 										  Constants.SDK_VERSION
 										 );
-			return userAgent;
+                                         */
+            return userAgent;
 		}
 
 		public void SetLocationCollectionState(bool enable)
 		{
 			// Empty.
 		}
-	}
+    }
 }
-#endif

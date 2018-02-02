@@ -20,9 +20,6 @@ namespace Mapbox.Platform
 #if !UNITY_5_3_OR_NEWER
 	using System.Threading;
 #endif
-#if UNITY_EDITOR
-	using UnityEditor;
-#endif
 #if UNITY_5_3_OR_NEWER
 	using UnityEngine;
 #endif

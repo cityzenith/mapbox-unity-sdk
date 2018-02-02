@@ -114,7 +114,7 @@ namespace Mapbox.Editor
 
 		static void Init()
 		{
-			Runnable.EnableRunnableInEditor();
+			RunnableEditor.EnableRunnableInEditor();
 
 			//verify that the config file exists
 			_configurationFile = Path.Combine(Unity.Constants.Path.MAPBOX_RESOURCES_ABSOLUTE, Unity.Constants.Path.CONFIG_FILE);

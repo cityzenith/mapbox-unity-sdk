@@ -3,14 +3,15 @@ namespace Mapbox.Unity.Location
 	using System.Collections;
 	using UnityEngine;
 	using Mapbox.Utils;
+    using System.Reflection;
 
-	/// <summary>
-	/// The DeviceLocationProvider is responsible for providing real world location and heading data,
-	/// served directly from native hardware and OS. 
-	/// This relies on Unity's <see href="https://docs.unity3d.com/ScriptReference/LocationService.html">LocationService</see> for location
-	/// and <see href="https://docs.unity3d.com/ScriptReference/Compass.html">Compass</see> for heading.
-	/// </summary>
-	public class DeviceLocationProvider : AbstractLocationProvider
+    /// <summary>
+    /// The DeviceLocationProvider is responsible for providing real world location and heading data,
+    /// served directly from native hardware and OS. 
+    /// This relies on Unity's <see href="https://docs.unity3d.com/ScriptReference/LocationService.html">LocationService</see> for location
+    /// and <see href="https://docs.unity3d.com/ScriptReference/Compass.html">Compass</see> for heading.
+    /// </summary>
+    public class DeviceLocationProvider : AbstractLocationProvider
 	{
 		/// <summary>
 		/// Using higher value like 500 usually does not require to turn GPS chip on and thus saves battery power. 
@@ -43,6 +44,40 @@ namespace Mapbox.Unity.Location
 			}
 		}
 
+        private static PropertyInfo editorApplicationProperty;
+
+        private static PropertyInfo EditorApplicationProperty
+        {
+            get
+            {
+                if (null == editorApplicationProperty)
+                {
+                    string assemblyPath = Assembly.GetAssembly(typeof(Vector3)).Location; // We get the location of the UnityEngine Assembly
+                    assemblyPath = assemblyPath.Replace("UnityEngine", "UnityEditor"); //UnityEditor is in the same path
+
+                    //We load the editor assembly and get the method we need 
+                    Assembly assembly = Assembly.LoadFrom(assemblyPath);
+                    System.Type type = assembly.GetType("UnityEditor.EditorApplication");
+
+                    editorApplicationProperty = type.GetProperty("isRemoteConnected");
+                }
+
+                return editorApplicationProperty;
+            }
+        }
+
+        private bool IsRemoteConnected
+        {
+            get
+            {
+                bool isConnected = false;
+
+                if (bool.TryParse(EditorApplicationProperty.GetValue(null, null).ToString(), out isConnected))
+                    return isConnected;
+                return false;
+            }
+        }
+
 		/// <summary>
 		/// Enable location and compass services.
 		/// Sends continuous location and heading updates based on 
@@ -51,9 +86,9 @@ namespace Mapbox.Unity.Location
 		/// <returns>The location routine.</returns>
 		IEnumerator PollLocationRoutine()
 		{
-#if UNITY_EDITOR
-			yield return new WaitWhile(() => !UnityEditor.EditorApplication.isRemoteConnected);
-#endif
+            if(MapboxProperties.IsUnityEditor)
+			    yield return new WaitWhile(() => !IsRemoteConnected);
+
 			if (!Input.location.isEnabledByUser)
 			{
 				Debug.LogError("DeviceLocationProvider: " + "Location is not enabled by user!");
@@ -82,11 +117,11 @@ namespace Mapbox.Unity.Location
 				yield break;
 			}
 
-#if UNITY_EDITOR
+            if(MapboxProperties.IsUnityEditor)
 			// HACK: this is to prevent Android devices, connected through Unity Remote, 
 			// from reporting a location of (0, 0), initially.
-			yield return _wait;
-#endif
+			    yield return _wait;
+
 			while (true)
 			{
 				_currentLocation.IsHeadingUpdated = false;

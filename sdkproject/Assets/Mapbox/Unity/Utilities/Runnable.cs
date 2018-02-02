@@ -69,29 +69,6 @@ namespace Mapbox.Unity.Utilities
             return Instance.m_Routines.ContainsKey(id);
         }
 
-#if UNITY_EDITOR
-        private static bool sm_EditorRunnable = false;
-
-        /// <summary>
-        /// This function enables the Runnable in edit mode.
-        /// </summary>
-        public static void EnableRunnableInEditor()
-        {
-            if (!sm_EditorRunnable)
-            {
-                sm_EditorRunnable = true;
-                UnityEditor.EditorApplication.update += UpdateRunnable;
-            }
-        }
-        static void UpdateRunnable()
-        {
-            if (!Application.isPlaying)
-            {
-                Instance.UpdateRoutines();
-            }
-        }
-
-#endif
         #endregion
 
         #region Private Types

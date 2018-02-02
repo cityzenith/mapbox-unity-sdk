@@ -52,7 +52,10 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 
 		[NonSerialized] private int _counter;
 		[NonSerialized] private int _secondCounter;
-		private void OnEnable()
+
+        public Action<VectorEntity, string, VectorFeatureUnity> NamingAction = (ve, s, vfu) => { };
+
+        private void OnEnable()
 		{
 			_pool = new ObjectPool<VectorEntity>(() =>
 			{
@@ -99,7 +102,10 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 		{
 			base.Initialize();
 
-			_counter = MeshModifiers.Count;
+            if(MapboxProperties.IsUnityEditor)
+                NamingAction = (ve, s, vfu) => ve.GameObject.name = s + " - " + vfu.Data.Id;
+
+            _counter = MeshModifiers.Count;
 			for (int i = 0; i < _counter; i++)
 			{
 				MeshModifiers[i].Initialize();
@@ -178,9 +184,9 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			_tempVectorEntity.Mesh.Clear();
 			_tempVectorEntity.Feature = feature;
 
-#if UNITY_EDITOR
-			_tempVectorEntity.GameObject.name = type + " - " + feature.Data.Id;
-#endif
+
+            NamingAction(_tempVectorEntity, type, feature);
+
 			_tempVectorEntity.Mesh.subMeshCount = meshData.Triangles.Count;
 			_tempVectorEntity.Mesh.SetVertices(meshData.Vertices);
 			_tempVectorEntity.Mesh.SetNormals(meshData.Normals);

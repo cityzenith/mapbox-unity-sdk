@@ -11,11 +11,6 @@ namespace Mapbox.Unity.Utilities
 	using UnityEngine.Networking;
 	using System.Collections;
 	using Mapbox.Platform;
-	using UnityEngine;
-
-#if UNITY_EDITOR
-	using UnityEditor;
-#endif
 
 	internal sealed class HTTPRequest : IAsyncRequest
 	{
@@ -32,12 +27,6 @@ namespace Mapbox.Unity.Utilities
 			_request.timeout = timeout;
 			_callback = callback;
 
-#if UNITY_EDITOR
-			if (!EditorApplication.isPlaying)
-			{
-				Runnable.EnableRunnableInEditor();
-			}
-#endif
 			Runnable.Run(DoRequest());
 		}
 
@@ -51,14 +40,15 @@ namespace Mapbox.Unity.Utilities
 
 		private IEnumerator DoRequest()
 		{
-#if UNITY_EDITOR
-			// otherwise requests don't work in Edit mode, eg geocoding
-			// also lot of EditMode tests fail otherwise
-			_request.Send();
-			while (!_request.isDone) { yield return null; }
-#else
-			yield return _request.Send();
-#endif
+            if (MapboxProperties.IsUnityEditor)
+            {
+                // otherwise requests don't work in Edit mode, eg geocoding
+                // also lot of EditMode tests fail otherwise
+                _request.Send();
+                while (!_request.isDone) { yield return null; }
+            }
+            else
+			    yield return _request.Send();
 
 			var response = Response.FromWebResponse(this, _request, null);
 

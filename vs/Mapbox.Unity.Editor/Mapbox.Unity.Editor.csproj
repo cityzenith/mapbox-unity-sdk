@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8290507A-7667-44F6-97D7-67D94DC17EBB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapbox.Unity.Editor</RootNamespace>
+    <AssemblyName>Mapbox.Unity.Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mapbox.Json">
+      <HintPath>..\..\sdkproject\Assets\Mapbox\Core\Plugins\ThirdParty\Mapbox.Json\Net35\Mapbox.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEditor.dll.1.0.3\lib\net35\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEngine.dll.1.0.3\lib\net35\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\AddMonoBehavioursModifierDrawer.cs">
+      <Link>AddMonoBehavioursModifierDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\Build\Mapbox_Android_prebuild_checks.cs">
+      <Link>Build\Mapbox_Android_prebuild_checks.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\Build\Mapbox_iOS_build.cs">
+      <Link>Build\Mapbox_iOS_build.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ClearMbTilesCache.cs">
+      <Link>ClearMbTilesCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FactoryDrawer.cs">
+      <Link>FactoryDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FactoryEditor.cs">
+      <Link>FactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FeatureBehaviourEditor.cs">
+      <Link>FeatureBehaviourEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FlatSphereTerrainFactoryEditor.cs">
+      <Link>FlatSphereTerrainFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FlatTerrainFactoryEditor.cs">
+      <Link>FlatTerrainFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\GeocodeAttributeDrawer.cs">
+      <Link>GeocodeAttributeDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\GeocodeAttributeSearchWindow.cs">
+      <Link>GeocodeAttributeSearchWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\LayerModifierEditor.cs">
+      <Link>LayerModifierEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\LowPolyTerrainFactoryEditor.cs">
+      <Link>LowPolyTerrainFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapboxConfigurationWindow.cs">
+      <Link>MapboxConfigurationWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapImageFactoryEditor.cs">
+      <Link>MapImageFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapVisualizerEditor.cs">
+      <Link>MapVisualizerEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MaterialModifierEditor.cs">
+      <Link>MaterialModifierEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MergedModifierStackEditor.cs">
+      <Link>MergedModifierStackEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ModifierStackEditor.cs">
+      <Link>ModifierStackEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\Connection.cs">
+      <Link>NodeEditor\Connection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\ConnectionPoint.cs">
+      <Link>NodeEditor\ConnectionPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\EditorZoomArea.cs">
+      <Link>NodeEditor\EditorZoomArea.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\Node.cs">
+      <Link>NodeEditor\Node.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\NodeBasedEditor.cs">
+      <Link>NodeEditor\NodeBasedEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\RunnableEditor.cs">
+      <Link>RunnableEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ScriptableCreatorWindow.cs">
+      <Link>ScriptableCreatorWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\StyleOptimizedVectorTileFactoryEditor.cs">
+      <Link>StyleOptimizedVectorTileFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\StyleSearchAttributeDrawer.cs">
+      <Link>StyleSearchAttributeDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\StyleSearchWindow.cs">
+      <Link>StyleSearchWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\TerrainFactoryEditor.cs">
+      <Link>TerrainFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\TerrainWithSideWallsFactoryEditor.cs">
+      <Link>TerrainWithSideWallsFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\VectorLayerVisualizerEditor.cs">
+      <Link>VectorLayerVisualizerEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\VectorTileFactoryEditor.cs">
+      <Link>VectorTileFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MapBox.Core\MapBox.Unity.csproj">
+      <Project>{11a714f9-c245-4d3f-8f96-66f32d014d80}</Project>
+      <Name>MapBox.Unity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)\..\sdkproject-dll\Assets\Mapbox\Unity\Editor\$(TargetName).dll"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

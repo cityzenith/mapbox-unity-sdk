@@ -1,10 +1,5 @@
-#if !UNITY_EDITOR
-#define NOT_UNITY_EDITOR
-#endif
-
 namespace Mapbox.Unity.Location
 {
-	using System.Diagnostics;
 	using UnityEngine;
 
 	/// <summary>
@@ -123,15 +118,16 @@ namespace Mapbox.Unity.Location
 				DontDestroyOnLoad(gameObject);
 			}
 
-			InjectEditorLocationProvider();
-			InjectDeviceLocationProvider();
+            if(MapboxProperties.IsUnityEditor)
+			    InjectEditorLocationProvider();
+            else
+			    InjectDeviceLocationProvider();
 		}
 
 		/// <summary>
 		/// Injects the editor location provider.
 		/// Depending on the platform, this method and calls to it will be stripped during compile.
 		/// </summary>
-		[Conditional("UNITY_EDITOR")]
 		void InjectEditorLocationProvider()
 		{
 			UnityEngine.Debug.Log("LocationProviderFactory: " + "Injected EDITOR Location Provider");
@@ -142,7 +138,6 @@ namespace Mapbox.Unity.Location
 		/// Injects the device location provider.
 		/// Depending on the platform, this method and calls to it will be stripped during compile.
 		/// </summary>
-		[Conditional("NOT_UNITY_EDITOR")]
 		void InjectDeviceLocationProvider()
 		{
 			UnityEngine.Debug.Log("LocationProviderFactory: " + "Injected DEVICE Location Provider");

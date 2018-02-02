@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11A714F9-C245-4D3F-8F96-66F32D014D80}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapBox.Unity</RootNamespace>
+    <AssemblyName>MapBox.Unity</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNITY,UNITY_5_3_OR_NEWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mapbox.IO.Compression">
+      <HintPath>..\..\sdkproject\Assets\Mapbox\Core\Plugins\ThirdParty\Mapbox.IO.Compression\net35\Mapbox.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapbox.Json">
+      <HintPath>..\..\sdkproject\Assets\Mapbox\Core\Plugins\ThirdParty\Mapbox.Json\Net35\Mapbox.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEngine.dll.1.0.3\lib\net35\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEngine.UI.dll.1.0.0\lib\net35\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\DirectionResource.cs">
+      <Link>Directions\DirectionResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Directions.cs">
+      <Link>Directions\Directions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Overview.cs">
+      <Link>Directions\Overview.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Annotation.cs">
+      <Link>Directions\Response\Annotation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\DirectionsResponse.cs">
+      <Link>Directions\Response\DirectionsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Intersection.cs">
+      <Link>Directions\Response\Intersection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Leg.cs">
+      <Link>Directions\Response\Leg.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Maneuver.cs">
+      <Link>Directions\Response\Maneuver.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Route.cs">
+      <Link>Directions\Response\Route.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Step.cs">
+      <Link>Directions\Response\Step.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\Response\Waypoint.cs">
+      <Link>Directions\Response\Waypoint.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Directions\RoutingProfile.cs">
+      <Link>Directions\RoutingProfile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\ForwardGeocodeResource.cs">
+      <Link>Geocoding\ForwardGeocodeResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\Geocoder.cs">
+      <Link>Geocoding\Geocoder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\GeocodeResource.cs">
+      <Link>Geocoding\GeocodeResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\Response\Feature.cs">
+      <Link>Geocoding\Response\Feature.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\Response\GeocodeResponse.cs">
+      <Link>Geocoding\Response\GeocodeResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\Response\Geometry.cs">
+      <Link>Geocoding\Response\Geometry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Geocoding\ReverseGeocodeResource.cs">
+      <Link>Geocoding\ReverseGeocodeResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\MapMatching\MapMatcher.cs">
+      <Link>MapMatching\MapMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\MapMatching\MapMatchingParameters.cs">
+      <Link>MapMatching\MapMatchingParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\MapMatching\MapMatchingResource.cs">
+      <Link>MapMatching\MapMatchingResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\MapMatching\MapMatchingResponse.cs">
+      <Link>MapMatching\MapMatchingResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\MapMatching\MatchObject.cs">
+      <Link>MapMatching\MatchObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\MapMatching\Tracepoint.cs">
+      <Link>MapMatching\Tracepoint.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\CanonicalTileId.cs">
+      <Link>Map\CanonicalTileId.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\ClassicRasterTile.cs">
+      <Link>Map\ClassicRasterTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\ClassicRetinaRasterTile.cs">
+      <Link>Map\ClassicRetinaRasterTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\Map.cs">
+      <Link>Map\Map.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\MapUtils.cs">
+      <Link>Map\MapUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\RasterTile.cs">
+      <Link>Map\RasterTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\RawPngRasterTile.cs">
+      <Link>Map\RawPngRasterTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\RetinaRasterTile.cs">
+      <Link>Map\RetinaRasterTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\StyleOptimizedVectorTile.cs">
+      <Link>Map\StyleOptimizedVectorTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\Tile.cs">
+      <Link>Map\Tile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\TileCover.cs">
+      <Link>Map\TileCover.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\TileErrorEventArgs.cs">
+      <Link>Map\TileErrorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\TileResource.cs">
+      <Link>Map\TileResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\UnwrappedTileId.cs">
+      <Link>Map\UnwrappedTileId.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\VectorTile.cs">
+      <Link>Map\VectorTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\CachingWebFileSource.cs">
+      <Link>Platform\Cache\CachingWebFileSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\ICache.cs">
+      <Link>Platform\Cache\ICache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\MbTilesCache.cs">
+      <Link>Platform\Cache\MbTilesCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\MemoryCache.cs">
+      <Link>Platform\Cache\MemoryCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\FileSource.cs">
+      <Link>Platform\FileSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\HTTPRequestNonThreaded.cs">
+      <Link>Platform\HTTPRequestNonThreaded.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\HTTPRequestThreaded.cs">
+      <Link>Platform\HTTPRequestThreaded.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\IAsyncRequest.cs">
+      <Link>Platform\IAsyncRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\IAsyncRequestFactory.cs">
+      <Link>Platform\IAsyncRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\IFileSource.cs">
+      <Link>Platform\IFileSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\IResource.cs">
+      <Link>Platform\IResource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\MbTiles.cs">
+      <Link>Platform\MbTiles\MbTiles.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\MetaData.cs">
+      <Link>Platform\MbTiles\MetaData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\MetaDataRequired.cs">
+      <Link>Platform\MbTiles\MetaDataRequired.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\Tiles.cs">
+      <Link>Platform\MbTiles\Tiles.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Resource.cs">
+      <Link>Platform\Resource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Response.cs">
+      <Link>Platform\Response.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\SQLite\SQLite.cs">
+      <Link>Platform\SQLite\SQLite.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Tokens\MapboxToken.cs">
+      <Link>Tokens\MapboxToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Tokens\MapboxTokenApi.cs">
+      <Link>Tokens\MapboxTokenApi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\BearingFilter.cs">
+      <Link>Utils\BearingFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\Compression.cs">
+      <Link>Utils\Compression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\Constants.cs">
+      <Link>Utils\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\GeoCoordinate.cs">
+      <Link>Utils\GeoCoordinate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\GeoCoordinateBounds.cs">
+      <Link>Utils\GeoCoordinateBounds.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\IObservable.cs">
+      <Link>Utils\IObservable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\IObserver.cs">
+      <Link>Utils\IObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\JsonConverters\BboxToGeoCoordinateBoundsConverter.cs">
+      <Link>Utils\JsonConverters\BboxToGeoCoordinateBoundsConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\JsonConverters\JsonConverters.cs">
+      <Link>Utils\JsonConverters\JsonConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\JsonConverters\LonLatToGeoCoordinateConverter.cs">
+      <Link>Utils\JsonConverters\LonLatToGeoCoordinateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\JsonConverters\PolylineToGeoCoordinateListConverter.cs">
+      <Link>Utils\JsonConverters\PolylineToGeoCoordinateListConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\PolylineUtils.cs">
+      <Link>Utils\PolylineUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\UnixTimestampUtils.cs">
+      <Link>Utils\UnixTimestampUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\Vector2d\Mathd.cs">
+      <Link>Utils\Vector2d\Mathd.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\Vector2d\RectD.cs">
+      <Link>Utils\Vector2d\RectD.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\Vector2d\Vector2d.cs">
+      <Link>Utils\Vector2d\Vector2d.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\ExtensionMethods\Enums.cs">
+      <Link>VectorTile\ExtensionMethods\Enums.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\ExtensionMethods\VectorTile.cs">
+      <Link>VectorTile\ExtensionMethods\VectorTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\ExtensionMethods\VectorTileFeature.cs">
+      <Link>VectorTile\ExtensionMethods\VectorTileFeature.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\Geometry\clipper.cs">
+      <Link>VectorTile\Geometry\clipper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\Geometry\DecodeGeometry.cs">
+      <Link>VectorTile\Geometry\DecodeGeometry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\Geometry\Geometry.cs">
+      <Link>VectorTile\Geometry\Geometry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\Geometry\Util.cs">
+      <Link>VectorTile\Geometry\Util.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\PbfReader\Constants.cs">
+      <Link>VectorTile\PbfReader\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\PbfReader\PbfReader.cs">
+      <Link>VectorTile\PbfReader\PbfReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\VectorTileReader\VectorTile.cs">
+      <Link>VectorTile\VectorTileReader\VectorTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\VectorTileReader\VectorTileFeature.cs">
+      <Link>VectorTile\VectorTileReader\VectorTileFeature.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\VectorTileReader\VectorTileLayer.cs">
+      <Link>VectorTile\VectorTileReader\VectorTileLayer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\Plugins\Mapbox\vector-tile-cs\VectorTileReader\VectorTileReader.cs">
+      <Link>VectorTile\VectorTileReader\VectorTileReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Constants.cs">
+      <Link>Unity\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AbstractEditorLocationProvider.cs">
+      <Link>Unity\Location\AbstractEditorLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AbstractLocationProvider.cs">
+      <Link>Unity\Location\AbstractLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\DeviceLocationProvider.cs">
+      <Link>Unity\Location\DeviceLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\EditorLocationProvider.cs">
+      <Link>Unity\Location\EditorLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\ILocationProvider.cs">
+      <Link>Unity\Location\ILocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\Location.cs">
+      <Link>Unity\Location\Location.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\LocationArrayEditorLocationProvider.cs">
+      <Link>Unity\Location\LocationArrayEditorLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\LocationProviderFactory.cs">
+      <Link>Unity\Location\LocationProviderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\TransformLocationProvider.cs">
+      <Link>Unity\Location\TransformLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MapboxAccess.cs">
+      <Link>Unity\MapboxAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MapboxProperties.cs">
+      <Link>Unity\MapboxProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\AbstractMap.cs">
+      <Link>Unity\Map\AbstractMap.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\AbstractMapVisualizer.cs">
+      <Link>Unity\Map\AbstractMapVisualizer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\AbstractTileProvider.cs">
+      <Link>Unity\Map\AbstractTileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\BasicMap.cs">
+      <Link>Unity\Map\BasicMap.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\CameraBoundsTileProvider.cs">
+      <Link>Unity\Map\CameraBoundsTileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\GlobeTileProvider.cs">
+      <Link>Unity\Map\GlobeTileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\IMap.cs">
+      <Link>Unity\Map\IMap.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\InitializeMapWithLocationProvider.cs">
+      <Link>Unity\Map\InitializeMapWithLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\ITileProvider.cs">
+      <Link>Unity\Map\ITileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\MapAtSpecificLocation.cs">
+      <Link>Unity\Map\MapAtSpecificLocation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\MapAtWorldScale.cs">
+      <Link>Unity\Map\MapAtWorldScale.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\MapVisualizer.cs">
+      <Link>Unity\Map\MapVisualizer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\QuadTreeBasicMap.cs">
+      <Link>Unity\Map\QuadTreeBasicMap.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\QuadTreeMapVisualizer.cs">
+      <Link>Unity\Map\QuadTreeMapVisualizer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\QuadTreeTileProvider.cs">
+      <Link>Unity\Map\QuadTreeTileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\RangeAroundTransformTileProvider.cs">
+      <Link>Unity\Map\RangeAroundTransformTileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\RangeTileProvider.cs">
+      <Link>Unity\Map\RangeTileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Map\TileErrorHandler.cs">
+      <Link>Unity\Map\TileErrorHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Components\FeatureBehaviour.cs">
+      <Link>Unity\MeshGeneration\Components\FeatureBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Components\TextureSelector.cs">
+      <Link>Unity\MeshGeneration\Components\TextureSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Components\VertexDebugger.cs">
+      <Link>Unity\MeshGeneration\Components\VertexDebugger.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Components\VertexDebuggerGizmo.cs">
+      <Link>Unity\MeshGeneration\Components\VertexDebuggerGizmo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Data\MeshData.cs">
+      <Link>Unity\MeshGeneration\Data\MeshData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Data\UnityTile.cs">
+      <Link>Unity\MeshGeneration\Data\UnityTile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Data\VectorFeatureUnity.cs">
+      <Link>Unity\MeshGeneration\Data\VectorFeatureUnity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Enums\TilePropertyState.cs">
+      <Link>Unity\MeshGeneration\Enums\TilePropertyState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\AbstractTileFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\AbstractTileFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\DirectionsFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\DirectionsFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\FlatSphereTerrainFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\FlatSphereTerrainFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\FlatTerrainFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\FlatTerrainFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\LowPolyTerrainFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\LowPolyTerrainFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\MapImageFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\MapImageFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\StyleOptimizedVectorTileFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\StyleOptimizedVectorTileFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\TerrainFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\TerrainFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\TerrainFactoryWithSideWalls.cs">
+      <Link>Unity\MeshGeneration\Factories\TerrainFactoryWithSideWalls.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Factories\VectorTileFactory.cs">
+      <Link>Unity\MeshGeneration\Factories\VectorTileFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Filters\FilterBase.cs">
+      <Link>Unity\MeshGeneration\Filters\FilterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Filters\HeightFilter.cs">
+      <Link>Unity\MeshGeneration\Filters\HeightFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Filters\TypeFilter.cs">
+      <Link>Unity\MeshGeneration\Filters\TypeFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Interfaces\IFeaturePropertySettable.cs">
+      <Link>Unity\MeshGeneration\Interfaces\IFeaturePropertySettable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Interfaces\LayerVisualizerBase.cs">
+      <Link>Unity\MeshGeneration\Interfaces\LayerVisualizerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\LayerVisualizers\VectorLayerVisualizer.cs">
+      <Link>Unity\MeshGeneration\LayerVisualizers\VectorLayerVisualizer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\AddMonoBehavioursModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\AddMonoBehavioursModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\AddMonoBehavioursModifierType.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\AddMonoBehavioursModifierType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\ColliderModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\ColliderModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\DisableMeshRendererModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\DisableMeshRendererModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\FeatureBehaviourModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\FeatureBehaviourModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\LayerModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\LayerModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\MaterialModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\MaterialModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\PrefabModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\PrefabModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\SpawnInsideModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\SpawnInsideModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\TextureModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\TextureModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\TextureMonoBehaviourModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\TextureMonoBehaviourModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MergedModifierStack.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MergedModifierStack.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\ChamferHeightModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\ChamferHeightModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\Earcut.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\Earcut.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\HeightModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\HeightModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\LineMeshModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\LineMeshModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\LoftModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\LoftModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\PolygonMeshModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\PolygonMeshModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\SmoothLineModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\SmoothLineModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\SnapTerrainModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\SnapTerrainModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\SnapTerrainRaycastModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\SnapTerrainRaycastModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifiers\UvModifier.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshModifiers\UvModifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\ModifierBase.cs">
+      <Link>Unity\MeshGeneration\Modifiers\ModifierBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\ModifierStack.cs">
+      <Link>Unity\MeshGeneration\Modifiers\ModifierStack.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\ModifierStackBase.cs">
+      <Link>Unity\MeshGeneration\Modifiers\ModifierStackBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\ITelemetryLibrary.cs">
+      <Link>Unity\Telemetry\ITelemetryLibrary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemetryDummy.cs">
+      <Link>Unity\Telemetry\TelemetryDummy.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemetryEditor.cs">
+      <Link>Unity\Telemetry\TelemetryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemetryFactory.cs">
+      <Link>Unity\Telemetry\TelemetryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemetryFallback.cs">
+      <Link>Unity\Telemetry\TelemetryFallback.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemetryIos.cs">
+      <Link>Unity\Telemetry\TelemetryIos.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemetryWebgl.cs">
+      <Link>Unity\Telemetry\TelemetryWebgl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Telemetry\TelemtryAndroid.cs">
+      <Link>Unity\Telemetry\TelemtryAndroid.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\Conversions.cs">
+      <Link>Unity\Utilities\Conversions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\DebugTools\SceneData.cs">
+      <Link>Unity\Utilities\DebugTools\SceneData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\DebugTools\ScenesList.cs">
+      <Link>Unity\Utilities\DebugTools\ScenesList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\DontDestroyOnLoad.cs">
+      <Link>Unity\Utilities\DontDestroyOnLoad.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\GeocodeAttribute.cs">
+      <Link>Unity\Utilities\GeocodeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\HTTPRequest.cs">
+      <Link>Unity\Utilities\HTTPRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\MapVisualizerPerformance.cs">
+      <Link>Unity\Utilities\MapVisualizerPerformance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\NodeEditorElementAttribute.cs">
+      <Link>Unity\Utilities\NodeEditorElementAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\ObjectPool.cs">
+      <Link>Unity\Utilities\ObjectPool.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\OpenUrlOnButtonClick.cs">
+      <Link>Unity\Utilities\OpenUrlOnButtonClick.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\Runnable.cs">
+      <Link>Unity\Utilities\Runnable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\Singleton.cs">
+      <Link>Unity\Utilities\Singleton.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\SingletonScriptableObject.cs">
+      <Link>Unity\Utilities\SingletonScriptableObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\StyleSearchAttribute.cs">
+      <Link>Unity\Utilities\StyleSearchAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\TelemetryConfigurationButton.cs">
+      <Link>Unity\Utilities\TelemetryConfigurationButton.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\VectorEntity.cs">
+      <Link>Unity\Utilities\VectorEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Utilities\VectorExtensions.cs">
+      <Link>Unity\Utilities\VectorExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)\..\sdkproject-dll\Assets\Mapbox\$(TargetName).dll"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

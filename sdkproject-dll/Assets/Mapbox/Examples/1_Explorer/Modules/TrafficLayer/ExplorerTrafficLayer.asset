@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1863710553, guid: 08421dfe98bb7fd4eb87883f53e60d83, type: 3}
+  m_Name: ExplorerTrafficLayer
+  m_EditorClassIdentifier: 
+  Active: 1
+  _classificationKey: 
+  _key: traffic
+  Filters: []
+  _defaultStack: {fileID: 0}
+  Stacks:
+  - Type: low
+    Types: []
+    Stack: {fileID: 11400000, guid: ee74469aada8b4e49a805e9c6da4a267, type: 2}
+  - Type: moderate
+    Types: []
+    Stack: {fileID: 11400000, guid: 573bb6174df011c4e8e807569cdfe65f, type: 2}
+  - Type: heavy
+    Types: []
+    Stack: {fileID: 11400000, guid: 260dfd8da6eeffd4488864a96234054c, type: 2}
+  - Type: severe
+    Types: []
+    Stack: {fileID: 11400000, guid: 77ef3377c5e962a4b886d9dbec0ca51e, type: 2}
+  _enableCoroutines: 0
+  _entityPerCoroutine: 20

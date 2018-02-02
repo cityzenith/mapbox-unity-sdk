@@ -8,7 +8,7 @@
 	class AddMonoBehavioursModifierDrawer : PropertyDrawer
 	{
 		const int _offset = 40;
-		MonoScript _monoscript;
+		MonoBehaviour _monoscript;
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
@@ -22,16 +22,16 @@
 
 			EditorGUI.BeginChangeCheck();
 
-			_monoscript = monoscriptProperty.objectReferenceValue as MonoScript;
-			_monoscript = EditorGUI.ObjectField(scriptRect, _monoscript, typeof(MonoScript), false) as MonoScript;
+			_monoscript = monoscriptProperty.objectReferenceValue as MonoBehaviour;
+			_monoscript = EditorGUI.ObjectField(scriptRect, _monoscript, typeof(MonoBehaviour), false) as MonoBehaviour;
 
 			if (EditorGUI.EndChangeCheck())
 			{
-				var type = _monoscript.GetClass();
+				var type = _monoscript.GetType();
 				if (type != null && type.IsSubclassOf(typeof(MonoBehaviour)))
 				{
 					monoscriptProperty.objectReferenceValue = _monoscript;
-					typeStringProperty.stringValue = _monoscript.GetClass().ToString();
+					typeStringProperty.stringValue = _monoscript.GetType().ToString();
 				}
 				else
 				{

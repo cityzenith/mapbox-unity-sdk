@@ -19,13 +19,14 @@
 
 		WaitForSeconds _wait;
 
-#if UNITY_EDITOR
 		protected virtual void Awake()
 		{
-			_wait = new WaitForSeconds(_updateInterval);
-			StartCoroutine(QueryLocation());
+            if (MapboxProperties.IsUnityEditor)
+            {
+                _wait = new WaitForSeconds(_updateInterval);
+                StartCoroutine(QueryLocation());
+            }
 		}
-#endif
 
 		IEnumerator QueryLocation()
 		{

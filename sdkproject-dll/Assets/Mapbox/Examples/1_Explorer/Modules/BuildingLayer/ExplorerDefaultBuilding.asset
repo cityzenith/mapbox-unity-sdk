@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1199751667, guid: 08421dfe98bb7fd4eb87883f53e60d83, type: 3}
+  m_Name: ExplorerDefaultBuilding
+  m_EditorClassIdentifier: 
+  MeshModifiers:
+  - {fileID: 11400000, guid: 18fbd4e5dec12874b903117307115d3b, type: 2}
+  - {fileID: 11400000, guid: b59aea91b801b45499f5ccce2196a40a, type: 2}
+  - {fileID: 11400000, guid: 0cf4cbc138fa04b418edae2823e9c9a1, type: 2}
+  GoModifiers:
+  - {fileID: 11400000, guid: 7d8bf68f8ea569a44a3ce7c19ebdfa15, type: 2}

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1199751667, guid: 08421dfe98bb7fd4eb87883f53e60d83, type: 3}
+  m_Name: ExplorerSevereTraffic
+  m_EditorClassIdentifier: 
+  MeshModifiers:
+  - {fileID: 11400000, guid: a685cd95dd32e34479dc25e49656b1b6, type: 2}
+  - {fileID: 11400000, guid: 6ab60d8bdc420b647af532385c78ad23, type: 2}
+  GoModifiers:
+  - {fileID: 11400000, guid: 99a4360e7efb19b41b16d16cde258467, type: 2}

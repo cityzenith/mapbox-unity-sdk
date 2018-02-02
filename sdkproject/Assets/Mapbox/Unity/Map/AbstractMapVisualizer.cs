@@ -27,7 +27,17 @@ namespace Mapbox.Unity.Map
 		[SerializeField]
 		Texture2D _loadingTexture;
 
-		protected IMapReadable _map;
+        public Action<UnityTile> NamingAction = (ut) => { };
+
+        public AbstractMapVisualizer()
+        {
+            if (MapboxProperties.IsUnityEditor)
+            {
+                NamingAction = (unityTile) => unityTile.gameObject.name = unityTile.CanonicalTileId.ToString();
+            }
+        }
+
+        protected IMapReadable _map;
 		protected Dictionary<UnwrappedTileId, UnityTile> _activeTiles = new Dictionary<UnwrappedTileId, UnityTile>();
 		protected Queue<UnityTile> _inactiveTiles = new Queue<UnityTile>();
 		private int _counter;
@@ -183,12 +193,10 @@ namespace Mapbox.Unity.Map
 			unityTile.Initialize(_map, tileId, _map.WorldRelativeScale, _map.AbsoluteZoom, _loadingTexture);
 			PlaceTile(tileId, unityTile, _map);
 
-			// Don't spend resources naming objects, as you shouldn't find objects by name anyway!
-#if UNITY_EDITOR
-			unityTile.gameObject.name = unityTile.CanonicalTileId.ToString();
-#endif
+            // Don't spend resources naming objects, as you shouldn't find objects by name anyway!
+            NamingAction(unityTile);
 
-			foreach (var factory in Factories)
+            foreach (var factory in Factories)
 			{
 				factory.Register(unityTile);
 			}

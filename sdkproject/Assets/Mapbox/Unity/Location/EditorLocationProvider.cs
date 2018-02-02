@@ -33,19 +33,20 @@ namespace Mapbox.Unity.Location
 
 		bool _mapInitialized;
 
-#if UNITY_EDITOR
 		protected override void Awake()
 		{
-			_map.OnInitialized += Map_OnInitialized;
+            if (MapboxProperties.IsUnityEditor)
+            {
+                _map.OnInitialized += Map_OnInitialized;
 
-			if (_targetTransform == null)
-			{
-				_targetTransform = transform;
-			}
+                if (_targetTransform == null)
+                {
+                    _targetTransform = transform;
+                }
 
-			base.Awake();
+                base.Awake();
+            }
 		}
-#endif
 
 		void Map_OnInitialized()
 		{
