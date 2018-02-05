@@ -34,6 +34,9 @@
     <Reference Include="Mapbox.Json">
       <HintPath>..\..\sdkproject\Assets\Mapbox\Core\Plugins\ThirdParty\Mapbox.Json\Net35\Mapbox.Json.dll</HintPath>
     </Reference>
+    <Reference Include="MapBox.Unity, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MapBox.Unity.1.0.0.1\lib\net35\MapBox.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +48,9 @@
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnityEngine.dll.1.0.3\lib\net35\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEngine.UI.dll.1.0.0\lib\net35\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -150,12 +156,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MapBox.Core\MapBox.Unity.csproj">
-      <Project>{11a714f9-c245-4d3f-8f96-66f32d014d80}</Project>
-      <Name>MapBox.Unity</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="package.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
