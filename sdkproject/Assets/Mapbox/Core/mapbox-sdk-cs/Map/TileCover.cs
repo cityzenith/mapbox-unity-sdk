@@ -125,26 +125,31 @@ namespace Mapbox.Map
 		/// </example>
 		public static UnwrappedTileId CoordinateToTileId(Vector2d coord, int zoom)
 		{
-			var lat = coord.x;
-			var lng = coord.y;
+            double lat = coord.x;
+            double lng = coord.y;
+            double latConv = lat * Math.PI * inv180;
+            double pow = Math.Pow(2.0, zoom);
 
 			// See: http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
-			var x = (int)Math.Floor((lng + 180.0) / 360.0 * Math.Pow(2.0, zoom));
-			var y = (int)Math.Floor((1.0 - Math.Log(Math.Tan(lat * Math.PI / 180.0)
-					+ 1.0 / Math.Cos(lat * Math.PI / 180.0)) / Math.PI) / 2.0 * Math.Pow(2.0, zoom));
+			int x = (int)Math.Floor((lng + 180.0) * inv360 * pow);
+			int y = (int)Math.Floor((1.0 - Math.Log(Math.Tan(latConv)
+					+ 1.0 / Math.Cos(latConv)) * invPI) * 0.5 * pow);
 
 			return new UnwrappedTileId(zoom, x, y);
 		}
 
+        private static double inv360 = 1.0 / 360.0;
+        private static double inv180 = 1.0 / 180.0;
+        private static double invPI = 1.0 / Math.PI;
 
 
-		/// <summary>
-		///  Converts a Web Mercator coordinate to a tile identifier. https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Derivation_of_tile_names
-		/// </summary>
-		/// <param name="webMerc">Web Mercator coordinate</param>
-		/// <param name="zoom">Zoom level</param>
-		/// <returns>The to tile identifier.</returns>
-		public static UnwrappedTileId WebMercatorToTileId(Vector2d webMerc, int zoom)
+        /// <summary>
+        ///  Converts a Web Mercator coordinate to a tile identifier. https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Derivation_of_tile_names
+        /// </summary>
+        /// <param name="webMerc">Web Mercator coordinate</param>
+        /// <param name="zoom">Zoom level</param>
+        /// <returns>The to tile identifier.</returns>
+        public static UnwrappedTileId WebMercatorToTileId(Vector2d webMerc, int zoom)
 		{
 			// See:  https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Derivation_of_tile_names
 			double tileCount = Math.Pow(2, zoom);

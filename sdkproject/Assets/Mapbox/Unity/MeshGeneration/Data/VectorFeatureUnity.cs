@@ -18,33 +18,47 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		private List<Vector3> _newPoints = new List<Vector3>();
 		private List<List<Point2d<float>>> _geom;
 
-		public VectorFeatureUnity()
+        public VectorFeatureUnity()
 		{
 			Points = new List<List<Vector3>>();
 		}
 
-		public VectorFeatureUnity(VectorTileFeature feature, UnityTile tile, float layerExtent)
+        public VectorFeatureUnity(List<List<Point2d<float>>> geometries, UnityTile tile, float layerExtent)
+        {
+            Points.Clear();
+            _geom = geometries;
+
+            ProcessGeometry(tile, layerExtent);
+        }
+
+        public VectorFeatureUnity(VectorTileFeature feature, UnityTile tile, float layerExtent)
 		{
 			Data = feature;
 			Properties = Data.GetProperties();
 			Points.Clear();
 
-			_rectSizex = tile.Rect.Size.x;
-			_rectSizey = tile.Rect.Size.y;
+            _geom = feature.Geometry<float>(0);
 
-			_geom = feature.Geometry<float>(0);
-			_geomCount = _geom.Count;
-			for (int i = 0; i < _geomCount; i++)
-			{
-				_pointCount = _geom[i].Count;
-				_newPoints = new List<Vector3>(_pointCount);
-				for (int j = 0; j < _pointCount; j++)
-				{
-					var point = _geom[i][j];
-					_newPoints.Add(new Vector3((float)(point.X / layerExtent * _rectSizex - (_rectSizex / 2))* tile.TileScale, 0, (float)((layerExtent - point.Y) / layerExtent * _rectSizey - (_rectSizey / 2)) * tile.TileScale));
-				}
-				Points.Add(_newPoints);
-			}
-		}
+            ProcessGeometry(tile, layerExtent);
+        }
+
+        private void ProcessGeometry(UnityTile tile, float layerExtent)
+        {
+            _rectSizex = tile.Rect.Size.x;
+            _rectSizey = tile.Rect.Size.y;
+            _geomCount = _geom.Count;
+
+            for (int i = 0; i < _geomCount; i++)
+            {
+                _pointCount = _geom[i].Count;
+                _newPoints = new List<Vector3>(_pointCount);
+                for (int j = 0; j < _pointCount; j++)
+                {
+                    var point = _geom[i][j];
+                    _newPoints.Add(new Vector3((float)(point.X / layerExtent * _rectSizex - (_rectSizex / 2)) * tile.TileScale, 0, (float)((layerExtent - point.Y) / layerExtent * _rectSizey - (_rectSizey / 2)) * tile.TileScale));
+                }
+                Points.Add(_newPoints);
+            }
+        }
 	}
 }

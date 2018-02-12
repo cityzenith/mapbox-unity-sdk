@@ -54,7 +54,7 @@
 		/// Sets up the Mesh Factory
 		/// </summary>
 		/// <param name="fs"></param>
-		internal override void OnInitialized()
+		protected override void OnInitialized()
 		{
 			_layerBuilder = new Dictionary<string, List<LayerVisualizerBase>>();
 			foreach (LayerVisualizerBase factory in Visualizers)
@@ -70,7 +70,7 @@
 			}
 		}
 
-		internal override void OnRegistered(UnityTile tile)
+		protected override void OnRegistered(UnityTile tile)
 		{
 			var vectorTile = new StyleOptimizedVectorTile(_optimizedStyle.Id, _optimizedStyle.Modified);
 			tile.AddTile(vectorTile);
@@ -116,7 +116,7 @@
 			base.OnErrorOccurred(e);
 		}
 
-		internal override void OnUnregistered(UnityTile tile)
+		protected override void OnUnregistered(UnityTile tile)
 		{
 			// We are no longer interested in this tile's notifications.
 			tile.OnHeightDataChanged -= DataChangedHandler;

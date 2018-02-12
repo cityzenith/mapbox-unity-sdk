@@ -4,7 +4,7 @@
     <!--*-->
     <id>$id$</id>
     <!--*-->
-    <version>1.0.0.1</version>
+    <version>1.0.1.1</version>
     <title>
     </title>
     <!--*-->
@@ -19,12 +19,13 @@
     <!--*-->
     <description>$description$</description>
     <!--*-->
-    <releaseNotes>First&amp;#x0020;version&amp;#x0020;update</releaseNotes>
+    <releaseNotes>New&amp;#x0020;constructor&amp;#x0020;for&amp;#x0020;VectorFeatureUnity&amp;#x0020;</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>
     </tags>
     <dependencies>
    <group targetFramework="net35">
+      <dependency id="Mapbox.Dependencies" version="1.0.0" />
       <dependency id="UnityEngine.dll" version="1.0.3" />
       <dependency id="UnityEngine.UI.dll" version="1.0.0" />
    </group>

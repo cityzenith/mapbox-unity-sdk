@@ -53,7 +53,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		private int _vertA, _vertB, _vertC;
 		private int _counter;
 
-		internal override void OnInitialized()
+		protected override void OnInitialized()
 		{
 			_meshData = new Dictionary<UnwrappedTileId, Mesh>();
 			_currentTileMeshData = new MeshData();
@@ -64,7 +64,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			_newTriangleList = new List<int>();
 		}
 
-		internal override void OnRegistered(UnityTile tile)
+		protected override void OnRegistered(UnityTile tile)
 		{
 			if (_addToLayer && tile.gameObject.layer != _layerId)
 			{
@@ -250,7 +250,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			mesh.SetTriangles(baseTriList, 1);
 		}
 
-		internal override void OnUnregistered(UnityTile tile)
+		protected override void OnUnregistered(UnityTile tile)
 		{
 			_meshData.Remove(tile.UnwrappedTileId);
 		}

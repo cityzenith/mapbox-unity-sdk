@@ -58,7 +58,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		/// Sets up the Mesh Factory
 		/// </summary>
 		/// <param name="fs"></param>
-		internal override void OnInitialized()
+		protected override void OnInitialized()
 		{
 			_layerBuilder = new Dictionary<string, List<LayerVisualizerBase>>();
 			_cachedData.Clear();
@@ -81,7 +81,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			}
 		}
 
-		internal override void OnRegistered(UnityTile tile)
+		protected override void OnRegistered(UnityTile tile)
 		{
 			var vectorTile = new VectorTile();
 			tile.AddTile(vectorTile);
@@ -133,7 +133,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			base.OnErrorOccurred(e);
 		}
 
-		internal override void OnUnregistered(UnityTile tile)
+		protected override void OnUnregistered(UnityTile tile)
 		{
 			// We are no longer interested in this tile's notifications.
 			tile.OnHeightDataChanged -= DataChangedHandler;

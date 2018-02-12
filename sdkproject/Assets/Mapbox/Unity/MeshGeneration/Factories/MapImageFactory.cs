@@ -62,12 +62,12 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		//    }
 		//}
 
-		internal override void OnInitialized()
+		protected override void OnInitialized()
 		{
 
 		}
 
-		internal override void OnRegistered(UnityTile tile)
+		protected override void OnRegistered(UnityTile tile)
 		{
 			if (_mapIdType == MapImageType.None)
 				return;
@@ -116,7 +116,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			base.OnErrorOccurred(e);
 		}
 
-		internal override void OnUnregistered(UnityTile tile)
+		protected override void OnUnregistered(UnityTile tile)
 		{
 
 		}

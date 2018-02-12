@@ -66,7 +66,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			}
 		}
 
-		internal override void OnInitialized()
+		protected override void OnInitialized()
 		{
 			_meshData = new Dictionary<UnwrappedTileId, Mesh>();
 			_currentTileMeshData = new MeshData();
@@ -77,7 +77,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			_newTriangleList = new List<int>();
 		}
 
-		internal override void OnRegistered(UnityTile tile)
+		protected override void OnRegistered(UnityTile tile)
 		{
 			if (_addToLayer && tile.gameObject.layer != _layerId)
 			{
@@ -176,7 +176,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			mesh.RecalculateBounds();
 		}
 
-		internal override void OnUnregistered(UnityTile tile)
+		protected override void OnUnregistered(UnityTile tile)
 		{
 			_meshData.Remove(tile.UnwrappedTileId);
 		}

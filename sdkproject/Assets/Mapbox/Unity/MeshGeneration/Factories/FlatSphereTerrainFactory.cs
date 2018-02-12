@@ -36,12 +36,12 @@
 			}
 		}
 
-		internal override void OnInitialized()
+		protected override void OnInitialized()
 		{
 
 		}
 
-		internal override void OnRegistered(UnityTile tile)
+		protected override void OnRegistered(UnityTile tile)
 		{
 			if (_addToLayer && tile.gameObject.layer != _layerId)
 			{
@@ -130,7 +130,7 @@
 			tile.transform.localPosition = Mapbox.Unity.Constants.Math.Vector3Zero;
 		}
 
-		internal override void OnUnregistered(UnityTile tile)
+		protected override void OnUnregistered(UnityTile tile)
 		{
 
 		}

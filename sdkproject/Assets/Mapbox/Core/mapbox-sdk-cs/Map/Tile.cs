@@ -82,7 +82,7 @@ namespace Mapbox.Map
 		/// Sets the error message.
 		/// </summary>
 		/// <param name="errorMessage"></param>
-		internal void AddException(Exception ex)
+		public void AddException(Exception ex)
 		{
 			if (null == _exceptions) { _exceptions = new List<Exception>(); }
 			_exceptions.Add(ex);
@@ -127,7 +127,7 @@ namespace Mapbox.Map
 			_request = param.Fs.Request(MakeTileResource(param.MapId).GetUrl(), HandleTileResponse, tileId: _id, mapId: param.MapId);
 		}
 
-		internal void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
+		public void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
 		{
 			Cancel();
 
