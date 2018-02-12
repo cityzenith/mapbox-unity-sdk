@@ -4,7 +4,7 @@
     <!--*-->
     <id>$id$</id>
     <!--*-->
-    <version>1.0.1.1</version>
+    <version>1.0.1.2</version>
     <title>
     </title>
     <!--*-->
@@ -19,7 +19,7 @@
     <!--*-->
     <description>$description$</description>
     <!--*-->
-    <releaseNotes>New&amp;#x0020;constructor&amp;#x0020;for&amp;#x0020;VectorFeatureUnity&amp;#x0020;</releaseNotes>
+    <releaseNotes>Updates&amp;#x0020;for&amp;#x0020;faster&amp;#x0020;calcutaion&amp;#x0020;of&amp;#x0020;coordinates&amp;#x0020;to&amp;#x0020;tile</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>
     </tags>
