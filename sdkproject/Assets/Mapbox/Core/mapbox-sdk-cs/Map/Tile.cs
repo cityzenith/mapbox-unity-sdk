@@ -22,11 +22,11 @@ namespace Mapbox.Map
 	{
 
 
-		private CanonicalTileId _id;
-		private List<Exception> _exceptions;
-		private State _state = State.New;
-		private IAsyncRequest _request;
-		private Action _callback;
+		protected CanonicalTileId _id;
+        protected List<Exception> _exceptions;
+        protected State _state = State.New;
+        protected IAsyncRequest _request;
+        protected Action _callback;
 
 		/// <summary> Tile state. </summary>
 		public enum State
@@ -188,11 +188,11 @@ namespace Mapbox.Map
 
 
 		// Get the tile resource (raster/vector/etc).
-		internal abstract TileResource MakeTileResource(string mapid);
+		public abstract TileResource MakeTileResource(string mapid);
 
 
 		// Decode the tile.
-		internal abstract bool ParseTileData(byte[] data);
+		public abstract bool ParseTileData(byte[] data);
 
 
 		// TODO: Currently the tile decoding is done on the main thread. We must implement

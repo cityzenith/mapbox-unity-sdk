@@ -178,14 +178,19 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			}
 
 			var relativeScale = useRelative ? _relativeScale : 1f;
-			for (int xx = 0; xx < 256; ++xx)
+            float factor = relativeScale * heightMultiplier;
+
+            for (int xx = 0; xx < 256; ++xx)
 			{
 				for (int yy = 0; yy < 256; ++yy)
 				{
-					float r = rgbData[(xx * 256 + yy) * 4 + 1];
-					float g = rgbData[(xx * 256 + yy) * 4 + 2];
-					float b = rgbData[(xx * 256 + yy) * 4 + 3];
-					_heightData[xx * 256 + yy] = relativeScale * heightMultiplier * Conversions.GetAbsoluteHeightFromColor(r, g, b);
+                    int index = xx * 256 + yy;
+                    int index4 = index * 4;
+
+                    float r = rgbData[index4 + 1];
+					float g = rgbData[index4 + 2];
+					float b = rgbData[index4 + 3];
+					_heightData[index] = factor * Conversions.GetAbsoluteHeightFromColor(r, g, b);
 				}
 			}
 
@@ -212,7 +217,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		public void SetRasterData(byte[] data, bool useMipMap, bool useCompression)
 		{
-			if (MeshRenderer == null || MeshRenderer.material == null)
+			if (MeshRenderer == null || MeshRenderer.sharedMaterial == null)
 			{
 				return;
 			}
@@ -230,12 +235,32 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				_rasterData.Compress(false);
 			}
 
-			MeshRenderer.material.mainTexture = _rasterData;
+			MeshRenderer.sharedMaterial.mainTexture = _rasterData;
 			RasterDataState = TilePropertyState.Loaded;
 			OnRasterDataChanged(this);
 		}
 
-		public Texture2D GetRasterData()
+        public void SetRasterData(Texture2D texture, bool useCompression)
+        {
+            if (MeshRenderer == null || MeshRenderer.sharedMaterial == null)
+            {
+                return;
+            }
+
+            _rasterData = texture;
+
+            if (useCompression)
+            {
+                // High quality = true seems to decrease image quality?
+                _rasterData.Compress(false);
+            }
+
+            MeshRenderer.sharedMaterial.mainTexture = _rasterData;
+            RasterDataState = TilePropertyState.Loaded;
+            OnRasterDataChanged(this);
+        }
+
+        public Texture2D GetRasterData()
 		{
 			return _rasterData;
 		}

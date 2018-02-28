@@ -156,7 +156,7 @@
 			if (useGroundPlane)
 			{
 				// rays from camera to groundplane: lower left and upper right
-				Ray rayLL = _camera.ViewportPointToRay(new Vector3(0, 0));
+				Ray rayLL = _camera.ViewportPointToRay(new Vector3(-0.5f, -0.25f));
 				Ray rayUR = _camera.ViewportPointToRay(new Vector3(1, 1));
 				hitPntLL = getGroundPlaneHitPoint(rayLL);
 				hitPntUR = getGroundPlaneHitPoint(rayUR);
@@ -180,7 +180,6 @@
 			ury = ury > 0 ? Mathd.Min(ury, Mapbox.Utils.Constants.WebMercMax) : Mathd.Max(ury, -Mapbox.Utils.Constants.WebMercMax);
 			Vector2d llWebMerc = new Vector2d(llx, lly);
 			Vector2d urWebMerc = new Vector2d(urx, ury);
-
 
 			return new Vector2dBounds(
 				llWebMerc

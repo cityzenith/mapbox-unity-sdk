@@ -135,6 +135,9 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\ClassicRetinaRasterTile.cs">
       <Link>Map\ClassicRetinaRasterTile.cs</Link>
     </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\LowQualityRasterTile.cs">
+      <Link>Map\LowQualityRasterTile.cs</Link>
+    </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Map\Map.cs">
       <Link>Map\Map.cs</Link>
     </Compile>

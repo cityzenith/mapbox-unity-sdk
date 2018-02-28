@@ -53,12 +53,12 @@ namespace Mapbox.Map
 			}
 		}
 
-		internal override TileResource MakeTileResource(string styleUrl)
+		public override TileResource MakeTileResource(string styleUrl)
 		{
 			return TileResource.MakeRaster(Id, styleUrl);
 		}
 
-		internal override bool ParseTileData(byte[] data)
+		public override bool ParseTileData(byte[] data)
 		{
 			// We do not parse raster tiles as they are
 			this.data = data;

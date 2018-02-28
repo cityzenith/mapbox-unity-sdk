@@ -4,7 +4,7 @@
     <!--*-->
     <id>$id$</id>
     <!--*-->
-    <version>1.0.1</version>
+    <version>1.0.1.2</version>
     <title>
     </title>
     <!--*-->
@@ -26,7 +26,7 @@
     <dependencies>
    <group targetFramework="net35">
       <dependency id="Mapbox.Dependencies" version="1.0.0" />
-      <dependency id="MapBox.Unity" version="1.0.1.2" />
+      <dependency id="MapBox.Unity" version="1.0.1.4" />
       <dependency id="UnityEditor.dll" version="1.0.3" />
       <dependency id="UnityEngine.dll" version="1.0.3" />
       <dependency id="UnityEngine.UI.dll" version="1.0.0" />

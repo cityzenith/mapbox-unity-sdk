@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b10536479dade041b6db9893fdf723a, type: 3}
   m_Name: SatelliteImageFactory
   m_EditorClassIdentifier: 
-  _mapIdType: 0
+  _mapIdType: 1
   _customStyle:
-    Name: 
-    Id: mapbox.satellite
-    Modified: 
-    UserName: 
-  _mapId: mapbox.satellite
+    Name: Le Shine
+    Id: mapbox://styles/scratt/cjcwc7k03031z2spcvdgj0zt7
+    Modified: 2018-01-26T19:45:32.017Z
+    UserName: scratt
+  _mapId: mapbox://styles/scratt/cjcwc7k03031z2spcvdgj0zt7
   _useCompression: 0
   _useMipMap: 0
-  _useRetina: 1
+  _useRetina: 0

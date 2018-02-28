@@ -144,12 +144,12 @@ namespace Mapbox.Map {
 		}
 
 
-		internal override TileResource MakeTileResource(string mapId) {
+		public override TileResource MakeTileResource(string mapId) {
 			return TileResource.MakeVector(Id, mapId);
 		}
 
 
-		internal override bool ParseTileData(byte[] data) {
+		public override bool ParseTileData(byte[] data) {
 			try {
 				var decompressed = Compression.Decompress(data);
 				this.data = new Mapbox.VectorTile.VectorTile(decompressed);

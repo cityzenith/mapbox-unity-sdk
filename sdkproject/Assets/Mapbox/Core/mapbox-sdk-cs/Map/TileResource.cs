@@ -9,7 +9,7 @@ namespace Mapbox.Map
 	using System;
 	using Mapbox.Unity.Telemetry;
 
-	internal sealed class TileResource : IResource
+	public sealed class TileResource : IResource
 	{
 		readonly string _query;
 
@@ -23,14 +23,19 @@ namespace Mapbox.Map
 			return new TileResource(string.Format("{0}/{1}", MapUtils.NormalizeStaticStyleURL(styleUrl ?? "mapbox://styles/mapbox/satellite-v9"), id));
 		}
 
-		internal static TileResource MakeRetinaRaster(CanonicalTileId id, string styleUrl)
+        public static TileResource MakeLowQualityRaster(CanonicalTileId id, string styleUrl)
+        {
+            return new TileResource(string.Format("{0}/{1}.jpg70", MapUtils.NormalizeStaticStyleURL(styleUrl ?? "mapbox://styles/mapbox/satellite-v9"), id));
+        }
+
+        internal static TileResource MakeRetinaRaster(CanonicalTileId id, string styleUrl)
 		{
 			return new TileResource(string.Format("{0}/{1}@2x", MapUtils.NormalizeStaticStyleURL(styleUrl ?? "mapbox://styles/mapbox/satellite-v9"), id));
 		}
 
 		public static TileResource MakeClassicRaster(CanonicalTileId id, string mapId)
 		{
-			return new TileResource(string.Format("{0}/{1}.png", MapUtils.MapIdToUrl(mapId ?? "mapbox.satellite"), id));
+			return new TileResource(string.Format("{0}/{1}.jpg", MapUtils.MapIdToUrl(mapId ?? "mapbox.satellite"), id));
 		}
 
 		internal static TileResource MakeClassicRetinaRaster(CanonicalTileId id, string mapId)

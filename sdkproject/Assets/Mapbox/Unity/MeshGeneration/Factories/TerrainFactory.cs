@@ -60,6 +60,8 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		private int _vertA, _vertB, _vertC;
 		private int _counter;
 
+        private Mesh basicMesh;
+
 		public string MapId
 		{
 			get
@@ -111,8 +113,9 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			if (tile.MeshRenderer == null)
 			{
 				var renderer = tile.gameObject.AddComponent<MeshRenderer>();
-				renderer.material = _baseMaterial;
-			}
+                renderer.sharedMaterial = Instantiate(_baseMaterial);
+                //renderer.material = _baseMaterial;
+            }
 
 			if (tile.MeshFilter == null)
 			{
@@ -130,57 +133,69 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 		private void CreateBaseMesh(UnityTile tile)
 		{
-			//TODO use arrays instead of lists
-			_newVertexList.Clear();
-			_newNormalList.Clear();
-			_newUvList.Clear();
-			_newTriangleList.Clear();
+            if (null == basicMesh)
+            {
+                //TODO use arrays instead of lists
+                _newVertexList.Clear();
+                _newNormalList.Clear();
+                _newUvList.Clear();
+                _newTriangleList.Clear();
 
-			for (float y = 0; y < _sampleCount; y++)
-			{
-				var yrat = y / (_sampleCount - 1);
-				for (float x = 0; x < _sampleCount; x++)
-				{
-					var xrat = x / (_sampleCount - 1);
+                for (float y = 0; y < _sampleCount; y++)
+                {
+                    var yrat = y / (_sampleCount - 1);
+                    for (float x = 0; x < _sampleCount; x++)
+                    {
+                        var xrat = x / (_sampleCount - 1);
 
-					var xx = Mathd.Lerp(tile.Rect.Min.x, tile.Rect.Max.x, xrat);
-					var yy = Mathd.Lerp(tile.Rect.Min.y, tile.Rect.Max.y, yrat);
+                        var xx = Mathd.Lerp(tile.Rect.Min.x, tile.Rect.Max.x, xrat);
+                        var yy = Mathd.Lerp(tile.Rect.Min.y, tile.Rect.Max.y, yrat);
 
-					_newVertexList.Add(new Vector3(
-						(float)(xx - tile.Rect.Center.x) * tile.TileScale,
-						0,
-						(float)(yy - tile.Rect.Center.y) * tile.TileScale));
-					_newNormalList.Add(Unity.Constants.Math.Vector3Up);
-					_newUvList.Add(new Vector2(x * 1f / (_sampleCount - 1), 1 - (y * 1f / (_sampleCount - 1))));
-				}
-			}
+                        _newVertexList.Add(new Vector3(
+                            (float)(xx - tile.Rect.Center.x) * tile.TileScale,
+                            0,
+                            (float)(yy - tile.Rect.Center.y) * tile.TileScale));
+                        _newNormalList.Add(Unity.Constants.Math.Vector3Up);
+                        _newUvList.Add(new Vector2(x * 1f / (_sampleCount - 1), 1 - (y * 1f / (_sampleCount - 1))));
+                    }
+                }
 
-			int vertA, vertB, vertC;
-			for (int y = 0; y < _sampleCount - 1; y++)
-			{
-				for (int x = 0; x < _sampleCount - 1; x++)
-				{
-					vertA = (y * _sampleCount) + x;
-					vertB = (y * _sampleCount) + x + _sampleCount + 1;
-					vertC = (y * _sampleCount) + x + _sampleCount;
-					_newTriangleList.Add(vertA);
-					_newTriangleList.Add(vertB);
-					_newTriangleList.Add(vertC);
+                int vertA, vertB, vertC;
+                for (int y = 0; y < _sampleCount - 1; y++)
+                {
+                    for (int x = 0; x < _sampleCount - 1; x++)
+                    {
+                        vertA = (y * _sampleCount) + x;
+                        vertB = (y * _sampleCount) + x + _sampleCount + 1;
+                        vertC = (y * _sampleCount) + x + _sampleCount;
+                        _newTriangleList.Add(vertA);
+                        _newTriangleList.Add(vertB);
+                        _newTriangleList.Add(vertC);
 
-					vertA = (y * _sampleCount) + x;
-					vertB = (y * _sampleCount) + x + 1;
-					vertC = (y * _sampleCount) + x + _sampleCount + 1;
-					_newTriangleList.Add(vertA);
-					_newTriangleList.Add(vertB);
-					_newTriangleList.Add(vertC);
-				}
-			}
-			var mesh = tile.MeshFilter.mesh;
+                        vertA = (y * _sampleCount) + x;
+                        vertB = (y * _sampleCount) + x + 1;
+                        vertC = (y * _sampleCount) + x + _sampleCount + 1;
+                        _newTriangleList.Add(vertA);
+                        _newTriangleList.Add(vertB);
+                        _newTriangleList.Add(vertC);
+                    }
+                }
+
+                basicMesh = new Mesh();
+                basicMesh.SetVertices(_newVertexList);
+                basicMesh.SetNormals(_newNormalList);
+                basicMesh.SetUVs(0, _newUvList);
+                basicMesh.SetTriangles(_newTriangleList, 0);
+            }
+
+            //tile.MeshFilter.sharedMesh = Instantiate(basicMesh);
+
+            var mesh = tile.MeshFilter.mesh;
 			mesh.SetVertices(_newVertexList);
 			mesh.SetNormals(_newNormalList);
 			mesh.SetUVs(0, _newUvList);
 			mesh.SetTriangles(_newTriangleList, 0);
-		}
+        }
 
 		protected override void OnUnregistered(UnityTile tile)
 		{
@@ -245,8 +260,8 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		/// <param name="heightMultiplier">Multiplier for queried height value</param>
 		private void GenerateTerrainMesh(UnityTile tile)
 		{
-			tile.MeshFilter.mesh.GetVertices(_currentTileMeshData.Vertices);
-			tile.MeshFilter.mesh.GetNormals(_currentTileMeshData.Normals);
+			tile.MeshFilter.sharedMesh.GetVertices(_currentTileMeshData.Vertices);
+			tile.MeshFilter.sharedMesh.GetNormals(_currentTileMeshData.Normals);
 
 			for (float y = 0; y < _sampleCount; y++)
 			{
@@ -260,7 +275,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 				}
 			}
 
-			tile.MeshFilter.mesh.SetVertices(_currentTileMeshData.Vertices);
+			//tile.MeshFilter.mesh.SetVertices(_currentTileMeshData.Vertices);
 
 			for (int y = 0; y < _sampleCount - 1; y++)
 			{
@@ -286,10 +301,11 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 			FixStitches(tile.UnwrappedTileId, _currentTileMeshData);
 
-			tile.MeshFilter.mesh.SetNormals(_currentTileMeshData.Normals);
-			tile.MeshFilter.mesh.SetVertices(_currentTileMeshData.Vertices);
+            tile.MeshFilter.sharedMesh.SetVertices(_currentTileMeshData.Vertices);
+            tile.MeshFilter.sharedMesh.SetNormals(_currentTileMeshData.Normals);
+			
 
-			tile.MeshFilter.mesh.RecalculateBounds();
+			tile.MeshFilter.sharedMesh.RecalculateBounds();
 
 			if (!_meshData.ContainsKey(tile.UnwrappedTileId))
 			{
@@ -308,8 +324,8 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 		private void ResetToFlatMesh(UnityTile tile)
 		{
-			tile.MeshFilter.mesh.GetVertices(_currentTileMeshData.Vertices);
-			tile.MeshFilter.mesh.GetNormals(_currentTileMeshData.Normals);
+			tile.MeshFilter.sharedMesh.GetVertices(_currentTileMeshData.Vertices);
+			tile.MeshFilter.sharedMesh.GetNormals(_currentTileMeshData.Normals);
 
 			_counter = _currentTileMeshData.Vertices.Count;
 			for (int i = 0; i < _counter; i++)
@@ -321,10 +337,10 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 				_currentTileMeshData.Normals[i] = Unity.Constants.Math.Vector3Up;
 			}
 
-			tile.MeshFilter.mesh.SetVertices(_currentTileMeshData.Vertices);
-			tile.MeshFilter.mesh.SetNormals(_currentTileMeshData.Normals);
+			tile.MeshFilter.sharedMesh.SetVertices(_currentTileMeshData.Vertices);
+			tile.MeshFilter.sharedMesh.SetNormals(_currentTileMeshData.Normals);
 
-			tile.MeshFilter.mesh.RecalculateBounds();
+			tile.MeshFilter.sharedMesh.RecalculateBounds();
 		}
 
 		/// <summary>

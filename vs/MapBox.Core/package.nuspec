@@ -4,7 +4,7 @@
     <!--*-->
     <id>$id$</id>
     <!--*-->
-    <version>1.0.1.2</version>
+    <version>1.0.1.4</version>
     <title>
     </title>
     <!--*-->
@@ -19,7 +19,7 @@
     <!--*-->
     <description>$description$</description>
     <!--*-->
-    <releaseNotes>Updates&amp;#x0020;for&amp;#x0020;faster&amp;#x0020;calcutaion&amp;#x0020;of&amp;#x0020;coordinates&amp;#x0020;to&amp;#x0020;tile</releaseNotes>
+    <releaseNotes>Added&amp;#x0020;low&amp;#x0020;quality&amp;#x0020;raster</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>
     </tags>

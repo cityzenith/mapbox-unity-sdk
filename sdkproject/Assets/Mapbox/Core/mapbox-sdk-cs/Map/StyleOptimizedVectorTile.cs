@@ -166,13 +166,13 @@ namespace Mapbox.Map
 		}
 
 
-		internal override TileResource MakeTileResource(string mapId)
+		public override TileResource MakeTileResource(string mapId)
 		{
 			return TileResource.MakeStyleOptimizedVector(Id, mapId, _optimizedStyleId, _modifiedDate);
 		}
 
 
-		internal override bool ParseTileData(byte[] data)
+		public override bool ParseTileData(byte[] data)
 		{
 			try
 			{
