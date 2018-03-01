@@ -38,7 +38,7 @@
       <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
     </Reference>
     <Reference Include="MapBox.Unity, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MapBox.Unity.1.0.1.4\lib\net35\MapBox.Unity.dll</HintPath>
+      <HintPath>..\packages\MapBox.Unity.1.0.1.5\lib\net35\MapBox.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
