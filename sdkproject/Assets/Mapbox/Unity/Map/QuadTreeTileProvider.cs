@@ -7,8 +7,9 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System;
+    using Mapbox.Unity.MeshGeneration.Factories;
 
-	public class QuadTreeTileProvider : AbstractTileProvider
+    public class QuadTreeTileProvider : AbstractTileProvider
 	{
 		[SerializeField]
 		Camera _camera;
@@ -105,14 +106,14 @@
 		void Update()
 		{
 			//Camera Debugging
-			Vector3[] frustumCorners = new Vector3[4];
+			/*Vector3[] frustumCorners = new Vector3[4];
 			_camera.CalculateFrustumCorners(new Rect(0, 0, 1, 1), _camera.transform.position.y, Camera.MonoOrStereoscopicEye.Mono, frustumCorners);
 
 			for (int i = 0; i < 4; i++)
 			{
 				var worldSpaceCorner = _camera.transform.TransformVector(frustumCorners[i]);
 				Debug.DrawRay(_camera.transform.position, worldSpaceCorner, Color.blue);
-			}
+			}*/
 
 			if (!_shouldUpdate)
 			{
@@ -126,7 +127,7 @@
 				_elapsedTime = 0f;
 
 				//update viewport in case it was changed by switching zoom level
-				Vector2dBounds _viewPortWebMercBounds = getcurrentViewPortWebMerc();
+				Vector2dBounds _viewPortWebMercBounds = getcurrentViewPortWebMerc(_map.AbsoluteZoom);
 
 				var tilesToRequest = TileCover.GetWithWebMerc(_viewPortWebMercBounds, _map.AbsoluteZoom);
 
@@ -145,30 +146,102 @@
 				{
 					AddTile(tile);
 				}
-			}
+
+                if (finalTilesNeeded.Count() > 0)
+                    RequestNewTileImages();
+            }
 		}
 
-		private Vector2dBounds getcurrentViewPortWebMerc(bool useGroundPlane = true)
-		{
-			Vector3 hitPntLL;
-			Vector3 hitPntUR;
+        private void RequestNewTileImages()
+        {
+            Vector2dBounds viewPortWebMercBounds = getcurrentViewPortWebMerc(_map.AbsoluteZoom + 1);
 
-			if (useGroundPlane)
-			{
-				// rays from camera to groundplane: lower left and upper right
-				Ray rayLL = _camera.ViewportPointToRay(new Vector3(-0.5f, -0.25f));
-				Ray rayUR = _camera.ViewportPointToRay(new Vector3(1, 1));
-				hitPntLL = getGroundPlaneHitPoint(rayLL);
-				hitPntUR = getGroundPlaneHitPoint(rayUR);
-			}
-			else
-			{
-				hitPntLL = _camera.ViewportToWorldPoint(new Vector3(0, 0, _camera.transform.localPosition.y));
-				hitPntUR = _camera.ViewportToWorldPoint(new Vector3(1, 1, _camera.transform.localPosition.y));
-			}
+            var tilesToRequest = TileCover.GetWithWebMerc(viewPortWebMercBounds, _map.AbsoluteZoom + 1);
+
+            var activeTiles = tilesToWork.Keys.ToList();
+
+            List<UnwrappedTileId> finalTilesNeeded = tilesToRequest.Except(activeTiles).ToList();
+
+            viewPortWebMercBounds = getcurrentViewPortWebMerc(_map.AbsoluteZoom - 1);
+
+            tilesToRequest = TileCover.GetWithWebMerc(viewPortWebMercBounds, _map.AbsoluteZoom - 1);
+
+            finalTilesNeeded.AddRange(tilesToRequest.Except(activeTiles));
+
+            foreach (UnwrappedTileId tileId in finalTilesNeeded)
+            {
+                tilesToWork.Add(tileId, true);
+                PreloadLowQualityImageOfTile(tileId);
+            }
+        }
+
+        private void PreloadImageOfTile(UnwrappedTileId tileId)
+        {
+            RasterTile rasterTile = new RasterTile();
+
+            rasterTile.Initialize(MapboxAccess.Instance, tileId.Canonical, MapImageFactory.MapId, () => { });
+        }
+
+        private void PreloadLowQualityImageOfTile(UnwrappedTileId tileId)
+        {
+            LowQualityRasterTile rasterTile = new LowQualityRasterTile();
+
+            rasterTile.Initialize(MapboxAccess.Instance, tileId.Canonical, MapImageFactory.MapId, () => { });
+        }
+
+        private MapImageFactory _mapImageFactory;
+        private MapImageFactory MapImageFactory
+        {
+            get
+            {
+                if (null == _mapImageFactory)
+                {
+                    AbstractMapVisualizer visualizer = (_map as AbstractMap).MapVisualizer;
+
+                    foreach (AbstractTileFactory factory in visualizer.Factories)
+                    {
+                        _mapImageFactory = factory as MapImageFactory;
+
+                        if (null != _mapImageFactory)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                return _mapImageFactory;
+            }
+        }
+
+        private Dictionary<UnwrappedTileId, bool> tilesToWork = new Dictionary<UnwrappedTileId, bool>();
+
+        private bool doneOnce = false;
+        private Vector3 hitPntLL;
+        private Vector3 hitPntUR;
+
+        private Vector2dBounds getcurrentViewPortWebMerc(int zoom, bool useGroundPlane = true)
+		{
+            if (!doneOnce)
+            {
+                doneOnce = true;
+
+                if (useGroundPlane)
+                {
+                    // rays from camera to groundplane: lower left and upper right
+                    Ray rayLL = _camera.ViewportPointToRay(new Vector3(-0.250f, -0.25f));
+                    Ray rayUR = _camera.ViewportPointToRay(new Vector3(1, 1));
+                    hitPntLL = getGroundPlaneHitPoint(rayLL);
+                    hitPntUR = getGroundPlaneHitPoint(rayUR);
+                }
+                else
+                {
+                    hitPntLL = _camera.ViewportToWorldPoint(new Vector3(0, 0, _camera.transform.localPosition.y));
+                    hitPntUR = _camera.ViewportToWorldPoint(new Vector3(1, 1, _camera.transform.localPosition.y));
+                }
+            }
 
 			//get tile scale at equator, otherwise calucations don't work at higher latitudes
-			double factor = Conversions.GetTileScaleInMeters(0, _map.AbsoluteZoom) * 256 / _map.UnityTileSize;
+			double factor = Conversions.GetTileScaleInMeters(0, zoom) * 256 / _map.UnityTileSize;
 			//convert Unity units to WebMercator and LatLng to get real world bounding box
 			double llx = _map.CenterMercator.x + hitPntLL.x * factor;
 			double lly = _map.CenterMercator.y + hitPntLL.z * factor;

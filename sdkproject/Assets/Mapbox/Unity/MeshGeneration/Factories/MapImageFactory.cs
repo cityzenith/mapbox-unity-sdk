@@ -75,7 +75,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			RasterTile rasterTile;
 			if (_mapId.StartsWith("mapbox://", StringComparison.Ordinal))
 			{
-				rasterTile = _useRetina ? new RetinaRasterTile() : new RasterTile();
+				rasterTile = _useRetina ? new LowQualityRasterTile() : new RasterTile();
 			}
 			else
 			{
