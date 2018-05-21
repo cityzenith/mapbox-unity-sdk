@@ -29,13 +29,10 @@ namespace Mapbox.Unity.Telemetry
 			{
 				if (MapboxProperties.IsUnityEditor)
 					telemetryInstance = TelemetryEditor.Instance;
-#if UNITY_ANDROID
 				else if (Application.platform == RuntimePlatform.Android)
 					telemetryInstance = TelemetryAndroid.Instance;
-#elif UNITY_IOS
 				else if (Application.platform == RuntimePlatform.IPhonePlayer)
-					telemetryInstance = TelemetryAndroid.Instance;
-#endif
+					telemetryInstance = TelemetryIos.Instance;
 				else if (Application.platform == RuntimePlatform.WebGLPlayer)
 					telemetryInstance = TelemetryWebgl.Instance;
 				else

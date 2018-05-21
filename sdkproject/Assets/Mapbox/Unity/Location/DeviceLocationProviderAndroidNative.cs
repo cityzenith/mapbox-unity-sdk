@@ -52,7 +52,7 @@
 		}
 
 
-		protected virtual void Dispose(bool disposeManagedResources)
+		public virtual void Dispose(bool disposeManagedResources)
 		{
 			if (!_disposed)
 			{
@@ -92,12 +92,12 @@
 		}
 
 
-		protected virtual void OnDestroy() { shutdown(); }
+		public virtual void OnDestroy() { shutdown(); }
 
 
-		protected virtual void OnDisable() { shutdown(); }
+		public virtual void OnDisable() { shutdown(); }
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 
 			_wait1sec = new WaitForSeconds(1);
@@ -381,7 +381,7 @@
 
 
 
-		protected virtual void Update()
+		public virtual void Update()
 		{
 
 			/*
@@ -403,8 +403,6 @@
 			}
 			*/
 		}
-
-#if UNITY_ANDROID
 
 		private string time2str(AndroidJavaObject loc)
 		{
@@ -433,8 +431,6 @@
 				return ex.ToString();
 			}
 		}
-
-#endif
 
 
 

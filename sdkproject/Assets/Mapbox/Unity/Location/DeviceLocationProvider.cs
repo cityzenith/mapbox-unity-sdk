@@ -105,16 +105,14 @@ namespace Mapbox.Unity.Location
 		// Android 6+ permissions have to be granted during runtime
 		// these are the callbacks for requesting location permission
 		// TODO: show message to users in case they accidentallly denied permission
-#if UNITY_ANDROID
 		private bool _gotPermissionRequestResponse = false;
 
 		private void OnAllow() { _gotPermissionRequestResponse = true; }
 		private void OnDeny() { _gotPermissionRequestResponse = true; }
 		private void OnDenyAndNeverAskAgain() { _gotPermissionRequestResponse = true; }
-#endif
 
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			_currentLocation.Provider = "unity";
 			_wait1sec = new WaitForSeconds(1f);
@@ -153,14 +151,12 @@ namespace Mapbox.Unity.Location
 
 
 			//request runtime fine location permission on Android if not yet allowed
-#if UNITY_ANDROID
-			if (!Input.location.isEnabledByUser)
+			if (Application.platform == RuntimePlatform.Android && !Input.location.isEnabledByUser)
 			{
 				UniAndroidPermission.RequestPermission(AndroidPermission.ACCESS_FINE_LOCATION);
 				//wait for user to allow or deny
 				while (!_gotPermissionRequestResponse) { yield return _wait1sec; }
 			}
-#endif
 
 
 			if (!Input.location.isEnabledByUser)

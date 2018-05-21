@@ -79,7 +79,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			_options = options;
 		}
 
-		protected virtual void OnErrorOccurred(TileErrorEventArgs e)
+		public virtual void OnErrorOccurred(TileErrorEventArgs e)
 		{
 			EventHandler<TileErrorEventArgs> handler = OnTileError;
 			if (handler != null)
@@ -106,10 +106,10 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			OnUnregistered(tile);
 		}
 
-		protected abstract void OnInitialized();
+		public abstract void OnInitialized();
 
-		protected abstract void OnRegistered(UnityTile tile);
+		public abstract void OnRegistered(UnityTile tile);
 
-		protected abstract void OnUnregistered(UnityTile tile);
+		public abstract void OnUnregistered(UnityTile tile);
 	}
 }

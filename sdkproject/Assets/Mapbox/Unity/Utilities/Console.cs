@@ -23,7 +23,7 @@ namespace Mapbox.Unity.Utilities
 		string _log;
 
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			if (_instance != null)
 			{

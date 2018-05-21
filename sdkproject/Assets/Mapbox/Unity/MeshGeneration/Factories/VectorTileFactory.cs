@@ -47,7 +47,7 @@
 		/// <summary>
 		/// Set up sublayers using VectorLayerVisualizers.
 		/// </summary>
-		protected override void OnInitialized()
+		public override void OnInitialized()
 		{
 			_layerBuilder = new Dictionary<string, List<LayerVisualizerBase>>();
 			_cachedData.Clear();
@@ -105,7 +105,7 @@
 			_properties = (VectorLayerProperties)options;
 		}
 
-		protected override void OnRegistered(UnityTile tile)
+		public override void OnRegistered(UnityTile tile)
 		{
 			if (string.IsNullOrEmpty(MapId) || _properties.sourceOptions.isActive == false || _properties.vectorSubLayers.Count == 0)
 			{
@@ -125,12 +125,12 @@
 		/// Method to be called when a tile error has occurred.
 		/// </summary>
 		/// <param name="e"><see cref="T:Mapbox.Map.TileErrorEventArgs"/> instance/</param>
-		protected override void OnErrorOccurred(TileErrorEventArgs e)
+		public override void OnErrorOccurred(TileErrorEventArgs e)
 		{
 			base.OnErrorOccurred(e);
 		}
 
-		protected override void OnUnregistered(UnityTile tile)
+		public override void OnUnregistered(UnityTile tile)
 		{
 			// We are no longer interested in this tile's notifications.
 			tile.OnHeightDataChanged -= DataChangedHandler;

@@ -9,7 +9,7 @@
 		[SerializeField]
 		bool _useSingleInstance;
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			if (_instance != null && _useSingleInstance)
 			{

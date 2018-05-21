@@ -32,7 +32,7 @@
 			OnInitialized();
 		}
 
-		protected virtual void AddTile(UnwrappedTileId tile)
+		public virtual void AddTile(UnwrappedTileId tile)
 		{
 			if (_activeTiles.ContainsKey(tile))
 			{
@@ -43,7 +43,7 @@
 			OnTileAdded(tile);
 		}
 
-		protected virtual void RemoveTile(UnwrappedTileId tile)
+		public virtual void RemoveTile(UnwrappedTileId tile)
 		{
 			if (!_activeTiles.ContainsKey(tile))
 			{
@@ -54,7 +54,7 @@
 			OnTileRemoved(tile);
 		}
 
-		protected virtual void RepositionTile(UnwrappedTileId tile)
+		public virtual void RepositionTile(UnwrappedTileId tile)
 		{
 			if (!_activeTiles.ContainsKey(tile))
 			{

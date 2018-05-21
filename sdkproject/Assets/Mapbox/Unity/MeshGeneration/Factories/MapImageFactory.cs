@@ -38,7 +38,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		}
 
 		#region UnityMethods
-		protected virtual void OnDestroy()
+		public virtual void OnDestroy()
 		{
 			if (DataFetcher != null)
 			{
@@ -60,7 +60,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		}
 
 		//merge this with OnErrorOccurred?
-		protected virtual void OnDataError(UnityTile tile, TileErrorEventArgs e)
+		public virtual void OnDataError(UnityTile tile, TileErrorEventArgs e)
 		{
 			if (tile != null)
 			{
@@ -72,7 +72,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		#endregion
 
 		#region AbstractFactoryOverrides
-		protected override void OnInitialized()
+		public override void OnInitialized()
 		{
 			DataFetcher = ScriptableObject.CreateInstance<ImageDataFetcher>();
 			DataFetcher.DataRecieved += OnImageRecieved;
@@ -84,7 +84,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			_properties = (ImageryLayerProperties)options;
 		}
 
-		protected override void OnRegistered(UnityTile tile)
+		public override void OnRegistered(UnityTile tile)
 		{
 			if (_properties.sourceType == ImagerySourceType.None)
 			{
@@ -102,11 +102,11 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		/// Method to be called when a tile error has occurred.
 		/// </summary>
 		/// <param name="e"><see cref="T:Mapbox.Map.TileErrorEventArgs"/> instance/</param>
-		protected override void OnErrorOccurred(TileErrorEventArgs e)
+		public override void OnErrorOccurred(TileErrorEventArgs e)
 		{
 		}
 
-		protected override void OnUnregistered(UnityTile tile)
+		public override void OnUnregistered(UnityTile tile)
 		{
 
 		}

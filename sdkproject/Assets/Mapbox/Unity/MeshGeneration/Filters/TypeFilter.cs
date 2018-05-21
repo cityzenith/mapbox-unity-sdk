@@ -177,7 +177,7 @@ namespace Mapbox.Unity.MeshGeneration.Filters
 			return false;
 		}
 
-		protected virtual bool PropertyComparer(object property)
+		public virtual bool PropertyComparer(object property)
 		{
 			return true;
 		}
@@ -189,7 +189,7 @@ namespace Mapbox.Unity.MeshGeneration.Filters
 		public double Min;
 		public double Max;
 
-		protected override bool PropertyComparer(object property)
+		public override bool PropertyComparer(object property)
 		{
 			if (property == null)
 			{
@@ -213,7 +213,7 @@ namespace Mapbox.Unity.MeshGeneration.Filters
 	{
 		public double Min;
 
-		protected override bool PropertyComparer(object property)
+		public override bool PropertyComparer(object property)
 		{
 			var propertyValue = Convert.ToDouble(property);
 			if (property == null)
@@ -233,7 +233,7 @@ namespace Mapbox.Unity.MeshGeneration.Filters
 	{
 		public double Min;
 
-		protected override bool PropertyComparer(object property)
+		public override bool PropertyComparer(object property)
 		{
 
 			if (property == null)
@@ -255,7 +255,7 @@ namespace Mapbox.Unity.MeshGeneration.Filters
 	{
 		public double Min;
 
-		protected override bool PropertyComparer(object property)
+		public override bool PropertyComparer(object property)
 		{
 			if (property == null)
 			{
@@ -276,7 +276,7 @@ namespace Mapbox.Unity.MeshGeneration.Filters
 	{
 		public List<object> ValueSet;
 
-		protected override bool PropertyComparer(object property)
+		public override bool PropertyComparer(object property)
 		{
 			foreach (var value in ValueSet)
 			{

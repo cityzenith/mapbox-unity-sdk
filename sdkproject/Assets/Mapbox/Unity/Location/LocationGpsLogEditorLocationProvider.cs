@@ -32,7 +32,7 @@
 		private CultureInfo _invariantCulture = CultureInfo.InvariantCulture;
 
 
-		protected override void Awake()
+		public override void Awake()
 		{
 			if (MapboxProperties.IsUnityEditor)
 			{
@@ -128,7 +128,7 @@
 		}
 
 
-		protected override void SetLocation()
+		public override void SetLocation()
 		{
 			GpsFix gpsFix = NextLocationData;
 

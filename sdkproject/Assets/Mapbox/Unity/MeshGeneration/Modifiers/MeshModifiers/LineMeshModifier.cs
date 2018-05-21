@@ -17,7 +17,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 		private float _scaledWidth;
 		public override ModifierType Type { get { return ModifierType.Preprocess; } }
 
-		protected virtual void OnEnable()
+		public virtual void OnEnable()
 		{
 			_scaledWidth = Width;
 		}

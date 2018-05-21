@@ -18,7 +18,7 @@
 		bool _sendEvent;
 
 		WaitForSeconds _wait;
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			if (MapboxProperties.IsUnityEditor)
 			{
@@ -52,7 +52,7 @@
 		}
 
 
-		protected virtual void OnValidate()
+		public virtual void OnValidate()
 		{
 			if (_sendEvent)
 			{
@@ -61,6 +61,6 @@
 			}
 		}
 
-		protected abstract void SetLocation();
+		public abstract void SetLocation();
 	}
 }

@@ -33,7 +33,7 @@ namespace Mapbox.Unity.Location
 
 		bool _mapInitialized;
 
-		protected virtual void Start()
+		public virtual void Start()
 		{
 			if (MapboxProperties.IsUnityEditor)
 			{
@@ -77,7 +77,7 @@ namespace Mapbox.Unity.Location
 			}
 		}
 
-		protected override void SetLocation()
+		public override void SetLocation()
 		{
 			_currentLocation.UserHeading = _targetTransform.eulerAngles.y;
 			_currentLocation.LatitudeLongitude = LatitudeLongitude;

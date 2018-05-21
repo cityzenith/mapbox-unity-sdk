@@ -40,7 +40,7 @@
 			}
 		}
 
-		protected override void SetLocation()
+		public override void SetLocation()
 		{
 			_currentLocation.UserHeading = _heading;
 			_currentLocation.LatitudeLongitude = LatitudeLongitude;

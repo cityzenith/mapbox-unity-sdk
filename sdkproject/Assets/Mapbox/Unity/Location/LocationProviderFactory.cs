@@ -119,7 +119,7 @@ namespace Mapbox.Unity.Location
 		/// <summary>
 		/// Create singleton instance and inject the DefaultLocationProvider upon initialization of this component. 
 		/// </summary>
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			if (Instance != null)
 			{

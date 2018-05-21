@@ -49,13 +49,16 @@
 			bundleVersion = type.GetProperty("bundleVersion").GetValue(null, null).ToString();
 			bundleCode = "0";
 
-#if UNITY_IOS
-            type = assembly.GetType("UnityEditor.PlayerSettings.iOS");
-            bundleCode = type.GetProperty("buildNumber").GetValue(null, null).ToString();
-#elif UNITY_ANDROID
-            type = assembly.GetType("UnityEditor.PlayerSettings.Android");
-            bundleCode = type.GetProperty("bundleVersionCode").GetValue(null, null).ToString();
-#endif
+			if (Application.platform == RuntimePlatform.Android)
+			{
+				type = assembly.GetType("UnityEditor.PlayerSettings.Android");
+				bundleCode = type.GetProperty("bundleVersionCode").GetValue(null, null).ToString();
+			}
+			else if (Application.platform == RuntimePlatform.IPhonePlayer)
+			{
+				type = assembly.GetType("UnityEditor.PlayerSettings.iOS");
+				bundleCode = type.GetProperty("buildNumber").GetValue(null, null).ToString();
+			}
 		}
 
 		public void Initialize(string accessToken)

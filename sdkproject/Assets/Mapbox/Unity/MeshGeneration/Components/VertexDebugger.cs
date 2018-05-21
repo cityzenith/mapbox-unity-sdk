@@ -7,7 +7,7 @@
 		[Multiline(10)]
 		public string Triangles;
 
-		protected virtual void Start()
+		public virtual void Start()
 		{
 			var mf = GetComponent<MeshFilter>();
 			if (mf)

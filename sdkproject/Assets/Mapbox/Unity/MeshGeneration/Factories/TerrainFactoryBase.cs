@@ -29,7 +29,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		#endregion
 
 		#region AbstractFactoryOverrides
-		protected override void OnInitialized()
+		public override void OnInitialized()
 		{
 			Strategy.Initialize(_elevationOptions);
 			DataFetcher = ScriptableObject.CreateInstance<TerrainDataFetcher>();
@@ -42,7 +42,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			_elevationOptions = (ElevationLayerProperties)options;
 		}
 
-		protected override void OnRegistered(UnityTile tile)
+		public override void OnRegistered(UnityTile tile)
 		{
 			Progress++;
 			if (Strategy is IElevationBasedTerrainStrategy)
@@ -58,7 +58,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 		}
 
-		protected override void OnUnregistered(UnityTile tile)
+		public override void OnUnregistered(UnityTile tile)
 		{
 			Progress--;
 			Strategy.UnregisterTile(tile);

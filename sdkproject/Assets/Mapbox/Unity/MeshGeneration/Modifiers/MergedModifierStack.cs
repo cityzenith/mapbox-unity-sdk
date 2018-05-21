@@ -36,7 +36,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 
 		private int _counter, _counter2;
 
-		protected virtual void OnEnable()
+		public virtual void OnEnable()
 		{
 			//we'll use this to concat building data until it reaches 65000 verts
 			_pool = new ObjectPool<VectorEntity>(() =>

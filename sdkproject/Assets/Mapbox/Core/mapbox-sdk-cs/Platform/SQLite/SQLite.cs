@@ -574,7 +574,7 @@ namespace SQLite4Unity3d
 		/// Creates a new SQLiteCommand. Can be overridden to provide a sub-class.
 		/// </summary>
 		/// <seealso cref="SQLiteCommand.OnInstanceCreated"/>
-		protected virtual SQLiteCommand NewCommand()
+		public virtual SQLiteCommand NewCommand()
 		{
 			return new SQLiteCommand(this);
 		}
@@ -1555,7 +1555,7 @@ namespace SQLite4Unity3d
 			GC.SuppressFinalize(this);
 		}
 
-		protected virtual void Dispose(bool disposing)
+		public virtual void Dispose(bool disposing)
 		{
 			Close();
 		}
@@ -2190,7 +2190,7 @@ namespace SQLite4Unity3d
 		///
 		/// Type safety is not possible because MonoTouch does not support virtual generic methods.
 		/// </remarks>
-		protected virtual void OnInstanceCreated(object obj)
+		public virtual void OnInstanceCreated(object obj)
 		{
 			// Can be overridden.
 		}
@@ -2580,7 +2580,7 @@ namespace SQLite4Unity3d
 			}
 		}
 
-		protected virtual Sqlite3Statement Prepare()
+		public virtual Sqlite3Statement Prepare()
 		{
 			var stmt = SQLite3.Prepare2(Connection.Handle, CommandText);
 			return stmt;

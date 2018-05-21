@@ -46,7 +46,7 @@ namespace Mapbox.Unity.Map
 			toRemove = new List<UnwrappedTileId>();
 		}
 
-		protected virtual void Update()
+		public virtual void Update()
 		{
 			if (!_shouldUpdate)
 			{

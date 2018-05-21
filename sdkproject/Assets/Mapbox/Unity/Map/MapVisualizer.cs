@@ -31,7 +31,7 @@ namespace Mapbox.Unity.Map
 	[CreateAssetMenu(menuName = "Mapbox/MapVisualizer/BasicMapVisualizer")]
 	public class MapVisualizer : AbstractMapVisualizer
 	{
-		protected override void PlaceTile(UnwrappedTileId tileId, UnityTile tile, IMapReadable map)
+		public override void PlaceTile(UnwrappedTileId tileId, UnityTile tile, IMapReadable map)
 		{
 			var rect = tile.Rect;
 

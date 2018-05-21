@@ -17,7 +17,7 @@ namespace Mapbox.Unity.MeshGeneration.Components
 
 		private System.Action _OnDrawGizmosSelected = () => { };
 
-		protected virtual void Start()
+		public virtual void Start()
 		{
 			if (MapboxProperties.IsUnityEditor)
 			{
@@ -38,7 +38,7 @@ namespace Mapbox.Unity.MeshGeneration.Components
 			}
 		}
 
-		protected virtual void OnDrawGizmosSelected()
+		public virtual void OnDrawGizmosSelected()
 		{
 			_OnDrawGizmosSelected();
 		}

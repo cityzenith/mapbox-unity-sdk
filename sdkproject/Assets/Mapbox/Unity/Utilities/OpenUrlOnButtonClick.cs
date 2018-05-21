@@ -9,7 +9,7 @@
 		[SerializeField]
 		string _url;
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			GetComponent<Button>().onClick.AddListener(VisitUrl);
 		}

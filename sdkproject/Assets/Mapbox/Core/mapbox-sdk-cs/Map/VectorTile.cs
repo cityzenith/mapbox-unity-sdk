@@ -85,7 +85,7 @@ namespace Mapbox.Map
 		}
 
 		//TODO: uncomment if 'VectorTile' class changes from 'sealed'
-		//protected override void Dispose(bool disposeManagedResources)
+		//public override void Dispose(bool disposeManagedResources)
 		//~VectorTile()
 		//{
 		//    Dispose(false);
@@ -99,7 +99,7 @@ namespace Mapbox.Map
 		}
 
 		//TODO: change signature if 'VectorTile' class changes from 'sealed'
-		//protected override void Dispose(bool disposeManagedResources)
+		//public override void Dispose(bool disposeManagedResources)
 		public void Dispose(bool disposeManagedResources)
 		{
 			if (!isDisposed)
