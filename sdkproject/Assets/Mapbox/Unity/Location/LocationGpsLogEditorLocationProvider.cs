@@ -32,15 +32,15 @@
 		private CultureInfo _invariantCulture = CultureInfo.InvariantCulture;
 
 
-#if UNITY_EDITOR
 		protected override void Awake()
 		{
-			base.Awake();
-			MemoryStream ms = new MemoryStream(_gpsLogFile.bytes);
-			_textReader = new StreamReader(ms);
+			if (MapboxProperties.IsUnityEditor)
+			{
+				base.Awake();
+				MemoryStream ms = new MemoryStream(_gpsLogFile.bytes);
+				_textReader = new StreamReader(ms);
+			}
 		}
-
-#endif
 
 		private struct GpsFix
 		{

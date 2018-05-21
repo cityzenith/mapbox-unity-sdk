@@ -1,26 +1,48 @@
-﻿namespace Mapbox.Unity.Telemetry
+﻿using UnityEngine;
+
+namespace Mapbox.Unity.Telemetry
 {
 	public static class TelemetryFactory
 	{
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID
-		public static readonly string EventQuery = "events=true";
-#else
-		public static readonly string EventQuery = "events=false";
-#endif
+		public static string EventQuery
+		{
+			get
+			{
+				if (null == eventQuery)
+				{
+					if (MapboxProperties.IsUnityEditor || Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+						eventQuery = "events=true";
+					else
+						eventQuery = "events=false";
+				}
+
+				return eventQuery;
+			}
+		}
+		private static string eventQuery;
+
+		private static ITelemetryLibrary telemetryInstance;
 
 		public static ITelemetryLibrary GetTelemetryInstance()
 		{
-#if UNITY_EDITOR
-			return TelemetryEditor.Instance;
+			if(null == telemetryInstance)
+			{
+				if (MapboxProperties.IsUnityEditor)
+					telemetryInstance = TelemetryEditor.Instance;
+#if UNITY_ANDROID
+				else if (Application.platform == RuntimePlatform.Android)
+					telemetryInstance = TelemetryAndroid.Instance;
 #elif UNITY_IOS
-			return TelemetryIos.Instance;
-#elif UNITY_ANDROID
-			return TelemetryAndroid.Instance;
-#elif UNITY_WEBGL
-			return TelemetryWebgl.Instance;
-#else
-			return TelemetryFallback.Instance;
+				else if (Application.platform == RuntimePlatform.IPhonePlayer)
+					telemetryInstance = TelemetryAndroid.Instance;
 #endif
+				else if (Application.platform == RuntimePlatform.WebGLPlayer)
+					telemetryInstance = TelemetryWebgl.Instance;
+				else
+					telemetryInstance = TelemetryFallback.Instance;
+			}
+
+			return telemetryInstance;
 		}
 	}
 }

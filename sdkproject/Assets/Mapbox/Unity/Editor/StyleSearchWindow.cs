@@ -46,7 +46,7 @@
 				window.Search(window._username);
 			}
 
-			Runnable.EnableRunnableInEditor();
+			RunnableEditor.EnableRunnableInEditor();
 			Event e = Event.current;
 			Vector2 mousePos = GUIUtility.GUIToScreenPoint(e.mousePosition);
 			window.position = new Rect(mousePos.x - width, mousePos.y, width, height);

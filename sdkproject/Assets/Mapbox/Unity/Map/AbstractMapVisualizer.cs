@@ -193,9 +193,7 @@ namespace Mapbox.Unity.Map
 			PlaceTile(tileId, unityTile, _map);
 
 			// Don't spend resources naming objects, as you shouldn't find objects by name anyway!
-#if UNITY_EDITOR
 			unityTile.gameObject.name = unityTile.CanonicalTileId.ToString();
-#endif
 
 			foreach (var factory in Factories)
 			{

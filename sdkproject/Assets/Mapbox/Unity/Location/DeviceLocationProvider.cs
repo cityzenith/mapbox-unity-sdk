@@ -6,6 +6,8 @@ namespace Mapbox.Unity.Location
 	using Mapbox.CheapRulerCs;
 	using System;
 	using System.Linq;
+	using System.Reflection;
+	using System.IO;
 
 	/// <summary>
 	/// The DeviceLocationProvider is responsible for providing real world location and heading data,
@@ -56,6 +58,49 @@ namespace Mapbox.Unity.Location
 			-1.5f
 		};
 
+		private static PropertyInfo editorApplicationProperty;
+
+		private static PropertyInfo EditorApplicationProperty
+		{
+			get
+			{
+				if (null == editorApplicationProperty)
+				{
+					string assemblyPath = Assembly.GetAssembly(typeof(Vector3)).Location; // We get the location of the UnityEngine Assembly
+
+					if (assemblyPath.EndsWith("UnityEngine.dll") && System.IO.File.Exists(assemblyPath.Replace("UnityEngine", "UnityEditor")))
+					{
+						assemblyPath = assemblyPath.Replace("UnityEngine", "UnityEditor"); //UnityEditor is in the same path
+					}
+					else
+					{
+						FileInfo fileInfo = new FileInfo(assemblyPath);
+						assemblyPath = Path.Combine(fileInfo.Directory.Parent.FullName, "UnityEditor.dll"); //editor is in parent
+					}
+
+					//We load the editor assembly and get the method we need 
+					Assembly assembly = Assembly.LoadFrom(assemblyPath);
+					System.Type type = assembly.GetType("UnityEditor.EditorApplication");
+
+					editorApplicationProperty = type.GetProperty("isRemoteConnected");
+				}
+
+				return editorApplicationProperty;
+			}
+		}
+
+		private bool IsRemoteConnected
+		{
+			get
+			{
+				bool isConnected = false;
+
+				if (bool.TryParse(EditorApplicationProperty.GetValue(null, null).ToString(), out isConnected))
+					return isConnected;
+
+				return false;
+			}
+		}
 
 		// Android 6+ permissions have to be granted during runtime
 		// these are the callbacks for requesting location permission
@@ -98,12 +143,13 @@ namespace Mapbox.Unity.Location
 		/// <returns>The location routine.</returns>
 		IEnumerator PollLocationRoutine()
 		{
-#if UNITY_EDITOR
-			while (!UnityEditor.EditorApplication.isRemoteConnected)
+			if (MapboxProperties.IsUnityEditor)
 			{
-				yield return null;
+				while (!IsRemoteConnected)
+				{
+					yield return null;
+				}
 			}
-#endif
 
 
 			//request runtime fine location permission on Android if not yet allowed
@@ -158,11 +204,12 @@ namespace Mapbox.Unity.Location
 			_currentLocation.IsLocationServiceInitializing = false;
 			_currentLocation.IsLocationServiceEnabled = true;
 
-#if UNITY_EDITOR
-			// HACK: this is to prevent Android devices, connected through Unity Remote, 
-			// from reporting a location of (0, 0), initially.
-			yield return _wait1sec;
-#endif
+			if (MapboxProperties.IsUnityEditor)
+			{
+				// HACK: this is to prevent Android devices, connected through Unity Remote, 
+				// from reporting a location of (0, 0), initially.
+				yield return _wait1sec;
+			}
 
 			System.Globalization.CultureInfo invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 

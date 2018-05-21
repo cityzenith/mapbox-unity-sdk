@@ -141,42 +141,46 @@ namespace Mapbox.Unity.Location
 		/// Injects the editor location provider.
 		/// Depending on the platform, this method and calls to it will be stripped during compile.
 		/// </summary>
-		[System.Diagnostics.Conditional("UNITY_EDITOR")]
 		void InjectEditorLocationProvider()
 		{
-			Debug.Log("LocationProviderFactory: " + "Injected EDITOR Location Provider");
-			DefaultLocationProvider = _editorLocationProvider;
+			if (MapboxProperties.IsUnityEditor)
+			{
+				Debug.Log("LocationProviderFactory: " + "Injected EDITOR Location Provider");
+				DefaultLocationProvider = _editorLocationProvider;
+			}
 		}
 
 		/// <summary>
 		/// Injects the device location provider.
 		/// Depending on the platform, this method and calls to it will be stripped during compile.
 		/// </summary>
-		[System.Diagnostics.Conditional("NOT_UNITY_EDITOR")]
 		void InjectDeviceLocationProvider()
 		{
-			int AndroidApiVersion = 0;
-			var regex = new Regex(@"(?<=API-)-?\d+");
-			Match match = regex.Match(SystemInfo.operatingSystem); // eg 'Android OS 8.1.0 / API-27 (OPM2.171019.029/4657601)'
-			if (match.Success) { int.TryParse(match.Groups[0].Value, out AndroidApiVersion); }
-			Debug.LogFormat("{0} => API version: {1}", SystemInfo.operatingSystem, AndroidApiVersion);
+			if (MapboxProperties.IsUnityEditor)
+			{
+				int AndroidApiVersion = 0;
+				var regex = new Regex(@"(?<=API-)-?\d+");
+				Match match = regex.Match(SystemInfo.operatingSystem); // eg 'Android OS 8.1.0 / API-27 (OPM2.171019.029/4657601)'
+				if (match.Success) { int.TryParse(match.Groups[0].Value, out AndroidApiVersion); }
+				Debug.LogFormat("{0} => API version: {1}", SystemInfo.operatingSystem, AndroidApiVersion);
 
 
-			if (Application.platform == RuntimePlatform.Android
-				&& null != _deviceLocationProviderAndroid
-				// API version 24 => Android 7 (Nougat): we are using GnssStatus 'https://developer.android.com/reference/android/location/GnssStatus.html'
-				// in the native plugin.
-				// GnssStatus is not available with versions lower than 24
-				&& AndroidApiVersion >= 24
-			)
-			{
-				Debug.Log("LocationProviderFactory: " + "Injected native Android DEVICE Location Provider");
-				DefaultLocationProvider = _deviceLocationProviderAndroid;
-			}
-			else
-			{
-				Debug.Log("LocationProviderFactory: " + "Injected DEVICE Location Provider");
-				DefaultLocationProvider = _deviceLocationProviderUnity;
+				if (Application.platform == RuntimePlatform.Android
+					&& null != _deviceLocationProviderAndroid
+					// API version 24 => Android 7 (Nougat): we are using GnssStatus 'https://developer.android.com/reference/android/location/GnssStatus.html'
+					// in the native plugin.
+					// GnssStatus is not available with versions lower than 24
+					&& AndroidApiVersion >= 24
+				)
+				{
+					Debug.Log("LocationProviderFactory: " + "Injected native Android DEVICE Location Provider");
+					DefaultLocationProvider = _deviceLocationProviderAndroid;
+				}
+				else
+				{
+					Debug.Log("LocationProviderFactory: " + "Injected DEVICE Location Provider");
+					DefaultLocationProvider = _deviceLocationProviderUnity;
+				}
 			}
 		}
 	}

@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{17FD6DEB-C655-480F-9C2A-5F9781AC0479}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapbox.Unity.Editor</RootNamespace>
+    <AssemblyName>Mapbox.Unity.Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mapbox.IO.Compression, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapbox.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapbox.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Unity.2.0.0\lib\net35\Mapbox.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEditor.dll.1.1.0\lib\net35\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEngine.dll.1.1.0\lib\net35\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityEngine.UI.dll.1.1.0\lib\net35\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\AddMonoBehavioursModifierDrawer.cs">
+      <Link>Mapbox\Unity\AddMonoBehavioursModifierDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\AtlasTemplateGenerator.cs">
+      <Link>Mapbox\Unity\AtlasTemplateGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\Build\Mapbox_iOS_build.cs">
+      <Link>Mapbox\Unity\Build\Mapbox_iOS_build.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ClearMbTilesCache.cs">
+      <Link>Mapbox\Unity\ClearMbTilesCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FactoryDrawer.cs">
+      <Link>Mapbox\Unity\FactoryDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FactoryEditor.cs">
+      <Link>Mapbox\Unity\FactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FeatureBehaviourEditor.cs">
+      <Link>Mapbox\Unity\FeatureBehaviourEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FeatureSubLayerTreeView.cs">
+      <Link>Mapbox\Unity\FeatureSubLayerTreeView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\GeocodeAttributeDrawer.cs">
+      <Link>Mapbox\Unity\GeocodeAttributeDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\GeocodeAttributeSearchWindow.cs">
+      <Link>Mapbox\Unity\GeocodeAttributeSearchWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\LayerModifierEditor.cs">
+      <Link>Mapbox\Unity\LayerModifierEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapboxConfigurationWindow.cs">
+      <Link>Mapbox\Unity\MapboxConfigurationWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapImageFactoryEditor.cs">
+      <Link>Mapbox\Unity\MapImageFactoryEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapManagerEditor.cs">
+      <Link>Mapbox\Unity\MapManagerEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MapVisualizerEditor.cs">
+      <Link>Mapbox\Unity\MapVisualizerEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MaterialModifierEditor.cs">
+      <Link>Mapbox\Unity\MaterialModifierEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\MergedModifierStackEditor.cs">
+      <Link>Mapbox\Unity\MergedModifierStackEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ModifierStackEditor.cs">
+      <Link>Mapbox\Unity\ModifierStackEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\Connection.cs">
+      <Link>Mapbox\Unity\NodeEditor\Connection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\ConnectionPoint.cs">
+      <Link>Mapbox\Unity\NodeEditor\ConnectionPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\EditorZoomArea.cs">
+      <Link>Mapbox\Unity\NodeEditor\EditorZoomArea.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\Node.cs">
+      <Link>Mapbox\Unity\NodeEditor\Node.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\NodeBasedEditor.cs">
+      <Link>Mapbox\Unity\NodeEditor\NodeBasedEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\CameraBoundsTileProviderOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\CameraBoundsTileProviderOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\ColliderOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\ColliderOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\CoreVectorLayerPropertiesDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\CoreVectorLayerPropertiesDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\ElevationLayerPropertiesDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\ElevationLayerPropertiesDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\ElevationModificationOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\ElevationModificationOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\ElevationRequiredOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\ElevationRequiredOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\FeaturesSubLayerPropertiesDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\FeaturesSubLayerPropertiesDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\GeometryExtrusionOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\GeometryExtrusionOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\GeometryMaterialOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\GeometryMaterialOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\ImageryLayerPropertiesDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\ImageryLayerPropertiesDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\ImageryRasterOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\ImageryRasterOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\LayerPerformanceOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\LayerPerformanceOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\LayerSourceOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\LayerSourceOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\MapExtentOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\MapExtentOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\MapLocationOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\MapLocationOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\MapOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\MapOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\MapPlacementOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\MapPlacementOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\MapScalingOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\MapScalingOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\MaterialListDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\MaterialListDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\PointsOfInterestSubLayerPropertiesDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\PointsOfInterestSubLayerPropertiesDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\PrefabItemOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\PrefabItemOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\RangeAroundTransformTileProviderOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\RangeAroundTransformTileProviderOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\RangeTileProviderOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\RangeTileProviderOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\SpawnPrefabOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\SpawnPrefabOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\StyleOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\StyleOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\StyleSearchAttributeDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\StyleSearchAttributeDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\TerrainSideWallOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\TerrainSideWallOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\UnityLayerOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\UnityLayerOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\VectorFilterOptionsDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\VectorFilterOptionsDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\VectorLayerPropertiesDrawer.cs">
+      <Link>Mapbox\Unity\PropertyDrawers\VectorLayerPropertiesDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\RunnableEditor.cs">
+      <Link>Mapbox\Unity\RunnableEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ScenesListEditor.cs">
+      <Link>Mapbox\Unity\ScenesListEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ScriptableCreatorWindow.cs">
+      <Link>Mapbox\Unity\ScriptableCreatorWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ScriptablePaletteEditor.cs">
+      <Link>Mapbox\Unity\ScriptablePaletteEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\StyleSearchWindow.cs">
+      <Link>Mapbox\Unity\StyleSearchWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\VectorSubLayerTreeView.cs">
+      <Link>Mapbox\Unity\VectorSubLayerTreeView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\ThirdPartyAssets\WoLfulus\LineEnding\Editor\Enums.cs">
+      <Link>WoLfulus\LineEnding\Enums.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\ThirdPartyAssets\WoLfulus\LineEnding\Editor\FileMonitor.cs">
+      <Link>WoLfulus\LineEnding\FileMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\ThirdPartyAssets\WoLfulus\LineEnding\Editor\LogEntries.cs">
+      <Link>WoLfulus\LineEnding\LogEntries.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\ThirdPartyAssets\WoLfulus\LineEnding\Editor\LogEntry.cs">
+      <Link>WoLfulus\LineEnding\LogEntry.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="package.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)nuget.exe pack $(ProjectDir)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

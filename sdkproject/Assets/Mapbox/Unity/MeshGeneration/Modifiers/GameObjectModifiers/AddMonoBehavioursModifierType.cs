@@ -3,10 +3,6 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 	using System;
 	using UnityEngine;
 
-#if UNITY_EDITOR
-	using UnityEditor;
-#endif
-
 	[Serializable]
 	public class AddMonoBehavioursModifierType
 	{
@@ -15,10 +11,8 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 
 		Type _type;
 
-#if UNITY_EDITOR
 		[SerializeField]
-		MonoScript _script;
-#endif
+		MonoBehaviour _script;
 
 		public Type Type
 		{

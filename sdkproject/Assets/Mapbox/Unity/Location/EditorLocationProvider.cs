@@ -33,20 +33,21 @@ namespace Mapbox.Unity.Location
 
 		bool _mapInitialized;
 
-#if UNITY_EDITOR
 		protected virtual void Start()
 		{
-			LocationProviderFactory.Instance.mapManager.OnInitialized += Map_OnInitialized;
-			//_map.OnInitialized += Map_OnInitialized;
-
-			if (_targetTransform == null)
+			if (MapboxProperties.IsUnityEditor)
 			{
-				_targetTransform = transform;
-			}
+				LocationProviderFactory.Instance.mapManager.OnInitialized += Map_OnInitialized;
+				//_map.OnInitialized += Map_OnInitialized;
 
-			base.Awake();
+				if (_targetTransform == null)
+				{
+					_targetTransform = transform;
+				}
+
+				base.Awake();
+			}
 		}
-#endif
 
 		void Map_OnInitialized()
 		{
