@@ -7,16 +7,31 @@ public class ImageDataFetcher : DataFetcher
 	public Action<UnityTile, TileErrorEventArgs> FetchingError = (t, s) => { };
 
 	//tile here should be totally optional and used only not to have keep a dictionary in terrain factory base
-	public void FetchImage(CanonicalTileId canonicalTileId, string mapid, UnityTile tile = null, bool useRetina = false)
+	public void FetchImage(CanonicalTileId canonicalTileId, string mapid, UnityTile tile = null, bool useRetina = false, bool useLowRes = false)
 	{
 		RasterTile rasterTile;
-		if (mapid.StartsWith("mapbox://", StringComparison.Ordinal))
+
+		if (useLowRes)
 		{
-			rasterTile = useRetina ? new RetinaRasterTile() : new RasterTile();
+			if (mapid.StartsWith("mapbox://", StringComparison.Ordinal))
+			{
+				rasterTile = new LowQualityRasterTile();
+			}
+			else
+			{
+				rasterTile = new ClassicRasterTile();
+			}
 		}
 		else
 		{
-			rasterTile = useRetina ? new ClassicRetinaRasterTile() : new ClassicRasterTile();
+			if (mapid.StartsWith("mapbox://", StringComparison.Ordinal))
+			{
+				rasterTile = useRetina ? new RetinaRasterTile() : new RasterTile();
+			}
+			else
+			{
+				rasterTile = useRetina ? new ClassicRetinaRasterTile() : new ClassicRasterTile();
+			}
 		}
 
 		if (tile != null)

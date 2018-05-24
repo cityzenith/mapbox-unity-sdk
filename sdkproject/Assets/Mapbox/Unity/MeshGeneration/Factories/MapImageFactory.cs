@@ -7,6 +7,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 	using Mapbox.Unity.MeshGeneration.Data;
 	using Mapbox.Unity.Utilities;
 	using Mapbox.Unity.Map;
+	using System.Collections.Generic;
 
 	public enum MapImageType
 	{
@@ -34,8 +35,17 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			set
 			{
 				_properties.sourceOptions.Id = value;
+
+				if (ReloadAtRuntime)
+					ReloadTiles();
 			}
 		}
+
+		public bool PreloadLowRes { get; set; }
+
+		public bool ReloadAtRuntime { get; set; }
+
+		private List<UnityTile> existingTiles = new List<UnityTile>();
 
 		#region UnityMethods
 		public virtual void OnDestroy()
@@ -86,16 +96,10 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 		public override void OnRegistered(UnityTile tile)
 		{
-			if (_properties.sourceType == ImagerySourceType.None)
-			{
-				Progress++;
-				Progress--;
-				return;
-			}
+			if (ReloadAtRuntime)
+				existingTiles.Add(tile);
 
-			tile.RasterDataState = TilePropertyState.Loading;
-			Progress++;
-			DataFetcher.FetchImage(tile.CanonicalTileId, MapId, tile, _properties.rasterOptions.useRetina);
+			ProcessTile(tile);
 		}
 
 		/// <summary>
@@ -108,7 +112,32 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 		public override void OnUnregistered(UnityTile tile)
 		{
+			if (existingTiles.Contains(tile))
+				existingTiles.Remove(tile);
+		}
 
+		private void ProcessTile(UnityTile tile)
+		{
+			if (_properties.sourceType == ImagerySourceType.None)
+			{
+				Progress++;
+				Progress--;
+				return;
+			}
+
+			tile.RasterDataState = TilePropertyState.Loading;
+			Progress++;
+
+			if (PreloadLowRes)
+				DataFetcher.FetchImage(tile.CanonicalTileId, MapId, tile, _properties.rasterOptions.useRetina, true);
+
+			DataFetcher.FetchImage(tile.CanonicalTileId, MapId, tile, _properties.rasterOptions.useRetina);
+		}
+
+		private void ReloadTiles()
+		{
+			foreach (UnityTile tile in existingTiles)
+				ProcessTile(tile);
 		}
 
 

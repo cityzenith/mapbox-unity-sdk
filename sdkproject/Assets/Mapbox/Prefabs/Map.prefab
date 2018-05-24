@@ -81,12 +81,12 @@ MonoBehaviour:
     loadingTexture: {fileID: 2800000, guid: e2896a92727704803a9c422b043eae89, type: 3}
   _imagery:
     _layerProperty:
-      sourceType: 7
+      sourceType: 6
       sourceOptions:
         isActive: 1
         layerSource:
           Name: Streets
-          Id: mapbox://styles/mapbox/streets-v10
+          Id: mapbox://styles/scratt/cj8okfu8z8t3j2rqn76byyafy
           Modified: 
           UserName: 
       rasterOptions:

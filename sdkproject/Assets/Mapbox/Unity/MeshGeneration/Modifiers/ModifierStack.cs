@@ -129,8 +129,31 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 				}
 				else if (moveFeaturePositionTo == PositionTargetType.CenterOfVertices)
 				{
+					Vector3 uperLeft = feature.Points[0][0];
+					Vector3 lowerRight = feature.Points[0][0];
+
+					for (int i = 0; i < _counter; i++)
+					{
+						_secondCounter = feature.Points[i].Count;
+
+						for (int j = 0; j < _secondCounter; j++)
+						{
+							if (uperLeft.x > feature.Points[i][j].x)
+								uperLeft.x = feature.Points[i][j].x;
+							if (uperLeft.z > feature.Points[i][j].z)
+								uperLeft.z = feature.Points[i][j].z;
+
+							if (lowerRight.x < feature.Points[i][j].x)
+								lowerRight.x = feature.Points[i][j].x;
+							if (lowerRight.z < feature.Points[i][j].z)
+								lowerRight.z = feature.Points[i][j].z;
+						}
+					}
+
+					_tempPoint = (uperLeft + lowerRight) * 0.5f;
+
 					//this is not precisely the center because of the duplicates  (first/last vertex) but close to center
-					_tempPoint = feature.Points[0][0];
+					/*_tempPoint = feature.Points[0][0];
 					vertexIndex = 1;
 
 					for (int i = 0; i < _counter; i++)
@@ -142,7 +165,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 							vertexIndex++;
 						}
 					}
-					_tempPoint /= vertexIndex;
+					_tempPoint /= vertexIndex;*/
 				}
 
 				for (int i = 0; i < _counter; i++)

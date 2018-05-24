@@ -23,6 +23,11 @@ namespace Mapbox.Map
 			return new TileResource(string.Format("{0}/{1}", MapUtils.NormalizeStaticStyleURL(styleUrl ?? "mapbox://styles/mapbox/satellite-v9"), id));
 		}
 
+		public static TileResource MakeLowQualityRaster(CanonicalTileId id, string styleUrl)
+		{
+			return new TileResource(string.Format("{0}/256/{1}", MapUtils.NormalizeStaticStyleURL(styleUrl ?? "mapbox://styles/mapbox/satellite-v9"), id));
+		}
+
 		internal static TileResource MakeRetinaRaster(CanonicalTileId id, string styleUrl)
 		{
 			return new TileResource(string.Format("{0}/{1}@2x", MapUtils.NormalizeStaticStyleURL(styleUrl ?? "mapbox://styles/mapbox/satellite-v9"), id));

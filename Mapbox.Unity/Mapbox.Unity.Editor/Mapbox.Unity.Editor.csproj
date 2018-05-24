@@ -36,8 +36,8 @@
     <Reference Include="Mapbox.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Mapbox.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapbox.Unity.2.0.2\lib\net35\Mapbox.Unity.dll</HintPath>
+    <Reference Include="Mapbox.Unity, Version=2.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Unity.2.0.12\lib\net35\Mapbox.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -253,6 +253,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(SolutionDir)nuget.exe pack $(ProjectDir)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

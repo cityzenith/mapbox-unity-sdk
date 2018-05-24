@@ -115,7 +115,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		private bool _isInitialized = false;
 
-		internal void Initialize(IMapReadable map, UnwrappedTileId tileId, float scale, int zoom, Texture2D loadingTexture = null)
+		public void Initialize(IMapReadable map, UnwrappedTileId tileId, float scale, int zoom, Texture2D loadingTexture = null)
 		{
 			TileScale = scale;
 			_relativeScale = 1 / Mathf.Cos(Mathf.Deg2Rad * (float)map.CenterLatitudeLongitude.x);
@@ -136,7 +136,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			gameObject.SetActive(true);
 		}
 
-		internal void Recycle()
+		public void Recycle()
 		{
 			if (_loadingTexture && MeshRenderer != null)
 			{
@@ -158,7 +158,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			_tiles.Clear();
 		}
 
-		internal void SetHeightData(byte[] data, float heightMultiplier = 1f, bool useRelative = false)
+		public void SetHeightData(byte[] data, float heightMultiplier = 1f, bool useRelative = false)
 		{
 			// HACK: compute height values for terrain. We could probably do this without a texture2d.
 			if (_heightTexture == null)
@@ -240,7 +240,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			return _rasterData;
 		}
 
-		internal void AddTile(Tile tile)
+		public void AddTile(Tile tile)
 		{
 			_tiles.Add(tile);
 		}
