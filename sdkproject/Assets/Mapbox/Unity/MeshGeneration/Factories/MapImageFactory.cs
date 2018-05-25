@@ -129,7 +129,10 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			Progress++;
 
 			if (PreloadLowRes)
+			{
+				Progress++;
 				DataFetcher.FetchImage(tile.CanonicalTileId, MapId, tile, _properties.rasterOptions.useRetina, true);
+			}
 
 			DataFetcher.FetchImage(tile.CanonicalTileId, MapId, tile, _properties.rasterOptions.useRetina);
 		}

@@ -181,11 +181,10 @@ namespace Mapbox.Unity
 		void ConfigureFileSource()
 		{
 			_fileSource = new CachingWebFileSource(_configuration.AccessToken, _configuration.AutoRefreshCache)
-				.AddCache(new MemoryCache(_configuration.MemoryCacheSize))
-#if !UNITY_WEBGL
-				.AddCache(new MbTilesCache(_configuration.MbTilesCacheSize))
-#endif
-				;
+				.AddCache(new MemoryCache(_configuration.MemoryCacheSize));
+
+			if (!MapboxProperties.IsWebGL)
+				_fileSource.AddCache(new MbTilesCache(_configuration.MbTilesCacheSize));
 		}
 
 
