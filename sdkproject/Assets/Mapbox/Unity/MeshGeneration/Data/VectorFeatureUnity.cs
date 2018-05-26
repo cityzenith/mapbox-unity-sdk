@@ -12,7 +12,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		public VectorTileFeature Data;
 		public Dictionary<string, object> Properties;
 		public List<List<Vector3>> Points = new List<List<Vector3>>();
-		public Vector2d[] boundPoints;
+		public Bounds bounds;
 
 		private double _rectSizex;
 		private double _rectSizey;
@@ -50,8 +50,8 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 			if (firstPoint.HasValue)
 			{
-				Point2d<float> upperLeft = firstPoint.Value;
-				Point2d<float> lowerRight = firstPoint.Value;
+				Point2d<float> lowerLeft = firstPoint.Value;
+				Point2d<float> upperRight = firstPoint.Value;
 
 				_geomCount = _geom.Count;
 
@@ -64,27 +64,26 @@ namespace Mapbox.Unity.MeshGeneration.Data
 						var point = _geom[i][j];
 						_newPoints.Add(new Vector3((float)(point.X / layerExtent * _rectSizex - (_rectSizex / 2)) * tile.TileScale, 0, (float)((layerExtent - point.Y) / layerExtent * _rectSizey - (_rectSizey / 2)) * tile.TileScale));
 
-						if (upperLeft.X > point.X)
-							upperLeft.X = point.X;
-						if (upperLeft.Y > point.Y)
-							upperLeft.Y = point.Y;
-						if (lowerRight.X < point.X)
-							lowerRight.X = point.X;
-						if (lowerRight.Y < point.Y)
-							lowerRight.Y = point.Y;
+						if (lowerLeft.X > point.X)
+							lowerLeft.X = point.X;
+						if (lowerLeft.Y < point.Y)
+							lowerLeft.Y = point.Y;
+						if (upperRight.X < point.X)
+							upperRight.X = point.X;
+						if (upperRight.Y > point.Y)
+							upperRight.Y = point.Y;
 					}
 					Points.Add(_newPoints);
 				}
 
 				CanonicalTileId tileId = tile.CanonicalTileId;
 
-				LatLng ll_ul = upperLeft.ToLngLat((ulong)tileId.Z, (ulong)tileId.X, (ulong)tileId.Y, feature.Layer.Extent);
-				LatLng ll_lr = lowerRight.ToLngLat((ulong)tileId.Z, (ulong)tileId.X, (ulong)tileId.Y, feature.Layer.Extent);
+				LatLng ll_ll = lowerLeft.ToLngLat((ulong)tileId.Z, (ulong)tileId.X, (ulong)tileId.Y, feature.Layer.Extent);
+				LatLng ll_ur = upperRight.ToLngLat((ulong)tileId.Z, (ulong)tileId.X, (ulong)tileId.Y, feature.Layer.Extent);
 
-				boundPoints = new Vector2d[] { new Vector2d(ll_ul.Lat, ll_ul.Lng),
-											   new Vector2d(ll_ul.Lat, ll_lr.Lng),
-											   new Vector2d(ll_lr.Lat, ll_ul.Lng),
-											   new Vector2d(ll_lr.Lat, ll_lr.Lng)};
+				bounds = new Bounds();
+				bounds.SetMinMax(new Vector3((float)ll_ll.Lng, -0.0001f, (float)ll_ll.Lat),
+									new Vector3((float)ll_ur.Lng, 0.0001f, (float)ll_ur.Lat));
 			}
 			else
 			{
