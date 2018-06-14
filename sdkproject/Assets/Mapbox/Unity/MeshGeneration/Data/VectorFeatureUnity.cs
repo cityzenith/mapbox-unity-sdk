@@ -159,5 +159,23 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 			return null;
 		}
+
+		public bool ContainsLatLon(Vector2d coord)
+		{
+			////first check tile
+			var coordinateTileId = Conversions.LatitudeLongitudeToTileId(
+				coord.x, coord.y, Tile.InitialZoom);
+			if (!coordinateTileId.Canonical.Equals(Tile.CanonicalTileId))
+			{
+				return false;
+			}
+
+			//then check polygon
+			var point = Conversions.LatitudeLongitudeToVectorTilePosition(coord, Tile.InitialZoom);
+			var output = PolygonUtils.PointInPolygon(new Point2d<float>(point.x, point.y), _geom);
+
+			return output;
+		}
+ 
 	}
 }
