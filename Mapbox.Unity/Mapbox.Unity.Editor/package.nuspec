@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Mapbox.Unity.Editor</id>
-    <version>2.0.21</version>
+    <version>2.0.23</version>
     <title>Mapbox.Unity.Editor</title>
     <authors>Daniel Mosquera</authors>
     <owners>Cityzenith</owners>
@@ -14,7 +14,7 @@
     </tags>
     <dependencies>
       <group targetFramework="net35">
-        <dependency id="MapBox.Unity" version="2.0.21" />
+        <dependency id="MapBox.Unity" version="2.0.23" />
         <dependency id="Mapbox.Dependencies" version="1.0.0" />
         <dependency id="UnityEditor.dll" version="1.1.0" />
         <dependency id="UnityEngine.dll" version="1.1.0" />

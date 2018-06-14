@@ -6,6 +6,8 @@ namespace Mapbox.Unity.MeshGeneration.Data
 	using UnityEngine;
 	using Mapbox.Map;
 	using Mapbox.Utils;
+	using Mapbox.Unity.Utilities;
+	using Mapbox.VectorTile.Geometry.InteralClipperLib;
 
 	public class VectorFeatureUnity
 	{
@@ -13,6 +15,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		public Dictionary<string, object> Properties;
 		public List<List<Vector3>> Points = new List<List<Vector3>>();
 		public Bounds bounds;
+		public UnityTile Tile;
 
 		private double _rectSizex;
 		private double _rectSizey;
@@ -31,6 +34,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			Data = feature;
 			Properties = Data.GetProperties();
 			Points.Clear();
+			Tile = tile;
 
 			//this is a temp hack until we figure out how streets ids works
 			if (buildingsWithUniqueIds == true) //ids from building dataset is big ulongs 
@@ -101,6 +105,43 @@ namespace Mapbox.Unity.MeshGeneration.Data
 					Points.Add(_newPoints);
 				}
 			}
+		}
+
+		public bool ContainsLatLon(Vector2d coord)
+		{
+			////first check tile
+			var coordinateTileId = Conversions.LatitudeLongitudeToTileId(
+				coord.x, coord.y, Tile.InitialZoom);
+			if (!coordinateTileId.Canonical.Equals(Tile.CanonicalTileId))
+			{
+				return false;
+			}
+
+			var point = Conversions.LatitudeLongitudeToVectorTilePosition(coord, Tile.InitialZoom);
+			var output = PointInPolygon(new Point2d<float>(point.x, point.y), _geom);
+
+			return output;
+		}
+
+		/// <summary>
+		/// Method to check if a point is contained inside a polygon, ignores vertical axis (y axis),
+		/// </summary>
+		/// <returns><c>true</c>, if point lies inside the constructed polygon, <c>false</c> otherwise.</returns>
+		/// <param name="polyPoints">Polygon points.</param>
+		/// <param name="p">The point that is to be tested.</param>
+		private bool PointInPolygon(Point2d<float> coord, List<List<Point2d<float>>> poly)
+		{
+			var point = new InternalClipper.IntPoint(coord.X, coord.Y);
+			List<InternalClipper.IntPoint> polygon = new List<InternalClipper.IntPoint>();
+
+			foreach (var vert in poly[0])
+			{
+				polygon.Add(new InternalClipper.IntPoint(vert.X, vert.Y));
+			}
+
+			//then check the actual polygon
+			int result = InternalClipper.Clipper.PointInPolygon(point, polygon);
+			return (result == 1) ? true : false;
 		}
 
 		private Point2d<float>? GetFirstPoint()

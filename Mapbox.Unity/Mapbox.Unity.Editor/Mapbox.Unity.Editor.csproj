@@ -36,8 +36,8 @@
     <Reference Include="Mapbox.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Mapbox.Unity, Version=2.0.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapbox.Unity.2.0.21\lib\net35\Mapbox.Unity.dll</HintPath>
+    <Reference Include="Mapbox.Unity, Version=2.0.23.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Unity.2.0.23\lib\net35\Mapbox.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -248,7 +248,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="package.nuspec" />
+    <None Include="package.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
