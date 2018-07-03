@@ -194,11 +194,17 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\ICache.cs">
       <Link>Core\SDK\Platform\Cache\ICache.cs</Link>
     </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\MbTilesCache.cs">
-      <Link>Core\SDK\Platform\Cache\MbTilesCache.cs</Link>
-    </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\MemoryCache.cs">
       <Link>Core\SDK\Platform\Cache\MemoryCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\SQLiteCache\SQLiteCache.cs">
+      <Link>Core\SDK\Platform\SQLiteCache\SQLiteCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\SQLiteCache\Tiles.cs">
+      <Link>Core\SDK\Platform\SQLiteCache\Tiles.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Cache\SQLiteCache\Tilesets.cs">
+      <Link>Core\SDK\Platform\SQLiteCache\Tilesets.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\FileSource.cs">
       <Link>Core\SDK\Platform\FileSource.cs</Link>
@@ -220,18 +226,6 @@
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\IResource.cs">
       <Link>Core\SDK\Platform\IResource.cs</Link>
-    </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\MbTiles.cs">
-      <Link>Core\SDK\Platform\MbTiles\MbTiles.cs</Link>
-    </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\MetaData.cs">
-      <Link>Core\SDK\Platform\MbTiles\MetaData.cs</Link>
-    </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\MetaDataRequired.cs">
-      <Link>Core\SDK\Platform\MbTiles\MetaDataRequired.cs</Link>
-    </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\MbTiles\Tiles.cs">
-      <Link>Core\SDK\Platform\MbTiles\Tiles.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\Resource.cs">
       <Link>Core\SDK\Platform\Resource.cs</Link>
@@ -464,6 +458,24 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AbstractLocationProvider.cs">
       <Link>Unity\Location\AbstractLocationProvider.cs</Link>
     </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AngleSmoothing\AngleSmoothingAbstractBase.cs">
+      <Link>Unity\Location\AngleSmoothing\AngleSmoothingAbstractBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AngleSmoothing\AngleSmoothingAverage.cs">
+      <Link>Unity\Location\AngleSmoothing\AngleSmoothingAverage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AngleSmoothing\AngleSmoothingLowPass.cs">
+      <Link>Unity\Location\AngleSmoothing\AngleSmoothingLowPass.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AngleSmoothing\AngleSmoothingNoOp.cs">
+      <Link>Unity\Location\AngleSmoothing\AngleSmoothingNoOp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AngleSmoothing\AngleSmoothingWeighted.cs">
+      <Link>Unity\Location\AngleSmoothing\AngleSmoothingWeighted.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\AngleSmoothing\IAngleSmoothing.cs">
+      <Link>Unity\Location\AngleSmoothing\IAngleSmoothing.cs</Link>
+    </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\DeviceLocationProvider.cs">
       <Link>Unity\Location\DeviceLocationProvider.cs</Link>
     </Compile>
@@ -475,9 +487,6 @@
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\ILocationProvider.cs">
       <Link>Unity\Location\ILocationProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\KalmanFilter.cs">
-      <Link>Unity\Location\KalmanFilter.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\Location.cs">
       <Link>Unity\Location\Location.cs</Link>
@@ -491,8 +500,38 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\LocationProviderFactory.cs">
       <Link>Unity\Location\LocationProviderFactory.cs</Link>
     </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\LocationSmoothing\KalmanFilter.cs">
+      <Link>Unity\Location\LocationSmoothing\KalmanFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\Logging\LocationLogAbstractBase.cs">
+      <Link>Unity\Location\Logging\LocationLogAbstractBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\Logging\LocationLogReader.cs">
+      <Link>Unity\Location\Logging\LocationLogReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\Logging\LocationLogWriter.cs">
+      <Link>Unity\Location\Logging\LocationLogWriter.cs</Link>
+    </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\TransformLocationProvider.cs">
       <Link>Unity\Location\TransformLocationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\UnityLocationWrappers\IMapboxLocationInfo.cs">
+      <Link>Unity\Location\UnityLocationWrappers\IMapboxLocationInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\UnityLocationWrappers\IMapboxLocationService.cs">
+      <Link>Unity\Location\UnityLocationWrappers\IMapboxLocationService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\UnityLocationWrappers\MapboxLocationInfoMock.cs">
+      <Link>Unity\Location\UnityLocationWrappers\MapboxLocationInfoMock.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\UnityLocationWrappers\MapboxLocationInfoUnityWrapper.cs">
+      <Link>Unity\Location\UnityLocationWrappers\MapboxLocationInfoUnityWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\UnityLocationWrappers\MapboxLocationServiceMock.cs">
+      <Link>Unity\Location\UnityLocationWrappers\MapboxLocationServiceMock.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Location\UnityLocationWrappers\MapboxLocationServiceUnityWrapper.cs">
+      <Link>Unity\Location\UnityLocationWrappers\MapboxLocationServiceUnityWrapper.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MapboxAccess.cs">
       <Link>Unity\MapboxAccess.cs</Link>
@@ -710,8 +749,17 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\GameObjectModifiers\TextureMonoBehaviourModifier.cs">
       <Link>Unity\MeshGeneration\Modifiers\GameObjectModifiers\TextureMonoBehaviourModifier.cs</Link>
     </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\IReplaceable.cs">
+      <Link>Unity\MeshGeneration\Modifiers\IReplaceable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\IReplacementCriteria.cs">
+      <Link>Unity\MeshGeneration\Modifiers\IReplacementCriteria.cs</Link>
+    </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MergedModifierStack.cs">
       <Link>Unity\MeshGeneration\Modifiers\MergedModifierStack.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshGenerationBase.cs">
+      <Link>Unity\MeshGeneration\Modifiers\MeshGenerationBase.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\MeshGeneration\Modifiers\MeshModifier.cs">
       <Link>Unity\MeshGeneration\Modifiers\MeshModifier.cs</Link>
@@ -769,6 +817,9 @@
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\SourceLayers\MapboxDefaultImagery.cs">
       <Link>Unity\MeshGeneration\SourceLayers\MapboxDefaultImagery.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\SourceLayers\MapboxDefaultStyles.cs">
+      <Link>Unity\MeshGeneration\SourceLayers\MapboxDefaultStyles.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\SourceLayers\MapboxDefaultVector.cs">
       <Link>Unity\MeshGeneration\SourceLayers\MapboxDefaultVector.cs</Link>

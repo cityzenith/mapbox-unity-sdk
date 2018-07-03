@@ -141,8 +141,7 @@ namespace Mapbox.Unity.Location
 
 		public virtual void Awake()
 		{
-#if UNITY_EDITOR
-			if (_editorDebuggingOnly._mockUnityInputLocation)
+			if (MapboxProperties.IsUnityEditor && _editorDebuggingOnly._mockUnityInputLocation)
 			{
 				if (null == _editorDebuggingOnly._locationLogFile || null == _editorDebuggingOnly._locationLogFile.bytes)
 				{
@@ -152,12 +151,7 @@ namespace Mapbox.Unity.Location
 				_locationService = new MapboxLocationServiceMock(_editorDebuggingOnly._locationLogFile.bytes);
 			}
 			else
-			{
-#endif
 				_locationService = new MapboxLocationServiceUnityWrapper();
-#if UNITY_EDITOR
-			}
-#endif
 
 			_currentLocation.Provider = "unity";
 			_wait1sec = new WaitForSeconds(1f);

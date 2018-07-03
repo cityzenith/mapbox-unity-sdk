@@ -168,7 +168,7 @@ namespace Mapbox.Unity
 				.AddCache(new MemoryCache(_configuration.MemoryCacheSize));
 
 			if (!MapboxProperties.IsWebGL)
-				.AddCache(new SQLiteCache(_configuration.FileCacheSize))
+				_fileSource.AddCache(new SQLiteCache(_configuration.FileCacheSize));
 		}
 
 

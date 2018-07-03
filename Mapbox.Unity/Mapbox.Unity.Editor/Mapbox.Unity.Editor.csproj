@@ -36,8 +36,8 @@
     <Reference Include="Mapbox.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Mapbox.Unity, Version=2.0.23.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapbox.Unity.2.0.23\lib\net35\Mapbox.Unity.dll</HintPath>
+    <Reference Include="Mapbox.Unity, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Unity.2.1.0\lib\net35\Mapbox.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,8 +65,8 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\Build\Mapbox_iOS_build.cs">
       <Link>Mapbox\Unity\Build\Mapbox_iOS_build.cs</Link>
     </Compile>
-    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ClearMbTilesCache.cs">
-      <Link>Mapbox\Unity\ClearMbTilesCache.cs</Link>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\ClearFileCache.cs">
+      <Link>Mapbox\Unity\ClearFileCache.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\FactoryDrawer.cs">
       <Link>Mapbox\Unity\FactoryDrawer.cs</Link>
@@ -124,6 +124,9 @@
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\NodeEditor\NodeBasedEditor.cs">
       <Link>Mapbox\Unity\NodeEditor\NodeBasedEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PopupSelectionMenu.cs">
+      <Link>Mapbox\Unity\PopupSelectionMenu.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Unity\Editor\PropertyDrawers\CameraBoundsTileProviderOptionsDrawer.cs">
       <Link>Mapbox\Unity\PropertyDrawers\CameraBoundsTileProviderOptionsDrawer.cs</Link>
