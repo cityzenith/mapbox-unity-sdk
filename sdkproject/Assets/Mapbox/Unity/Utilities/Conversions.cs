@@ -231,9 +231,31 @@ namespace Mapbox.Unity.Utilities
 			return new UnwrappedTileId(zoom, x, y);
 		}
 
+
+		/// <summary>
+		/// Get coordinates for a given latitude/longitude in tile-space. Useful when comparing feature geometry to lat/lon coordinates.
+		/// </summary>
+		/// <returns>The longitude to tile position.</returns>
+		/// <param name="coordinate">Coordinate.</param>
+		/// <param name="tileZoom">The zoom level of the tile.</param>
+		/// <param name="layerExtent">Layer extent. Optional, but recommended. Defaults to 4096, the standard for Mapbox Tiles</param>
+		public static Vector2 LatitudeLongitudeToVectorTilePosition(Vector2d coordinate, int tileZoom, ulong layerExtent = 4096)
+		{
+			var coordinateTileId = Conversions.LatitudeLongitudeToTileId(
+				coordinate.x, coordinate.y, tileZoom);
+			var _meters = LatLonToMeters(coordinate);
+			var _rect = Conversions.TileBounds(coordinateTileId);
+
+			//vectortile space point (0 - layerExtent)
+			var vectorTilePoint = new Vector2((float)((_meters - _rect.Min).x / _rect.Size.x) * layerExtent,
+											  (float)(layerExtent - ((_meters - _rect.Max).y / _rect.Size.y) * layerExtent));
+
+			return vectorTilePoint;
+		}
+
 		public static Vector2 LatitudeLongitudeToUnityTilePosition(Vector2d coordinate, UnityTile tile, ulong layerExtent = 4096)
 		{
-			return LatitudeLongitudeToUnityTilePosition(coordinate, tile.InitialZoom, tile.TileScale, layerExtent);
+			return LatitudeLongitudeToUnityTilePosition(coordinate, tile.CurrentZoom, tile.TileScale, layerExtent);
 		}
 
 		/// <summary>
