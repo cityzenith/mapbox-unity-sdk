@@ -35,7 +35,7 @@ namespace Mapbox.Unity.Location
 			}
 		}
 
-		protected override void SetLocation()
+		public override void SetLocation()
 		{
 			var _map = LocationProviderFactory.Instance.mapManager;
 			_currentLocation.UserHeading = _targetTransform.eulerAngles.y;

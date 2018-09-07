@@ -92,7 +92,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			{
 				return _rasterDataState;
 			}
-			internal set
+			set
 			{
 				if (_rasterDataState != value)
 				{
@@ -109,7 +109,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			{
 				return _heightDataState;
 			}
-			internal set
+			set
 			{
 				if (_heightDataState != value)
 				{
@@ -126,7 +126,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			{
 				return _vectorDataState;
 			}
-			internal set
+			set
 			{
 				if (_vectorDataState != value)
 				{
@@ -306,7 +306,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			return _rasterData;
 		}
 
-		internal void AddTile(Tile tile)
+		public void AddTile(Tile tile)
 		{
 			_tiles.Add(tile);
 		}
@@ -319,7 +319,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			}
 		}
 
-		protected virtual void OnDestroy()
+		public virtual void OnDestroy()
 		{
 			Cancel();
 			if (_heightTexture != null)

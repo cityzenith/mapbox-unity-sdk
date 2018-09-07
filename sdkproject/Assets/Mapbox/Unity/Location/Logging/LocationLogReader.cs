@@ -44,7 +44,7 @@
 		}
 
 
-		protected virtual void Dispose(bool disposeManagedResources)
+		public virtual void Dispose(bool disposeManagedResources)
 		{
 			if (!_disposed)
 			{

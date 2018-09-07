@@ -6,6 +6,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 	using UnityEngine;
 	using Mapbox.Utils;
 	using Mapbox.Unity.Utilities;
+	using Mapbox.Map;
 
 	public class VectorFeatureUnity
 	{
@@ -13,6 +14,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		public Dictionary<string, object> Properties;
 		public List<List<Vector3>> Points = new List<List<Vector3>>();
 		public UnityTile Tile;
+		public double[] latLong;
 
 		private double _rectSizex;
 		private double _rectSizey;
@@ -45,18 +47,40 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 			_rectSizex = tile.Rect.Size.x;
 			_rectSizey = tile.Rect.Size.y;
+			Point2d<float>? firstPoint = GetFirstPoint();
 
-			_geomCount = _geom.Count;
-			for (int i = 0; i < _geomCount; i++)
+			if (firstPoint.HasValue)
 			{
-				_pointCount = _geom[i].Count;
-				_newPoints = new List<Vector3>(_pointCount);
-				for (int j = 0; j < _pointCount; j++)
+				Point2d<float> value = firstPoint.Value;
+				Point2d<float> value2 = firstPoint.Value;
+				_geomCount = _geom.Count;
+
+				for (int i = 0; i < _geomCount; i++)
 				{
-					var point = _geom[i][j];
-					_newPoints.Add(new Vector3((float)(point.X / layerExtent * _rectSizex - (_rectSizex / 2)) * tile.TileScale, 0, (float)((layerExtent - point.Y) / layerExtent * _rectSizey - (_rectSizey / 2)) * tile.TileScale));
+					_pointCount = _geom[i].Count;
+					_newPoints = new List<Vector3>(_pointCount);
+					for (int j = 0; j < _pointCount; j++)
+					{
+						var point = _geom[i][j];
+						_newPoints.Add(new Vector3((float)(point.X / layerExtent * _rectSizex - (_rectSizex / 2)) * tile.TileScale, 0, (float)((layerExtent - point.Y) / layerExtent * _rectSizey - (_rectSizey / 2)) * tile.TileScale));
+
+						if (value.X > point.X)
+							value.X = point.X;
+						if (value.Y < point.Y)
+							value.Y = point.Y;
+						if (value2.X < point.X)
+							value2.X = point.X;
+						if (value2.Y > point.Y)
+							value2.Y = point.Y;
+					}
+					Points.Add(_newPoints);
 				}
-				Points.Add(_newPoints);
+
+				Point2d<float> center = new Point2d<float>((value.X + value2.X) * 0.5f, (value.Y + value2.Y) * 0.5f);
+				CanonicalTileId canonicalTileId = tile.CanonicalTileId;
+				LatLng ll = center.ToLngLat((ulong)canonicalTileId.Z, (ulong)canonicalTileId.X, (ulong)canonicalTileId.Y, feature.Layer.Extent);
+
+				latLong = new double[] { ll.Lat, ll.Lng };
 			}
 		}
 
@@ -120,5 +144,19 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		}
 
+		private Point2d<float>? GetFirstPoint()
+		{
+			_geomCount = _geom.Count;
+			for (int i = 0; i < _geomCount; i++)
+			{
+				_pointCount = _geom[i].Count;
+				int num = 0;
+				if (num < _pointCount)
+				{
+					return _geom[i][num];
+				}
+			}
+			return null;
+		}
 	}
 }

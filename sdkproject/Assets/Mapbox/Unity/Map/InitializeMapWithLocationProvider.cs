@@ -17,7 +17,7 @@
 			_map.InitializeOnStart = false;
 		}
 
-		protected virtual IEnumerator Start()
+		public virtual IEnumerator Start()
 		{
 			yield return null;
 			_locationProvider = LocationProviderFactory.Instance.DefaultLocationProvider;

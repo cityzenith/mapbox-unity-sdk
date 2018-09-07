@@ -9,7 +9,7 @@ namespace Mapbox.Unity.Map
 	[CreateAssetMenu(menuName = "Mapbox/MapVisualizer/QuadTreeMapVisualizer")]
 	public class QuadTreeMapVisualizer : AbstractMapVisualizer
 	{
-		protected override void PlaceTile(UnwrappedTileId tileId, UnityTile tile, IMapReadable map)
+		public override void PlaceTile(UnwrappedTileId tileId, UnityTile tile, IMapReadable map)
 		{
 			//get the tile covering the center (Unity 0,0,0) of current extent
 			UnwrappedTileId centerTile = TileCover.CoordinateToTileId(map.CenterLatitudeLongitude, map.AbsoluteZoom);

@@ -114,7 +114,7 @@ namespace UnityARInterface
             }
         }
 
-        protected virtual void SetupARInterface()
+        public virtual void SetupARInterface()
         {
             m_ARInterface = ARInterface.GetInterface();
         }

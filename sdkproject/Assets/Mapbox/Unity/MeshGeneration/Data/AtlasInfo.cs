@@ -58,7 +58,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
             m_OnValidate.AddListener(action);
         }
 
-        protected virtual void OnValidate()
+        public virtual void OnValidate()
         {
             if(m_OnValidate != null)
             {

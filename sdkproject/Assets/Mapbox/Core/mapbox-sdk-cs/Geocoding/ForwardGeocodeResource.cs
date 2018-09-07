@@ -8,6 +8,7 @@ namespace Mapbox.Geocoding
 {
 	using System;
 	using System.Collections.Generic;
+	using Mapbox.Unity;
 	using Mapbox.Utils;
 	using UnityEngine;
 
@@ -179,22 +180,19 @@ namespace Mapbox.Geocoding
 			// Use 'CFNETWORK_DIAGNOSTICS=1' in XCode to get more details https://stackoverflow.com/a/46748461
 
 			// trying to get rid of at least the most common characters - other will still crash
-#if UNITY_IOS
-			Query = Query
-				.Replace(",", " ")
-				.Replace(".", " ")
-				.Replace("-", " ");
-#endif
+			if(MapboxProperties.IsIOS)
+				Query = Query
+					.Replace(",", " ")
+					.Replace(".", " ")
+					.Replace("-", " ");
+
+			string escapeString = MapboxProperties.IsIOS ? WWW.EscapeURL(Query) : Uri.EscapeDataString(Query);
 
 			return
-				Constants.BaseAPI +
+				Utils.Constants.BaseAPI +
 				ApiEndpoint +
 				Mode +
-#if UNITY_IOS
-				WWW.EscapeURL(Query) +
-#else
-				Uri.EscapeDataString(Query) +
-#endif
+				escapeString +
 				".json" +
 				EncodeQueryString(opts);
 		}

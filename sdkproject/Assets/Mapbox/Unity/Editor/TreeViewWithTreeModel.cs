@@ -133,11 +133,11 @@ namespace Mapbox.Editor
 			SortSearchResult(result);
 		}
 
-		protected virtual void SortSearchResult (List<TreeViewItem> rows)
+		public virtual void SortSearchResult (List<TreeViewItem> rows)
 		{
 			rows.Sort ((x,y) => EditorUtility.NaturalCompare (x.displayName, y.displayName)); // sort by displayName by default, can be overriden for multicolumn solutions
 		}
-	
+
 		protected override IList<int> GetAncestors (int id)
 		{
 			return m_TreeModel.GetAncestors(id);

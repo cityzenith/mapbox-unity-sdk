@@ -1,13 +1,11 @@
 namespace Mapbox.Unity.MeshGeneration.Factories
 {
-	using System;
 	using Mapbox.Map;
-	using UnityEngine;
-	using Mapbox.Unity.MeshGeneration.Enums;
-	using Mapbox.Unity.MeshGeneration.Data;
-	using Mapbox.Unity.Utilities;
 	using Mapbox.Unity.Map;
+	using Mapbox.Unity.MeshGeneration.Data;
+	using Mapbox.Unity.MeshGeneration.Enums;
 	using System.Collections.Generic;
+	using UnityEngine;
 
 	public enum MapImageType
 	{
@@ -25,6 +23,8 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		[SerializeField]
 		ImageryLayerProperties _properties;
 		protected ImageDataFetcher DataFetcher;
+		private List<UnityTile> existingTiles = new List<UnityTile>();
+
 		public string MapId
 		{
 			get
@@ -35,11 +35,20 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			set
 			{
 				_properties.sourceOptions.Id = value;
+
+				if (ReloadAtRuntime)
+				{
+					ReloadTiles();
+				}
 			}
 		}
 
+		public bool PreloadLowRes { get; set; }
+
+		public bool ReloadAtRuntime { get; set; }
+
 		#region UnityMethods
-		protected virtual void OnDestroy()
+		public virtual void OnDestroy()
 		{
 			if (DataFetcher != null)
 			{
@@ -63,7 +72,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		}
 
 		//merge this with OnErrorOccurred?
-		protected virtual void OnDataError(UnityTile tile, RasterTile rasterTile, TileErrorEventArgs e)
+		public virtual void OnDataError(UnityTile tile, RasterTile rasterTile, TileErrorEventArgs e)
 		{
 			if (tile != null)
 			{
@@ -79,7 +88,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		#endregion
 
 		#region AbstractFactoryOverrides
-		protected override void OnInitialized()
+		public override void OnInitialized()
 		{
 			DataFetcher = ScriptableObject.CreateInstance<ImageDataFetcher>();
 			DataFetcher.DataRecieved += OnImageRecieved;
@@ -91,7 +100,50 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			_properties = (ImageryLayerProperties)options;
 		}
 
-		protected override void OnRegistered(UnityTile tile)
+		public override void OnRegistered(UnityTile tile)
+		{
+			if (ReloadAtRuntime)
+				existingTiles.Add(tile);
+
+			ProcessTile(tile);
+		}
+
+		/// <summary>
+		/// Method to be called when a tile error has occurred.
+		/// </summary>
+		/// <param name="e"><see cref="T:Mapbox.Map.TileErrorEventArgs"/> instance/</param>
+		public override void OnErrorOccurred(TileErrorEventArgs e)
+		{
+		}
+
+		public override void OnUnregistered(UnityTile tile)
+		{
+			if (_tilesWaitingResponse.Contains(tile))
+			{
+				_tilesWaitingResponse.Remove(tile);
+			}
+
+			if (existingTiles.Contains(tile))
+			{
+				existingTiles.Remove(tile);
+			}
+		}
+
+		public override void OnPostProcess(UnityTile tile)
+		{
+
+		}
+		#endregion
+
+		private void ReloadTiles()
+		{
+			foreach (UnityTile existingTile in existingTiles)
+			{
+				ProcessTile(existingTile);
+			}
+		}
+
+		private void ProcessTile(UnityTile tile)
 		{
 			if (_properties.sourceType == ImagerySourceType.None)
 			{
@@ -102,27 +154,5 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			tile.RasterDataState = TilePropertyState.Loading;
 			DataFetcher.FetchImage(tile.CanonicalTileId, MapId, tile, _properties.rasterOptions.useRetina);
 		}
-
-		/// <summary>
-		/// Method to be called when a tile error has occurred.
-		/// </summary>
-		/// <param name="e"><see cref="T:Mapbox.Map.TileErrorEventArgs"/> instance/</param>
-		protected override void OnErrorOccurred(TileErrorEventArgs e)
-		{
-		}
-
-		protected override void OnUnregistered(UnityTile tile)
-		{
-			if (_tilesWaitingResponse.Contains(tile))
-			{
-				_tilesWaitingResponse.Remove(tile);
-			}
-		}
-
-		protected override void OnPostProcess(UnityTile tile)
-		{
-
-		}
-		#endregion
 	}
 }

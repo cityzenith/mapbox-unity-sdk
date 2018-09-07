@@ -2,6 +2,7 @@
 {
 
 	using Mapbox.Map;
+	using Mapbox.Unity;
 	using Mapbox.Utils;
 	using SQLite4Unity3d;
 	using System;
@@ -63,7 +64,7 @@
 			GC.SuppressFinalize(this);
 		}
 
-		protected virtual void Dispose(bool disposeManagedResources)
+		public virtual void Dispose(bool disposeManagedResources)
 		{
 			if (!_disposed)
 			{
@@ -198,9 +199,10 @@ lastmodified INTEGER,
 		public static string GetFullDbPath(string dbName)
 		{
 			string dbPath = Path.Combine(Application.persistentDataPath, "cache");
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_WSA
-			dbPath = Path.GetFullPath(dbPath);
-#endif
+
+			if (MapboxProperties.IsWindows)
+				dbPath = Path.GetFullPath(dbPath);
+
 			if (!Directory.Exists(dbPath)) { Directory.CreateDirectory(dbPath); }
 			dbPath = Path.Combine(dbPath, dbName);
 

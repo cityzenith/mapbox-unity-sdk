@@ -31,7 +31,7 @@ namespace UnityARInterface
             ARInterface.planeRemoved -= PlaneRemovedHandler;
         }
 
-        protected virtual void CreateOrUpdateGameObject(BoundedPlane plane)
+        public virtual void CreateOrUpdateGameObject(BoundedPlane plane)
         {
             GameObject go;
             if (!m_Planes.TryGetValue(plane.id, out go))
@@ -50,19 +50,19 @@ namespace UnityARInterface
             go.transform.localScale = new Vector3(plane.extents.x, 1f, plane.extents.y);
         }
 
-        protected virtual void PlaneAddedHandler(BoundedPlane plane)
+        public virtual void PlaneAddedHandler(BoundedPlane plane)
         {
             if (m_PlanePrefab)
                 CreateOrUpdateGameObject(plane);
         }
 
-        protected virtual void PlaneUpdatedHandler(BoundedPlane plane)
+        public virtual void PlaneUpdatedHandler(BoundedPlane plane)
         {
             if (m_PlanePrefab)
                 CreateOrUpdateGameObject(plane);
         }
 
-        protected virtual void PlaneRemovedHandler(BoundedPlane plane)
+        public virtual void PlaneRemovedHandler(BoundedPlane plane)
         {
             GameObject go;
             if (m_Planes.TryGetValue(plane.id, out go))

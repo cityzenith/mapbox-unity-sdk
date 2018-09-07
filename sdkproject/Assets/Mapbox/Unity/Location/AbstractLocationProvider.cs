@@ -21,7 +21,7 @@
 
 		public event Action<Location> OnLocationUpdated = delegate { };
 
-		protected virtual void SendLocation(Location location)
+		public virtual void SendLocation(Location location)
 		{
 			OnLocationUpdated(location);
 		}

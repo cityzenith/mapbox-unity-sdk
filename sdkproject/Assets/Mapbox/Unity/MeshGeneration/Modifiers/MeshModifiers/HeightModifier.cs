@@ -92,7 +92,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 
 		}
 
-		protected virtual void GenerateWallMesh(MeshData md)
+		public virtual void GenerateWallMesh(MeshData md)
 		{
 			md.Vertices.Capacity = _counter + md.Edges.Count * 2;
 			float d = 0f;
@@ -163,7 +163,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			}
 		}
 
-		protected virtual void GenerateRoofMesh(MeshData md, float minHeight, float maxHeight)
+		public virtual void GenerateRoofMesh(MeshData md, float minHeight, float maxHeight)
 		{
 			if (_options.extrusionGeometryType != ExtrusionGeometryType.SideOnly)
 			{
@@ -216,7 +216,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			}
 		}
 
-		protected virtual void QueryHeight(VectorFeatureUnity feature, MeshData md, UnityTile tile, out float maxHeight, out float minHeight)
+		public virtual void QueryHeight(VectorFeatureUnity feature, MeshData md, UnityTile tile, out float maxHeight, out float minHeight)
 		{
 			minHeight = 0.0f;
 			maxHeight = 0.0f;

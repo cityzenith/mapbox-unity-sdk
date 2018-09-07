@@ -134,7 +134,7 @@ namespace Mapbox.Map
 			_request = param.Fs.Request(MakeTileResource(param.MapId).GetUrl(), HandleTileResponse, tileId: _id, mapId: param.MapId);
 		}
 
-		internal void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
+		public void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
 		{
 			Cancel();
 

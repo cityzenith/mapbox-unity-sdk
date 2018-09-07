@@ -224,9 +224,7 @@ namespace Mapbox.Unity.Map
 			PlaceTile(tileId, unityTile, _map);
 
 			// Don't spend resources naming objects, as you shouldn't find objects by name anyway!
-#if UNITY_EDITOR
 			unityTile.gameObject.name = unityTile.CanonicalTileId.ToString();
-#endif
 			unityTile.OnHeightDataChanged += TileStateChanged;
 			unityTile.OnRasterDataChanged += TileStateChanged;
 			unityTile.OnVectorDataChanged += TileStateChanged;
@@ -269,7 +267,7 @@ namespace Mapbox.Unity.Map
 			}
 		}
 
-		protected abstract void PlaceTile(UnwrappedTileId tileId, UnityTile tile, IMapReadable map);
+		public abstract void PlaceTile(UnwrappedTileId tileId, UnityTile tile, IMapReadable map);
 
 		#region Events
 		/// <summary>

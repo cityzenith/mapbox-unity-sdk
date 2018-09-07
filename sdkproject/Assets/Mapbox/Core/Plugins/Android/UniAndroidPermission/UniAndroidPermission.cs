@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mapbox.Unity;
+using System;
 using UnityEngine;
 
 public class UniAndroidPermission : MonoBehaviour
@@ -16,29 +17,31 @@ public class UniAndroidPermission : MonoBehaviour
 
     public static bool IsPermitted(AndroidPermission permission)
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        using (var permissionManager = new AndroidJavaClass(PackageName))
-        {
-            return permissionManager.CallStatic<bool>("hasPermission", GetPermittionStr(permission));
-        }
-#else
-        return true;
-#endif
-    }
+		if (MapboxProperties.IsAndroid)
+		{
+			using (var permissionManager = new AndroidJavaClass(PackageName))
+			{
+				return permissionManager.CallStatic<bool>("hasPermission", GetPermittionStr(permission));
+			}
+		}
 
-    public static void RequestPermission(AndroidPermission permission, Action onAllow = null, Action onDeny = null, Action onDenyAndNeverAskAgain = null)
+		return true;
+	}
+
+	public static void RequestPermission(AndroidPermission permission, Action onAllow = null, Action onDeny = null, Action onDenyAndNeverAskAgain = null)
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        using (var permissionManager = new AndroidJavaClass(PackageName))
-        {
-            permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
-            onAllowCallback = onAllow;
-            onDenyCallback = onDeny;
-            onDenyAndNeverAskAgainCallback = onDenyAndNeverAskAgain;
-        }
-#else
+		if (MapboxProperties.IsAndroid)
+		{
+			using (var permissionManager = new AndroidJavaClass(PackageName))
+			{
+				permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
+				onAllowCallback = onAllow;
+				onDenyCallback = onDeny;
+				onDenyAndNeverAskAgainCallback = onDenyAndNeverAskAgain;
+			}
+		}
+
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
-#endif
     }
 
     private static string GetPermittionStr(AndroidPermission permittion)

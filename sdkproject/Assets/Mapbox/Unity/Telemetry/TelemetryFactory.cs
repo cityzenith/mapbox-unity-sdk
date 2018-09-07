@@ -2,25 +2,35 @@
 {
 	public static class TelemetryFactory
 	{
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID
-		public static readonly string EventQuery = "events=true";
-#else
-		public static readonly string EventQuery = "events=false";
-#endif
+		public static string EventQuery
+		{
+			get
+			{
+				if (null == eventQuery)
+				{
+					if (MapboxProperties.IsEditor || MapboxProperties.IsAndroid || MapboxProperties.IsIOS)
+						eventQuery = "events=true";
+					else
+						eventQuery = "events=false";
+				}
+
+				return eventQuery;
+			}
+		}
+		public static string eventQuery;
 
 		public static ITelemetryLibrary GetTelemetryInstance()
 		{
-#if UNITY_EDITOR
-			return TelemetryEditor.Instance;
-#elif UNITY_IOS
-			return TelemetryIos.Instance;
-#elif UNITY_ANDROID
-			return TelemetryAndroid.Instance;
-#elif UNITY_WEBGL
-			return TelemetryWebgl.Instance;
-#else
-			return TelemetryFallback.Instance;
-#endif
+			if(MapboxProperties.IsEditor)
+				return TelemetryEditor.Instance;
+			else if(MapboxProperties.IsIOS)
+				return TelemetryIos.Instance;
+			else if(MapboxProperties.IsAndroid)
+				return TelemetryAndroid.Instance;
+			else if(MapboxProperties.IsWebGl)
+				return TelemetryWebgl.Instance;
+			else
+				return TelemetryFallback.Instance;
 		}
 	}
 }

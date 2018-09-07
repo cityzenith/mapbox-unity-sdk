@@ -51,7 +51,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 
 		[NonSerialized] private int _counter;
 		[NonSerialized] private int _secondCounter;
-		protected virtual void OnEnable()
+		public virtual void OnEnable()
 		{
 			_pool = new ObjectPool<VectorEntity>(() =>
 			{
@@ -179,7 +179,6 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			_tempVectorEntity.Mesh.Clear();
 			_tempVectorEntity.Feature = feature;
 
-#if UNITY_EDITOR
 			if (feature.Data != null)
 			{
 				_tempVectorEntity.GameObject.name = type + " - " + feature.Data.Id;
@@ -188,7 +187,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			{
 				_tempVectorEntity.GameObject.name = type;
 			}
-#endif
+
 			_tempVectorEntity.Mesh.subMeshCount = meshData.Triangles.Count;
 			_tempVectorEntity.Mesh.SetVertices(meshData.Vertices);
 			_tempVectorEntity.Mesh.SetNormals(meshData.Normals);

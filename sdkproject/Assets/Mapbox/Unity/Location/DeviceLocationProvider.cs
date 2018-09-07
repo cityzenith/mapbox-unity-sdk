@@ -8,6 +8,7 @@ namespace Mapbox.Unity.Location
 	using Mapbox.CheapRulerCs;
 	using System;
 	using System.Linq;
+	using System.Reflection;
 
 
 
@@ -87,19 +88,27 @@ namespace Mapbox.Unity.Location
 		// Android 6+ permissions have to be granted during runtime
 		// these are the callbacks for requesting location permission
 		// TODO: show message to users in case they accidentallly denied permission
-#if UNITY_ANDROID
+
 		private bool _gotPermissionRequestResponse = false;
 
 		private void OnAllow() { _gotPermissionRequestResponse = true; }
 		private void OnDeny() { _gotPermissionRequestResponse = true; }
 		private void OnDenyAndNeverAskAgain() { _gotPermissionRequestResponse = true; }
-#endif
 
-
-		protected virtual void Awake()
+		private bool IsRemoteConnected
 		{
-#if UNITY_EDITOR
-			if (_editorDebuggingOnly._mockUnityInputLocation)
+			get
+			{
+				Assembly assembly = MapboxProperties.EditorAssembly;
+				Type type = assembly.GetType("UnityEditor.EditorApplication");
+				return (bool)type.GetProperty("isRemoteConnected").GetValue(null, null);
+			}	
+		}
+
+
+		public virtual void Awake()
+		{
+			if (MapboxProperties.IsEditor && _editorDebuggingOnly._mockUnityInputLocation)
 			{
 				if (null == _editorDebuggingOnly._locationLogFile || null == _editorDebuggingOnly._locationLogFile.bytes)
 				{
@@ -110,11 +119,8 @@ namespace Mapbox.Unity.Location
 			}
 			else
 			{
-#endif
 				_locationService = new MapboxLocationServiceUnityWrapper();
-#if UNITY_EDITOR
 			}
-#endif
 
 			_currentLocation.Provider = "unity";
 			_wait1sec = new WaitForSeconds(1f);
@@ -140,33 +146,32 @@ namespace Mapbox.Unity.Location
 		/// <returns>The location routine.</returns>
 		IEnumerator PollLocationRoutine()
 		{
-#if UNITY_EDITOR
-			while (!UnityEditor.EditorApplication.isRemoteConnected)
+			if (MapboxProperties.IsEditor)
 			{
-				// exit if we are not the selected location provider
-				if (null != LocationProviderFactory.Instance && null != LocationProviderFactory.Instance.DefaultLocationProvider)
+				while (!IsRemoteConnected)
 				{
-					if (!this.Equals(LocationProviderFactory.Instance.DefaultLocationProvider))
+					// exit if we are not the selected location provider
+					if (null != LocationProviderFactory.Instance && null != LocationProviderFactory.Instance.DefaultLocationProvider)
 					{
-						yield break;
+						if (!this.Equals(LocationProviderFactory.Instance.DefaultLocationProvider))
+						{
+							yield break;
+						}
 					}
-				}
 
-				Debug.LogWarning("Remote device not connected via 'Unity Remote'. Waiting ..." + Environment.NewLine + "If Unity seems to be stuck here make sure 'Unity Remote' is running and restart Unity with your device already connected.");
-				yield return _wait1sec;
+					Debug.LogWarning("Remote device not connected via 'Unity Remote'. Waiting ..." + Environment.NewLine + "If Unity seems to be stuck here make sure 'Unity Remote' is running and restart Unity with your device already connected.");
+					yield return _wait1sec;
+				}
 			}
-#endif
 
 
 			//request runtime fine location permission on Android if not yet allowed
-#if UNITY_ANDROID
-			if (!_locationService.isEnabledByUser)
+			if (MapboxProperties.IsAndroid && !_locationService.isEnabledByUser)
 			{
 				UniAndroidPermission.RequestPermission(AndroidPermission.ACCESS_FINE_LOCATION);
 				//wait for user to allow or deny
 				while (!_gotPermissionRequestResponse) { yield return _wait1sec; }
 			}
-#endif
 
 
 			if (!_locationService.isEnabledByUser)
@@ -210,11 +215,10 @@ namespace Mapbox.Unity.Location
 			_currentLocation.IsLocationServiceInitializing = false;
 			_currentLocation.IsLocationServiceEnabled = true;
 
-#if UNITY_EDITOR
-			// HACK: this is to prevent Android devices, connected through Unity Remote, 
-			// from reporting a location of (0, 0), initially.
-			yield return _wait1sec;
-#endif
+			if(MapboxProperties.IsEditor)
+				// HACK: this is to prevent Android devices, connected through Unity Remote, 
+				// from reporting a location of (0, 0), initially.
+				yield return _wait1sec;
 
 			System.Globalization.CultureInfo invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
 

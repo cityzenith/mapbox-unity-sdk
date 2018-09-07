@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace Mapbox.Unity.Telemetry
+﻿namespace Mapbox.Unity.Telemetry
 {
 	using System.Collections.Generic;
 	using System.Collections;
@@ -8,7 +7,7 @@ namespace Mapbox.Unity.Telemetry
 	using Mapbox.Unity.Utilities;
 	using UnityEngine;
 	using System.Text;
-	using UnityEditor;
+	using System.Reflection;
 
 	public class TelemetryEditor : ITelemetryLibrary
 	{
@@ -93,17 +92,18 @@ namespace Mapbox.Unity.Telemetry
 
 		static string GetUserAgent()
 		{
+			object version = "0";
+
+			if (MapboxProperties.IsAndroid)
+				version = GetEditorPlayerSerttings("Android.bundleVersionCode");
+			else if (MapboxProperties.IsIOS)
+				version = GetEditorPlayerSerttings("iOS.buildNumber");
+
 			var userAgent = string.Format(
 				"{0}/{1}/{2} MapboxEventsUnityEditor/{3}",
-				PlayerSettings.applicationIdentifier,
-				PlayerSettings.bundleVersion,
-#if UNITY_IOS
-				PlayerSettings.iOS.buildNumber,
-#elif UNITY_ANDROID
-				PlayerSettings.Android.bundleVersionCode,
-#else
-				 "0",
-#endif
+				GetEditorPlayerSerttings("applicationIdentifier"),
+				GetEditorPlayerSerttings("bundleVersion"),
+				version,
 				 Constants.SDK_VERSION
 			);
 			return userAgent;
@@ -113,6 +113,26 @@ namespace Mapbox.Unity.Telemetry
 		{
 			// Empty.
 		}
+
+		private static object GetEditorPlayerSerttings(string path)
+		{
+			Assembly assembly = MapboxProperties.EditorAssembly;
+			Type type = null;
+			string property = null;
+
+			if (path.Contains("."))
+			{
+				string[] parts = path.Split('.');
+				property = parts[1];
+				type = assembly.GetType("UnityEditor.PlayerSettings." + parts[0]);
+			}
+			else
+			{
+				property = path;
+				type = assembly.GetType("UnityEditor.PlayerSettings");
+			}
+
+			return type.GetProperty(property).GetValue(null, null);
+		}
 	}
 }
-#endif

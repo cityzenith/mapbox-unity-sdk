@@ -23,11 +23,12 @@ namespace Mapbox.Unity.Utilities
     using UnityEngine;
     using System.Collections;
     using System.Collections.Generic;
+	using System.Reflection;
 
-    /// <summary>
-    /// Helper class for running co-routines without having to inherit from MonoBehavior.
-    /// </summary>
-    public class Runnable : MonoBehaviour
+	/// <summary>
+	/// Helper class for running co-routines without having to inherit from MonoBehavior.
+	/// </summary>
+	public class Runnable : MonoBehaviour
     {
         #region Public Properties
         /// <summary>
@@ -69,7 +70,6 @@ namespace Mapbox.Unity.Utilities
             return Instance.m_Routines.ContainsKey(id);
         }
 
-#if UNITY_EDITOR
         private static bool sm_EditorRunnable = false;
 
         /// <summary>
@@ -77,21 +77,29 @@ namespace Mapbox.Unity.Utilities
         /// </summary>
         public static void EnableRunnableInEditor()
         {
-            if (!sm_EditorRunnable)
-            {
-                sm_EditorRunnable = true;
-                UnityEditor.EditorApplication.update += UpdateRunnable;
+			if (MapboxProperties.IsEditor && !sm_EditorRunnable)
+			{
+				sm_EditorRunnable = true;
+
+				Assembly assembly = MapboxProperties.EditorAssembly;
+				FieldInfo fieldInfo = assembly.GetType("UnityEditor.EditorApplication").GetField("update");
+				MethodInfo methodInfo = typeof(Runnable).GetMethod("UpdateRunnable", BindingFlags.Static | BindingFlags.NonPublic);
+				System.Delegate currentDelegate = (System.Delegate)fieldInfo.GetValue(null);
+
+				System.Delegate handler1 =
+					System.Delegate.CreateDelegate(fieldInfo.FieldType, methodInfo);
+
+				fieldInfo.SetValue(null, System.Delegate.Combine(handler1, currentDelegate));
             }
         }
-        static void UpdateRunnable()
+        private static void UpdateRunnable()
         {
-            if (!Application.isPlaying)
+            if (MapboxProperties.IsEditor && !Application.isPlaying)
             {
                 Instance.UpdateRoutines();
             }
         }
 
-#endif
         #endregion
 
         #region Private Types

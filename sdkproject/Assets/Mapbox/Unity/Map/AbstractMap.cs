@@ -372,14 +372,14 @@ namespace Mapbox.Unity.Map
 		/// </summary>
 		public event Action OnUpdated = delegate { };
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			// Setup a visualizer to get a "Starter" map.
 			_mapVisualizer = ScriptableObject.CreateInstance<MapVisualizer>();
 		}
 
 		// Use this for initialization
-		protected virtual void Start()
+		public virtual void Start()
 		{
 			StartCoroutine("SetupAccess");
 			if (_initializeOnStart)
@@ -399,7 +399,7 @@ namespace Mapbox.Unity.Map
 		/// This method uses the mapOptions and layer properties to setup the map to be rendered.
 		/// Override <c>SetUpMap</c> to write custom behavior to map setup.
 		/// </summary>
-		protected virtual void SetUpMap()
+		public virtual void SetUpMap()
 		{
 			switch (_options.placementOptions.placementType)
 			{
@@ -489,7 +489,7 @@ namespace Mapbox.Unity.Map
 		}
 
 		// TODO: implement IDisposable, instead?
-		protected virtual void OnDestroy()
+		public virtual void OnDestroy()
 		{
 			if (_tileProvider != null)
 			{
@@ -502,7 +502,7 @@ namespace Mapbox.Unity.Map
 		/// Initializes the map using the mapOptions.
 		/// </summary>
 		/// <param name="options">Options.</param>
-		protected virtual void InitializeMap(MapOptions options)
+		public virtual void InitializeMap(MapOptions options)
 		{
 			Options = options;
 			_worldHeightFixed = false;
@@ -612,7 +612,7 @@ namespace Mapbox.Unity.Map
 			Initialize(Conversions.StringToLatLon(_options.locationOptions.latitudeLongitude), (int)_options.locationOptions.zoom);
 		}
 
-		protected virtual void TileProvider_OnTileAdded(UnwrappedTileId tileId)
+		public virtual void TileProvider_OnTileAdded(UnwrappedTileId tileId)
 		{
 			if (Options.placementOptions.snapMapToZero)
 			{
@@ -644,12 +644,12 @@ namespace Mapbox.Unity.Map
 			}
 		}
 
-		protected virtual void TileProvider_OnTileRemoved(UnwrappedTileId tileId)
+		public virtual void TileProvider_OnTileRemoved(UnwrappedTileId tileId)
 		{
 			_mapVisualizer.DisposeTile(tileId);
 		}
 
-		protected virtual void TileProvider_OnTileRepositioned(UnwrappedTileId tileId)
+		public virtual void TileProvider_OnTileRepositioned(UnwrappedTileId tileId)
 		{
 			_mapVisualizer.RepositionTile(tileId);
 		}
@@ -667,7 +667,7 @@ namespace Mapbox.Unity.Map
 			return Root.TransformPoint(worldPos);
 		}
 
-		protected virtual float QueryElevationAtInternal(Vector2d latlong, out float tileScale)
+		public virtual float QueryElevationAtInternal(Vector2d latlong, out float tileScale)
 		{
 			var _meters = Conversions.LatLonToMeters(latlong.x, latlong.y);
 			UnityTile tile;

@@ -48,7 +48,7 @@
 		/// <summary>
 		/// Set up sublayers using VectorLayerVisualizers.
 		/// </summary>
-		protected override void OnInitialized()
+		public override void OnInitialized()
 		{
 			_layerProgress = new Dictionary<UnityTile, HashSet<LayerVisualizerBase>>();
 			_layerBuilder = new Dictionary<string, List<LayerVisualizerBase>>();
@@ -108,7 +108,7 @@
 			_properties = (VectorLayerProperties)options;
 		}
 
-		protected override void OnRegistered(UnityTile tile)
+		public override void OnRegistered(UnityTile tile)
 		{
 			if (string.IsNullOrEmpty(MapId) || _properties.sourceOptions.isActive == false || (_properties.vectorSubLayers.Count + _properties.locationPrefabList.Count) == 0)
 			{
@@ -124,13 +124,13 @@
 		/// Method to be called when a tile error has occurred.
 		/// </summary>
 		/// <param name="e"><see cref="T:Mapbox.Map.TileErrorEventArgs"/> instance/</param>
-		protected override void OnErrorOccurred(TileErrorEventArgs e)
+		public override void OnErrorOccurred(TileErrorEventArgs e)
 		{
 			//relaying OnDataError from datafetcher using this event
 			base.OnErrorOccurred(e);
 		}
 
-		protected override void OnUnregistered(UnityTile tile)
+		public override void OnUnregistered(UnityTile tile)
 		{
 			if (_layerProgress.ContainsKey(tile))
 			{
@@ -153,7 +153,7 @@
 			}
 		}
 
-		protected override void OnPostProcess(UnityTile tile)
+		public override void OnPostProcess(UnityTile tile)
 		{
 
 		}

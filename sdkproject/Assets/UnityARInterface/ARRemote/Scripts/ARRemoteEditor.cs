@@ -182,7 +182,7 @@ namespace UnityARInterface
             }
         }
 
-        protected override void SetupARInterface()
+        public override void SetupARInterface()
         {
             m_RemoteInterface = new ARRemoteEditorInterface();
             m_RemoteInterface.editorConnection = m_EditorConnection;

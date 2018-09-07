@@ -29,15 +29,15 @@
 		private LocationLogReader _logReader;
 		private IEnumerator<Location> _locationEnumerator;
 
-
-#if UNITY_EDITOR
-		protected override void Awake()
+		public override void Awake()
 		{
-			base.Awake();
-			_logReader = new LocationLogReader(_locationLogFile.bytes);
-			_locationEnumerator = _logReader.GetLocations();
+			if (MapboxProperties.IsEditor)
+			{
+				base.Awake();
+				_logReader = new LocationLogReader(_locationLogFile.bytes);
+				_locationEnumerator = _logReader.GetLocations();
+			}
 		}
-#endif
 
 
 		private void OnDestroy()
@@ -55,7 +55,7 @@
 		}
 
 
-		protected override void SetLocation()
+		public override void SetLocation()
 		{
 			if (null == _locationEnumerator) { return; }
 
