@@ -262,13 +262,17 @@ namespace Mapbox.Unity.Map
 		public void ClearMap()
 		{
 			UnregisterAllTiles();
-
-			foreach (var tileFactory in Factories)
+			if (Factories != null)
 			{
-				tileFactory.Clear();
-				DestroyImmediate(tileFactory);
+				foreach (var tileFactory in Factories)
+				{
+					if (tileFactory != null)
+					{
+						tileFactory.Clear();
+						DestroyImmediate(tileFactory);
+					}
+				}
 			}
-
 			foreach (var tileId in _activeTiles.Keys.ToList())
 			{
 				_activeTiles[tileId].ClearAssets();
@@ -282,6 +286,7 @@ namespace Mapbox.Unity.Map
 			}
 
 			_inactiveTiles.Clear();
+			State = ModuleState.Initialized;
 		}
 
 		#region Events
