@@ -81,13 +81,14 @@ namespace Mapbox.Unity.Utilities
 			// otherwise requests don't work in Edit mode, eg geocoding
 			// also lot of EditMode tests fail otherwise
 #pragma warning disable 0618
-			_request.Send();
-#pragma warning restore 0618
-			if(MapboxProperties.IsEditor)
+			if (MapboxProperties.IsEditor)
+			{
+				_request.SendWebRequest();
 				while (!_request.isDone) { yield return null; }
+			}
 			else
 #pragma warning disable 0618
-				yield return _request.Send();
+				yield return _request.SendWebRequest();
 #pragma warning restore 0618
 
 

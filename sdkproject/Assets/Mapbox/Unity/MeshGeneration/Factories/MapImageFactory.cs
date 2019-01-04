@@ -43,6 +43,17 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			}
 		}
 
+		public float MapTransparency
+		{
+			get { return _mapTransparency; }
+			set
+			{
+				_mapTransparency = value;
+				UpdateTransparency();
+			}
+		}
+		private float _mapTransparency;
+
 		public bool PreloadLowRes { get; set; }
 
 		public bool ReloadAtRuntime { get; set; }
@@ -105,6 +116,7 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			if (ReloadAtRuntime)
 				existingTiles.Add(tile);
 
+			UpdateTransparencyForTile(tile);
 			ProcessTile(tile);
 		}
 
@@ -141,6 +153,21 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			{
 				ProcessTile(existingTile);
 			}
+		}
+
+		private void UpdateTransparency()
+		{
+			foreach (UnityTile existingTile in existingTiles)
+			{
+				UpdateTransparencyForTile(existingTile);
+			}
+		}
+
+		private void UpdateTransparencyForTile(UnityTile tile)
+		{
+			Color color = tile.Material.color;
+			color.a = (1f - MapTransparency);
+			tile.Material.color = color;
 		}
 
 		private void ProcessTile(UnityTile tile)

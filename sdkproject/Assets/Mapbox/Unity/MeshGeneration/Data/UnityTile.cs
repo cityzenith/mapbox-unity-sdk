@@ -42,6 +42,25 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			}
 		}
 
+		private Material _material;
+		public Material Material
+		{
+			get
+			{
+				if (null == _material)
+					_material = MeshRenderer.material;
+
+				return _material;
+			}
+			set
+			{
+				if (null != value)
+				{
+					MeshRenderer.material = value;
+				}
+			}
+		}
+
 		private MeshFilter _meshFilter;
 		public MeshFilter MeshFilter
 		{
@@ -190,7 +209,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		{
 			if (_loadingTexture && MeshRenderer != null)
 			{
-				MeshRenderer.material.mainTexture = _loadingTexture;
+				Material.mainTexture = _loadingTexture;
 				//MeshRenderer.enabled = false;
 			}
 
@@ -271,7 +290,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 					_rasterData.Compress(false);
 				}
 
-				MeshRenderer.material.mainTexture = _rasterData;
+				Material.mainTexture = _rasterData;
 				RasterDataState = TilePropertyState.Loaded;
 			}
 		}
@@ -298,7 +317,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		public void SetLoadingTexture(Texture2D texture)
 		{
-			MeshRenderer.material.mainTexture = texture;
+			Material.mainTexture = texture;
 		}
 
 		public Texture2D GetRasterData()
