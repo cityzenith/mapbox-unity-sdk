@@ -113,10 +113,9 @@ namespace Mapbox.Editor.NodeEditor
 				// In compability mode, we will assume only one top group and do everything manually, not using reflected calls (-> practically blind)
 				GUI.EndGroup();
 				screenRect = rect;
-#if UNITY_EDITOR
-				if (!Application.isPlaying)
+
+				if(MapboxHelper.IsEditor && Application.isPlaying)
 					screenRect.y += 23;
-#endif
 			}
 			else
 			{
@@ -395,10 +394,9 @@ namespace Mapbox.Editor.NodeEditor
 		/// </summary>
 		public static Vector2 GUIToScreenSpace(Vector2 guiPosition)
 		{
-#if UNITY_EDITOR
-			if (!Application.isPlaying)
+			if (MapboxHelper.IsEditor && Application.isPlaying)
 				return guiPosition + getTopRectScreenSpace.position - new Vector2(0, 22);
-#endif
+
 			return guiPosition + getTopRectScreenSpace.position;
 		}
 
@@ -410,10 +408,10 @@ namespace Mapbox.Editor.NodeEditor
 		public static Rect GUIToScreenSpace(Rect guiRect)
 		{
 			guiRect.position += getTopRectScreenSpace.position;
-#if UNITY_EDITOR
-			if (!Application.isPlaying)
+
+			if (MapboxHelper.IsEditor && Application.isPlaying)
 				guiRect.y -= 22;
-#endif
+
 			return guiRect;
 		}
 

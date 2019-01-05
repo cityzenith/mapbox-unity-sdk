@@ -22,8 +22,8 @@
 
 			EditorGUI.BeginChangeCheck();
 
-			_monoscript = monoscriptProperty.objectReferenceValue as MonoScript;
-			_monoscript = EditorGUI.ObjectField(scriptRect, _monoscript, typeof(MonoScript), false) as MonoScript;
+			var script = monoscriptProperty.objectReferenceValue as MonoBehaviour;
+			_monoscript = EditorGUI.ObjectField(scriptRect, script, typeof(MonoScript), false) as MonoScript;
 
 			if (EditorGUI.EndChangeCheck())
 			{

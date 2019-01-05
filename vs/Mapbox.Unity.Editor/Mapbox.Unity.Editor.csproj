@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mapbox.IO.Compression, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapbox.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -267,6 +273,22 @@
     <ProjectReference Include="..\Mapbox.Unity\Mapbox.Unity.csproj">
       <Project>{5e1affe4-bf07-40f6-96ef-88fcc5f98049}</Project>
       <Name>Mapbox.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapbox.VectorTile.ExtensionMethods\Mapbox.VectorTile.ExtensionMethods.csproj">
+      <Project>{248e79a4-da4c-4432-81cf-c5e23fbf8490}</Project>
+      <Name>Mapbox.VectorTile.ExtensionMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapbox.VectorTile.Geometry\Mapbox.VectorTile.Geometry.csproj">
+      <Project>{6d032ae6-27e6-44a9-aff7-4e44d902d972}</Project>
+      <Name>Mapbox.VectorTile.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapbox.VectorTile.PbfReader\Mapbox.VectorTile.PbfReader.csproj">
+      <Project>{279834a7-6376-466d-822f-3059f377a95d}</Project>
+      <Name>Mapbox.VectorTile.PbfReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapbox.VectorTile\Mapbox.VectorTile.csproj">
+      <Project>{c60c88c3-6ba5-4d5c-a0e8-8598d4860cee}</Project>
+      <Name>Mapbox.VectorTile</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
