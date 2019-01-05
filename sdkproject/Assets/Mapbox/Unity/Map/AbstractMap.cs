@@ -47,7 +47,6 @@ namespace Mapbox.Unity.Map
 		#endregion
 
 		#region Properties
-		//public bool IsPreviewEnabled = false;
 
 		public bool IsEditorPreviewEnabled
 		{
@@ -313,7 +312,6 @@ namespace Mapbox.Unity.Map
 			SetUpMap();
 		}
 
-		//Unity Update
 		protected virtual void Update()
 		{
 			if (TileProvider != null)
@@ -466,24 +464,18 @@ namespace Mapbox.Unity.Map
 			}
 			_mapVisualizer.ClearMap();
 			_mapVisualizer.Destroy();
-			if (_previewOptions.isPreviewEnabled == true)
-			{
-				DisableEditorPreview();
-			}
 		}
 
 		protected virtual void Awake()
 		{
-			MapOnAwakeRoutine();
-
 			if (_previewOptions.isPreviewEnabled == true)
 			{
-				//Disable Editor Preview 
+				DisableEditorPreview();
 				_previewOptions.isPreviewEnabled = false;
 			}
+			MapOnAwakeRoutine();
 		}
 
-		// Use this for initialization
 		protected virtual void Start()
 		{
 			MapOnStartRoutine();
@@ -496,8 +488,6 @@ namespace Mapbox.Unity.Map
 			{
 				Destroy(tr.gameObject);
 			}
-			//Destroy default tileproviders that might be orphaned due to serialization. 
-			DestroyTileProvider();
 
 			// Setup a visualizer to get a "Starter" map.
 			_mapVisualizer = ScriptableObject.CreateInstance<MapVisualizer>();
@@ -553,7 +543,10 @@ namespace Mapbox.Unity.Map
 			_vectorData.SubLayerAdded -= OnVectorDataSubLayerAdded;
 			_vectorData.UpdateLayer -= OnVectorDataUpdateLayer;
 			_vectorData.UnbindAllEvents();
-			_mapVisualizer.ClearMap();
+			if(_mapVisualizer != null)
+			{
+				_mapVisualizer.ClearMap();
+			}
 			DestroyTileProvider();
 
 			if (OnEditorPreviewDisabled != null)
@@ -568,6 +561,7 @@ namespace Mapbox.Unity.Map
 			if (_options.extentOptions.extentType != MapExtentType.Custom && tileProvider != null)
 			{
 				tileProvider.Destroy();
+				_tileProvider = null;
 			}
 		}
 
@@ -700,19 +694,16 @@ namespace Mapbox.Unity.Map
 
 			_options.locationOptions.PropertyHasChanged += (object sender, System.EventArgs eventArgs) =>
 			{
-				//take care of redraw map business...
 				UpdateMap();
 			};
 
 			_options.extentOptions.PropertyHasChanged += (object sender, System.EventArgs eventArgs) =>
 			{
-				//take care of redraw map business...
 				OnTileProviderChanged();
 			};
 
 			_options.extentOptions.defaultExtents.PropertyHasChanged += (object sender, System.EventArgs eventArgs) =>
 			{
-				//take care of redraw map business...
 				if (TileProvider != null)
 				{
 					TileProvider.UpdateTileExtent();
@@ -721,14 +712,12 @@ namespace Mapbox.Unity.Map
 
 			_options.placementOptions.PropertyHasChanged += (object sender, System.EventArgs eventArgs) =>
 			{
-				//take care of redraw map business...
 				SetPlacementStrategy();
 				UpdateMap();
 			};
 
 			_options.scalingOptions.PropertyHasChanged += (object sender, System.EventArgs eventArgs) =>
 			{
-				//take care of redraw map business...
 				SetScalingStrategy();
 				UpdateMap();
 			};
@@ -842,7 +831,7 @@ namespace Mapbox.Unity.Map
 			List<UnwrappedTileId> _toRemove = new List<UnwrappedTileId>();
 			foreach (var item in _activeTiles)
 			{
-				if (TileProvider.Cleanup(item.Key)) //(!_currentExtent.Contains(item.Key))
+				if (TileProvider.Cleanup(item.Key))
 				{
 					_toRemove.Add(item.Key);
 				}
@@ -923,8 +912,8 @@ namespace Mapbox.Unity.Map
 
 			if (layerUpdateArgs.visualizer != null)
 			{
-				//we got a visualizer. Update only the visualizer.
-				// No need to unload the entire factory to apply changes.
+				//We have a visualizer. Update only the visualizer.
+				//No need to unload the entire factory to apply changes.
 				_mapVisualizer.UnregisterAndRedrawTilesFromLayer((VectorTileFactory)layerUpdateArgs.factory, layerUpdateArgs.visualizer);
 			}
 			else
@@ -938,12 +927,6 @@ namespace Mapbox.Unity.Map
 
 		private void OnTileProviderChanged()
 		{
-			//			var currentTileProvider = gameObject.GetComponent<AbstractTileProvider>();
-			//
-			//			if (currentTileProvider != null)
-			//			{
-			//				Destroy(currentTileProvider);
-			//			}
 			SetTileProvider();
 			TileProvider.Initialize(this);
 			TileProvider.UpdateTileExtent();
