@@ -501,6 +501,9 @@
     <Compile Include="..\sdkproject\Assets\Mapbox\Unity\MapboxAccess.cs">
       <Link>Unity\MapboxAccess.cs</Link>
     </Compile>
+    <Compile Include="..\sdkproject\Assets\Mapbox\Unity\MapboxHelper.cs">
+      <Link>Unity\MapboxHelper.cs</Link>
+    </Compile>
     <Compile Include="..\sdkproject\Assets\Mapbox\Unity\Map\AbstractMap.cs">
       <Link>Unity\Map\AbstractMap.cs</Link>
     </Compile>
