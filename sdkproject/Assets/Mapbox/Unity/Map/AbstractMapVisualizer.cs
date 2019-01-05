@@ -210,9 +210,10 @@ namespace Mapbox.Unity.Map
 			PlaceTile(tileId, unityTile, _map);
 
 			// Don't spend resources naming objects, as you shouldn't find objects by name anyway!
-#if UNITY_EDITOR
-			unityTile.gameObject.name = unityTile.CanonicalTileId.ToString();
-#endif
+
+			if(MapboxHelper.IsEditor)
+				unityTile.gameObject.name = unityTile.CanonicalTileId.ToString();
+
 			unityTile.OnHeightDataChanged += TileStateChanged;
 			unityTile.OnRasterDataChanged += TileStateChanged;
 			unityTile.OnVectorDataChanged += TileStateChanged;

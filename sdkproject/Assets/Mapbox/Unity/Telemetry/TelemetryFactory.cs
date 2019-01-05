@@ -2,25 +2,37 @@
 {
 	public static class TelemetryFactory
 	{
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID
-		public static readonly string EventQuery = "events=true";
-#else
-		public static readonly string EventQuery = "events=false";
-#endif
+		public static string EventQuery
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(_EventQuery))
+					_EventQuery = (MapboxHelper.IsEditor || MapboxHelper.IsIOS || MapboxHelper.IsAndroid) ? "events=true" : "events=false";
+
+				return _EventQuery;
+			}
+		} 
+		private static string _EventQuery;
+
+		private static ITelemetryLibrary telemetryInstance;
 
 		public static ITelemetryLibrary GetTelemetryInstance()
 		{
-#if UNITY_EDITOR
-			return TelemetryEditor.Instance;
-#elif UNITY_IOS
-			return TelemetryIos.Instance;
-#elif UNITY_ANDROID
-			return TelemetryAndroid.Instance;
-#elif UNITY_WEBGL
-			return TelemetryWebgl.Instance;
-#else
-			return TelemetryFallback.Instance;
-#endif
+			if (null == telemetryInstance)
+			{
+				if(MapboxHelper.IsEditor)
+					telemetryInstance = TelemetryEditor.Instance;
+				else if (MapboxHelper.IsIOS)
+					telemetryInstance = TelemetryIos.Instance;
+				else if (MapboxHelper.IsAndroid)
+					telemetryInstance = TelemetryAndroid.Instance;
+				else if (MapboxHelper.IsWebGL)
+					telemetryInstance = TelemetryWebgl.Instance;
+				else
+					telemetryInstance = TelemetryFallback.Instance;
+			}
+
+			return telemetryInstance;
 		}
 	}
 }

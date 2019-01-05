@@ -1,5 +1,4 @@
-﻿#if UNITY_ANDROID
-namespace Mapbox.Unity.Telemetry
+﻿namespace Mapbox.Unity.Telemetry
 {
 	using UnityEngine;
 
@@ -83,4 +82,3 @@ namespace Mapbox.Unity.Telemetry
 		}
 	}
 }
-#endif

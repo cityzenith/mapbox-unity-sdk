@@ -1,15 +1,11 @@
 namespace Mapbox.Unity.Utilities.DebugTools
 {
 	using UnityEngine;
-	#if UNITY_EDITOR
-	using UnityEditor;
-	#endif
 	public class ScenesList : ScriptableObject
 	{
 		public SceneData[] SceneList;
 
 		//ensure that linked scenes are stored in this object
-		#if UNITY_EDITOR
 
 		public void LinkScenes()
 		{
@@ -18,7 +14,7 @@ namespace Mapbox.Unity.Utilities.DebugTools
 				if (!ThisAssetContainsScene(SceneList[i]))
 				{
 					//duplicate the asset
-					var path = AssetDatabase.GetAssetPath(this);
+					var path = EditorHelper.GetAssetPath(this);
 					var newScene = ScriptableObject.CreateInstance<SceneData>();
 					newScene.name = SceneList[i].name;
 					newScene.ScenePath = SceneList[i].ScenePath;
@@ -26,12 +22,12 @@ namespace Mapbox.Unity.Utilities.DebugTools
 					newScene.Image = SceneList[i].Image;
 
 					//assign it to the current scene list
-					AssetDatabase.AddObjectToAsset(newScene, path);
+					EditorHelper.AddObjectToAsset(newScene, path);
 					SceneList[i] = newScene;
 
 					//save the scenelist
-					EditorUtility.SetDirty(this);
-					AssetDatabase.SaveAssets();
+					EditorHelper.EditorUtilitySetDirty(this);
+					EditorHelper.SaveAssets();
 
 					//TODO: clean up unreferenced sub-assets with Destroy
 				}
@@ -40,8 +36,8 @@ namespace Mapbox.Unity.Utilities.DebugTools
 
 		private bool ThisAssetContainsScene(SceneData scene)
 		{
-			var path = AssetDatabase.GetAssetPath(this);
-			Object[] assets = AssetDatabase.LoadAllAssetsAtPath(path);
+			var path = EditorHelper.GetAssetPath(this);
+			Object[] assets = EditorHelper.LoadAllAssetsAtPath(path);
 			foreach (var asset in assets)
 			{
 				if (asset == scene)
@@ -53,6 +49,5 @@ namespace Mapbox.Unity.Utilities.DebugTools
 			return false;
 
 		}
-		#endif
 	}
 }

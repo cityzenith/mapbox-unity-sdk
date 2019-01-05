@@ -62,16 +62,15 @@ namespace Mapbox.Unity.Location
 		/// <returns>Smoothed angle</returns>
 		public abstract double Calculate();
 
-
-		[System.Diagnostics.Conditional("UNITY_EDITOR")]
 		protected void debugLogAngle(double raw, double smoothed)
 		{
-			double debugAngle = Math.Atan2(Math.Sin(smoothed * DEG2RAD), Math.Cos(smoothed * DEG2RAD)) * RAD2DEG;
-			debugAngle = debugAngle < 0 ? debugAngle + 360 : debugAngle >= 360 ? debugAngle - 360 : debugAngle;
-			Debug.Log(string.Format("{0:0.000} => {1:0.000}", raw, smoothed));
+			if (MapboxHelper.IsEditor)
+			{
+				double debugAngle = Math.Atan2(Math.Sin(smoothed * DEG2RAD), Math.Cos(smoothed * DEG2RAD)) * RAD2DEG;
+				debugAngle = debugAngle < 0 ? debugAngle + 360 : debugAngle >= 360 ? debugAngle - 360 : debugAngle;
+				Debug.Log(string.Format("{0:0.000} => {1:0.000}", raw, smoothed));
+			}
 		}
-
-
 
 	}
 }

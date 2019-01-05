@@ -1,5 +1,4 @@
-﻿#if UNITY_IOS
-namespace Mapbox.Unity.Telemetry
+﻿namespace Mapbox.Unity.Telemetry
 {
 	using System.Runtime.InteropServices;
 
@@ -39,4 +38,3 @@ namespace Mapbox.Unity.Telemetry
 		}
 	}
 }
-#endif

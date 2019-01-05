@@ -69,7 +69,6 @@ namespace Mapbox.Unity.Utilities
             return Instance.m_Routines.ContainsKey(id);
         }
 
-#if UNITY_EDITOR
         private static bool sm_EditorRunnable = false;
 
         /// <summary>
@@ -77,21 +76,20 @@ namespace Mapbox.Unity.Utilities
         /// </summary>
         public static void EnableRunnableInEditor()
         {
-            if (!sm_EditorRunnable)
+            if (MapboxHelper.IsEditor && !sm_EditorRunnable)
             {
                 sm_EditorRunnable = true;
-                UnityEditor.EditorApplication.update += UpdateRunnable;
+				EditorHelper.Update += UpdateRunnable;
             }
         }
         static void UpdateRunnable()
         {
-            if (!Application.isPlaying)
+            if (MapboxHelper.IsEditor && !Application.isPlaying)
             {
                 Instance.UpdateRoutines();
             }
         }
 
-#endif
         #endregion
 
         #region Private Types

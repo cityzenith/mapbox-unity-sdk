@@ -12,27 +12,28 @@
 		{
 			try
 			{
-#if UNITY_ANDROID
-				using (var unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+				if (MapboxHelper.IsAndroid)
 				{
-					using (AndroidJavaObject currentActivityObject = unityClass.GetStatic<AndroidJavaObject>("currentActivity"))
+					using (var unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
 					{
-						string packageName = currentActivityObject.Call<string>("getPackageName");
-						using (var uriClass = new AndroidJavaClass("android.net.Uri"))
+						using (AndroidJavaObject currentActivityObject = unityClass.GetStatic<AndroidJavaObject>("currentActivity"))
 						{
-							using (AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("fromParts", "package", packageName, null))
+							string packageName = currentActivityObject.Call<string>("getPackageName");
+							using (var uriClass = new AndroidJavaClass("android.net.Uri"))
 							{
-								using (var intentObject = new AndroidJavaObject("android.content.Intent", "android.settings.APPLICATION_DETAILS_SETTINGS", uriObject))
+								using (AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("fromParts", "package", packageName, null))
 								{
-									intentObject.Call<AndroidJavaObject>("addCategory", "android.intent.category.DEFAULT");
-									intentObject.Call<AndroidJavaObject>("setFlags", 0x10000000);
-									currentActivityObject.Call("startActivity", intentObject);
+									using (var intentObject = new AndroidJavaObject("android.content.Intent", "android.settings.APPLICATION_DETAILS_SETTINGS", uriObject))
+									{
+										intentObject.Call<AndroidJavaObject>("addCategory", "android.intent.category.DEFAULT");
+										intentObject.Call<AndroidJavaObject>("setFlags", 0x10000000);
+										currentActivityObject.Call("startActivity", intentObject);
+									}
 								}
 							}
 						}
 					}
 				}
-#endif
 			}
 			catch (Exception ex)
 			{

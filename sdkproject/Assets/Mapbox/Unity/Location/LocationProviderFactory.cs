@@ -1,7 +1,3 @@
-#if !UNITY_EDITOR
-#define NOT_UNITY_EDITOR
-#endif
-
 namespace Mapbox.Unity.Location
 {
 	using UnityEngine;
@@ -141,20 +137,24 @@ namespace Mapbox.Unity.Location
 		/// Injects the editor location provider.
 		/// Depending on the platform, this method and calls to it will be stripped during compile.
 		/// </summary>
-		[System.Diagnostics.Conditional("UNITY_EDITOR")]
 		void InjectEditorLocationProvider()
 		{
-			Debug.LogFormat("LocationProviderFactory: Injected EDITOR Location Provider - {0}", _editorLocationProvider.GetType());
-			DefaultLocationProvider = _editorLocationProvider;
+			if (MapboxHelper.IsEditor)
+			{
+				Debug.LogFormat("LocationProviderFactory: Injected EDITOR Location Provider - {0}", _editorLocationProvider.GetType());
+				DefaultLocationProvider = _editorLocationProvider;
+			}
 		}
 
 		/// <summary>
 		/// Injects the device location provider.
 		/// Depending on the platform, this method and calls to it will be stripped during compile.
 		/// </summary>
-		[System.Diagnostics.Conditional("NOT_UNITY_EDITOR")]
 		void InjectDeviceLocationProvider()
 		{
+			if (MapboxHelper.IsEditor)
+				return;
+
 			int AndroidApiVersion = 0;
 			var regex = new Regex(@"(?<=API-)-?\d+");
 			Match match = regex.Match(SystemInfo.operatingSystem); // eg 'Android OS 8.1.0 / API-27 (OPM2.171019.029/4657601)'

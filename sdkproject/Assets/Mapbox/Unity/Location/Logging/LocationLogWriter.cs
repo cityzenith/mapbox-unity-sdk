@@ -21,10 +21,13 @@ namespace Mapbox.Unity.Location
 			string fileName = "MBX-location-log-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".txt";
 			string persistentPath = Application.persistentDataPath;
 			string fullFilePathAndName = Path.Combine(persistentPath, fileName);
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_WSA
-			// use `GetFullPath` on that to sanitize the path: replaces `/` returned by `Application.persistentDataPath` with `\`
-			fullFilePathAndName = Path.GetFullPath(fullFilePathAndName);
-#endif
+
+			if (MapboxHelper.IsWindows || MapboxHelper.IsWinRT)
+			{
+				// use `GetFullPath` on that to sanitize the path: replaces `/` returned by `Application.persistentDataPath` with `\`
+				fullFilePathAndName = Path.GetFullPath(fullFilePathAndName);
+			}
+
 			Debug.Log("starting new log file: " + fullFilePathAndName);
 
 			_fileStream = new FileStream(fullFilePathAndName, FileMode.Create, FileAccess.Write);

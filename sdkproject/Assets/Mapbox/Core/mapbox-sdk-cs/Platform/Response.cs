@@ -4,10 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#if UNITY_2017_1_OR_NEWER
-#define UNITY
-#endif
-
 namespace Mapbox.Platform
 {
 
@@ -18,15 +14,8 @@ namespace Mapbox.Platform
 	using System.Linq;
 	using System.Net;
 	using Utils;
-
-#if NETFX_CORE
-	using System.Net.Http;
-	using System.Threading.Tasks;
-#endif
-#if UNITY
 	using UnityEngine.Networking;
 	using Mapbox.Unity.Utilities;
-#endif
 
 	/// <summary> A response from a <see cref="IFileSource" /> request. </summary>
 	public class Response
@@ -119,7 +108,7 @@ namespace Mapbox.Platform
 			return response;
 		}
 
-#if !NETFX_CORE && !UNITY // full .NET Framework
+/*#if !NETFX_CORE && !UNITY // full .NET Framework
 		public static Response FromWebResponse(IAsyncRequest request, HttpWebResponse apiResponse, Exception apiEx) {
 
 			Response response = new Response();
@@ -184,9 +173,9 @@ namespace Mapbox.Platform
 
 			return response;
 		}
-#endif
+#endif*/
 
-#if NETFX_CORE && !UNITY //UWP but not Unity
+/*#if NETFX_CORE && !UNITY //UWP but not Unity
 		public static async Task<Response> FromWebResponse(IAsyncRequest request, HttpResponseMessage apiResponse, Exception apiEx) {
 
 			Response response = new Response();
@@ -241,9 +230,8 @@ namespace Mapbox.Platform
 
 			return response;
 		}
-#endif
+#endif*/
 
-#if UNITY // within Unity or UWP build from Unity
 		public static Response FromWebResponse(IAsyncRequest request, UnityWebRequest apiResponse, Exception apiEx)
 		{
 
@@ -270,13 +258,7 @@ namespace Mapbox.Platform
 				}
 			}
 
-#if NETFX_CORE
-			StringComparison stringComp = StringComparison.OrdinalIgnoreCase;
-#elif WINDOWS_UWP
-			StringComparison stringComp = StringComparison.OrdinalIgnoreCase;
-#else
 			StringComparison stringComp = StringComparison.InvariantCultureIgnoreCase;
-#endif
 
 			Dictionary<string, string> apiHeaders = apiResponse.GetResponseHeaders();
 			if (null != apiHeaders)
@@ -331,7 +313,6 @@ namespace Mapbox.Platform
 
 			return response;
 		}
-#endif
 
 
 

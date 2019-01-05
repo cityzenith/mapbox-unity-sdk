@@ -170,10 +170,13 @@ namespace Mapbox.Unity.Map.TileProviders
 			Vector2d hitPntSWGeoPos = new Vector2d(minLat, minLong);
 			Vector2d hitPntNEGeoPos = new Vector2d(maxLat, maxLong);
 			Vector2dBounds tileBounds = new Vector2dBounds(Conversions.LatLonToMeters(hitPntSWGeoPos), Conversions.LatLonToMeters(hitPntNEGeoPos));         // Bounds debugging.
-#if UNITY_EDITOR
-			Debug.DrawLine(_cbtpOptions.camera.transform.position, _map.GeoToWorldPosition(hitPntSWGeoPos), Color.blue);
-			Debug.DrawLine(_cbtpOptions.camera.transform.position, _map.GeoToWorldPosition(hitPntNEGeoPos), Color.red);
-#endif
+
+			if (MapboxHelper.IsEditor)
+			{
+				Debug.DrawLine(_cbtpOptions.camera.transform.position, _map.GeoToWorldPosition(hitPntSWGeoPos), Color.blue);
+				Debug.DrawLine(_cbtpOptions.camera.transform.position, _map.GeoToWorldPosition(hitPntNEGeoPos), Color.red);
+			}
+
 			return tileBounds;
 		}
 		private Vector3 getGroundPlaneHitPoint(Ray ray)

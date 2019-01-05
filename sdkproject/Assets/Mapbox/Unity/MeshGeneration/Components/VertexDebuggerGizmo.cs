@@ -4,7 +4,6 @@ namespace Mapbox.Unity.MeshGeneration.Components
 {
 	public class VertexDebuggerGizmo : MonoBehaviour
 	{
-#if UNITY_EDITOR
 		[SerializeField]
 		float _radius = .2f;
 
@@ -18,6 +17,9 @@ namespace Mapbox.Unity.MeshGeneration.Components
 
 		protected virtual void Start()
 		{
+			if (!MapboxHelper.IsEditor)
+				return;
+
 			var mf = GetComponent<MeshFilter>();
 			if (mf)
 			{
@@ -33,6 +35,9 @@ namespace Mapbox.Unity.MeshGeneration.Components
 
 		protected virtual void OnDrawGizmosSelected()
 		{
+			if (!MapboxHelper.IsEditor)
+				return;
+
 			if (_mesh)
 			{
 				var verts = _mesh.vertices;
@@ -43,6 +48,5 @@ namespace Mapbox.Unity.MeshGeneration.Components
 				}
 			}
 		}
-#endif
 	}
 }

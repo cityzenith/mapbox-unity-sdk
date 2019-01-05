@@ -179,22 +179,22 @@ namespace Mapbox.Geocoding
 			// Use 'CFNETWORK_DIAGNOSTICS=1' in XCode to get more details https://stackoverflow.com/a/46748461
 
 			// trying to get rid of at least the most common characters - other will still crash
-#if UNITY_IOS
-			Query = Query
-				.Replace(",", " ")
-				.Replace(".", " ")
-				.Replace("-", " ");
-#endif
+
+			if (MapboxHelper.IsIOS)
+			{
+				Query = Query
+					.Replace(",", " ")
+					.Replace(".", " ")
+					.Replace("-", " ");
+			}
+
+			string escapedQuery = MapboxHelper.IsIOS ? WWW.EscapeURL(Query) : Uri.EscapeDataString(Query);
 
 			return
 				Constants.BaseAPI +
 				ApiEndpoint +
 				Mode +
-#if UNITY_IOS
-				WWW.EscapeURL(Query) +
-#else
-				Uri.EscapeDataString(Query) +
-#endif
+				escapedQuery +
 				".json" +
 				EncodeQueryString(opts);
 		}

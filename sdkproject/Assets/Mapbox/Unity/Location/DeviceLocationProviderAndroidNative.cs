@@ -379,10 +379,11 @@
 			populateCurrentLocation(locNetwork);
 		}
 
-#if UNITY_ANDROID
-
 		private string time2str(AndroidJavaObject loc)
 		{
+			if (!MapboxHelper.IsAndroid)
+				return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToString("yyyyMMdd HHmmss");
+
 			long time = loc.Call<long>("getTime");
 			DateTime dtPlugin = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(TimeSpan.FromMilliseconds(time));
 			return dtPlugin.ToString("yyyyMMdd HHmmss");
@@ -392,6 +393,8 @@
 
 		private string loc2str(AndroidJavaObject loc)
 		{
+			if (!MapboxHelper.IsAndroid)
+				return "loc: NULL";
 
 			if (null == loc) { return "loc: NULL"; }
 
@@ -408,8 +411,6 @@
 				return ex.ToString();
 			}
 		}
-
-#endif
 
 
 

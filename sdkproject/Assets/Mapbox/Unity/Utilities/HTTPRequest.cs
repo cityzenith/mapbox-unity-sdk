@@ -13,10 +13,6 @@ namespace Mapbox.Unity.Utilities
 	using Mapbox.Platform;
 	using UnityEngine;
 
-#if UNITY_EDITOR
-	using UnityEditor;
-#endif
-
 	public enum HttpRequestType
 	{
 		Get,
@@ -59,12 +55,11 @@ namespace Mapbox.Unity.Utilities
 			_request.timeout = timeout;
 			_callback = callback;
 
-#if UNITY_EDITOR
-			if (!EditorApplication.isPlaying)
+			if (!EditorHelper.EditorIsPlaying)
 			{
 				Runnable.EnableRunnableInEditor();
 			}
-#endif
+
 			Runnable.Run(DoRequest());
 		}
 
@@ -78,18 +73,21 @@ namespace Mapbox.Unity.Utilities
 
 		private IEnumerator DoRequest()
 		{
-#if UNITY_EDITOR
-			// otherwise requests don't work in Edit mode, eg geocoding
-			// also lot of EditMode tests fail otherwise
+			if (MapboxHelper.IsEditor)
+			{
+				// otherwise requests don't work in Edit mode, eg geocoding
+				// also lot of EditMode tests fail otherwise
 #pragma warning disable 0618
-			_request.Send();
+				_request.Send();
 #pragma warning restore 0618
-			while (!_request.isDone) { yield return null; }
-#else
+				while (!_request.isDone) { yield return null; }
+			}
+			else
+			{
 #pragma warning disable 0618
-			yield return _request.Send();
+				yield return _request.Send();
 #pragma warning restore 0618
-#endif
+			}
 
 			var response = Response.FromWebResponse(this, _request, null);
 

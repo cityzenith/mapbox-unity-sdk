@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace Mapbox.Unity.Telemetry
+﻿namespace Mapbox.Unity.Telemetry
 {
 	using System.Collections.Generic;
 	using System.Collections;
@@ -8,7 +7,6 @@ namespace Mapbox.Unity.Telemetry
 	using Mapbox.Unity.Utilities;
 	using UnityEngine;
 	using System.Text;
-	using UnityEditor;
 
 	public class TelemetryEditor : ITelemetryLibrary
 	{
@@ -90,18 +88,19 @@ namespace Mapbox.Unity.Telemetry
 
 		static string GetUserAgent()
 		{
+			string code = "0";
+
+			if (MapboxHelper.IsIOS)
+				code = EditorHelper.IosBuildNumber;
+			else if (MapboxHelper.IsAndroid)
+				code = EditorHelper.AndroidBundleVersionCode.ToString();
+
 			var userAgent = string.Format(
 				"{0}/{1}/{2} MapboxEventsUnityEditor/{3}",
-				PlayerSettings.applicationIdentifier,
-				PlayerSettings.bundleVersion,
-#if UNITY_IOS
-				PlayerSettings.iOS.buildNumber,
-#elif UNITY_ANDROID
-				PlayerSettings.Android.bundleVersionCode,
-#else
-				 "0",
-#endif
-				 Constants.SDK_VERSION
+				EditorHelper.ApplicationIdentifier,
+				EditorHelper.BundleVersion,
+				code,
+				Constants.SDK_VERSION
 			);
 			return userAgent;
 		}
@@ -112,4 +111,3 @@ namespace Mapbox.Unity.Telemetry
 		}
 	}
 }
-#endif

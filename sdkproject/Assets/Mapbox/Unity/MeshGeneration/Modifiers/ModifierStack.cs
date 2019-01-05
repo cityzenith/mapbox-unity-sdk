@@ -181,16 +181,18 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			_tempVectorEntity.Mesh.Clear();
 			_tempVectorEntity.Feature = feature;
 
-#if UNITY_EDITOR
-			if (feature.Data != null)
+			if (MapboxHelper.IsEditor)
 			{
-				_tempVectorEntity.GameObject.name = type + " - " + feature.Data.Id;
+				if (feature.Data != null)
+				{
+					_tempVectorEntity.GameObject.name = type + " - " + feature.Data.Id;
+				}
+				else
+				{
+					_tempVectorEntity.GameObject.name = type;
+				}
 			}
-			else
-			{
-				_tempVectorEntity.GameObject.name = type;
-			}
-#endif
+
 			_tempVectorEntity.Mesh.subMeshCount = meshData.Triangles.Count;
 			_tempVectorEntity.Mesh.SetVertices(meshData.Vertices);
 			_tempVectorEntity.Mesh.SetNormals(meshData.Normals);

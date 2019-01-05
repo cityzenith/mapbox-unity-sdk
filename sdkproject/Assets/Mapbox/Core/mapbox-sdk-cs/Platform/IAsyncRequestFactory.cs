@@ -4,10 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_ANDROID || UNITY_WP_8_1 || UNITY_WSA || UNITY_WEBGL || UNITY_IOS || UNITY_PS4 || UNITY_SAMSUNGTV || UNITY_XBOXONE || UNITY_TIZEN || UNITY_TVOS
-#define UNITY
-#endif
-
 namespace Mapbox.Platform {
 
 	using Mapbox.Map;
@@ -23,15 +19,7 @@ namespace Mapbox.Platform {
 			, int timeout
 			, HttpRequestType requestType= HttpRequestType.Get
 		) {
-#if !UNITY
-			if (Environment.ProcessorCount > 2) {
-				return new HTTPRequestThreaded(url, callback, timeout);
-			} else {
-				return new HTTPRequestNonThreaded(url, callback, timeout);
-			}
-#else
 			return new Mapbox.Unity.Utilities.HTTPRequest(url, callback, timeout, requestType);
-#endif
 		}
 
 

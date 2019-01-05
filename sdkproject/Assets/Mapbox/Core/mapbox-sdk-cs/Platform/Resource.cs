@@ -11,9 +11,7 @@ namespace Mapbox.Platform
 	using System.Collections.Generic;
 	using System.Collections.Specialized;
 	using System.Linq;
-#if UNITY_IOS
 	using UnityEngine;
-#endif
 
 	/// <summary> Abstract class representing a Mapbox resource URL. </summary>
 	public abstract class Resource
@@ -34,14 +32,12 @@ namespace Mapbox.Platform
 			{
 				// we are seeing super weird crashes on some iOS devices:
 				// see 'ForwardGeocodeResource' for more details
+
 				var encodedValues = from p in values
-#if UNITY_IOS
-									let k = WWW.EscapeURL(p.Key.Trim())
-									let v = WWW.EscapeURL(p.Value)
-#else
-									let k = Uri.EscapeDataString(p.Key.Trim())
-									let v = Uri.EscapeDataString(p.Value)
-#endif
+
+									let k = MapboxHelper.IsIOS ? WWW.EscapeURL(p.Key.Trim()) : Uri.EscapeDataString(p.Key.Trim())
+									let v = MapboxHelper.IsIOS ? WWW.EscapeURL(p.Value) : Uri.EscapeDataString(p.Value)
+
 									orderby k
 									select string.IsNullOrEmpty(v) ? k : string.Format("{0}={1}", k, v);
 				if (encodedValues.Count() == 0)
