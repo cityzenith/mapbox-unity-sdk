@@ -182,7 +182,7 @@ namespace Mapbox.Map
 		}
 
 
-		internal override TileResource MakeTileResource(string mapId)
+		public override TileResource MakeTileResource(string mapId)
 		{
 
 			return (_isStyleOptimized) ?
@@ -191,7 +191,7 @@ namespace Mapbox.Map
 		}
 
 
-		internal override bool ParseTileData(byte[] data)
+		public override bool ParseTileData(byte[] data)
 		{
 			try
 			{

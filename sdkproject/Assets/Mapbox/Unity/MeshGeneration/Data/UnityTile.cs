@@ -171,7 +171,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		private bool _isInitialized = false;
 
 
-		internal void Initialize(IMapReadable map, UnwrappedTileId tileId, float scale, int zoom, Texture2D loadingTexture = null)
+		public void Initialize(IMapReadable map, UnwrappedTileId tileId, float scale, int zoom, Texture2D loadingTexture = null)
 		{
 			gameObject.hideFlags = HideFlags.DontSave;
 
@@ -202,7 +202,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			// None, if Factory source is None, Loading otherwise.
 		}
 
-		internal void Recycle()
+		public void Recycle()
 		{
 			if (_loadingTexture && MeshRenderer != null && MeshRenderer.sharedMaterial != null)
 			{
@@ -362,7 +362,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			return _rasterData;
 		}
 
-		internal void AddTile(Tile tile)
+		public void AddTile(Tile tile)
 		{
 			_tiles.Add(tile);
 		}

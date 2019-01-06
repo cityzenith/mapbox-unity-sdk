@@ -85,7 +85,7 @@ namespace Mapbox.Map
 		/// Sets the error message.
 		/// </summary>
 		/// <param name="errorMessage"></param>
-		internal void AddException(Exception ex)
+		public void AddException(Exception ex)
 		{
 			if (null == _exceptions) { _exceptions = new List<Exception>(); }
 			_exceptions.Add(ex);
@@ -134,7 +134,7 @@ namespace Mapbox.Map
 			_request = param.Fs.Request(MakeTileResource(param.MapId).GetUrl(), HandleTileResponse, tileId: _id, mapId: param.MapId);
 		}
 
-		internal void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
+		public void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
 		{
 			Cancel();
 
@@ -195,11 +195,11 @@ namespace Mapbox.Map
 
 
 		// Get the tile resource (raster/vector/etc).
-		internal abstract TileResource MakeTileResource(string mapid);
+		public abstract TileResource MakeTileResource(string mapid);
 
 
 		// Decode the tile.
-		internal abstract bool ParseTileData(byte[] data);
+		public abstract bool ParseTileData(byte[] data);
 
 
 		// TODO: Currently the tile decoding is done on the main thread. We must implement

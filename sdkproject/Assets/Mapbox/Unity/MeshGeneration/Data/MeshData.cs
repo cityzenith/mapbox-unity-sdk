@@ -29,7 +29,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			UV.Add(new List<Vector2>());
 		}
 
-		internal void Clear()
+		public void Clear()
 		{
 			Edges.Clear();
 			Vertices.Clear();

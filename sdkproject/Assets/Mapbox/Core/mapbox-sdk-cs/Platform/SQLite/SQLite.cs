@@ -1892,7 +1892,7 @@ namespace SQLite4Unity3d
 			return insertCommand;
 		}
 
-		protected internal void Dispose()
+		public void Dispose()
 		{
 			if (_insertCommand != null)
 			{
