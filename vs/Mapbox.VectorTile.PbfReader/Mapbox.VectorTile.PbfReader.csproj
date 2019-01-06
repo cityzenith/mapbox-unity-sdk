@@ -7,8 +7,8 @@
     <ProjectGuid>{279834A7-6376-466D-822F-3059F377A95D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mapbox.VectorTile</RootNamespace>
-    <AssemblyName>Mapbox.VectorTile</AssemblyName>
+    <RootNamespace>Mapbox.VectorTile.PbfReader</RootNamespace>
+    <AssemblyName>Mapbox.VectorTile.PbfReader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
