@@ -23,11 +23,13 @@ namespace Mapbox.Unity.Utilities
     using UnityEngine;
     using System.Collections;
     using System.Collections.Generic;
+	using System;
+	using System.Threading;
 
-    /// <summary>
-    /// Helper class for running co-routines without having to inherit from MonoBehavior.
-    /// </summary>
-    public class Runnable : MonoBehaviour
+	/// <summary>
+	/// Helper class for running co-routines without having to inherit from MonoBehavior.
+	/// </summary>
+	public class Runnable : MonoBehaviour
     {
         #region Public Properties
         /// <summary>
@@ -47,6 +49,11 @@ namespace Mapbox.Unity.Utilities
             Routine r = new Routine(routine);
             return r.ID;
         }
+
+		public static void RunInThread(Action methodToCall, Action onSuccess, Action<Exception> onError)
+		{
+			Run(CallInNewThreadCoroutine(methodToCall, onSuccess, onError));
+		}
 
         /// <summary>
         /// Stops a active co-routine.
@@ -90,13 +97,41 @@ namespace Mapbox.Unity.Utilities
             }
         }
 
-        #endregion
+		private static IEnumerator CallInNewThreadCoroutine(Action methodToCall, Action onSuccess, Action<Exception> onError)
+		{
+			bool done = false;
+			Exception exception = null;
 
-        #region Private Types
-        /// <summary>
-        /// This class handles a running co-routine.
-        /// </summary>
-        private class Routine : IEnumerator
+			ThreadPool.QueueUserWorkItem((o) =>
+			{
+				try
+				{
+					methodToCall();
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+
+				done = true;
+			});
+
+			while (!done)
+				yield return null;
+
+			if (null == exception)
+				onSuccess();
+			else
+				onError(exception);
+		}
+
+		#endregion
+
+		#region Private Types
+		/// <summary>
+		/// This class handles a running co-routine.
+		/// </summary>
+		private class Routine : IEnumerator
         {
             #region Public Properties
             public int ID { get; private set; }

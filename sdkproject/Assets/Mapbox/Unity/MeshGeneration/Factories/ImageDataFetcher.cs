@@ -3,6 +3,7 @@ using Mapbox.Unity.MeshGeneration.Data;
 using Mapbox.Unity.MeshGeneration.Enums;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class ImageDataFetcher : DataFetcher
 {
@@ -49,6 +50,8 @@ public class ImageDataFetcher : DataFetcher
 				DataRecieved(imageDataParameters.tile, rasterTile);
 			}
 
-		});
+		},
+		new DownloadHandlerTexture()
+		);
 	}
 }

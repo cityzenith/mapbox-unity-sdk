@@ -232,6 +232,8 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 				}
 			}
 
+			meshData.Clear();
+
 			return _tempVectorEntity.GameObject;
 		}
 

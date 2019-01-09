@@ -537,14 +537,14 @@ namespace Mapbox.Unity.MeshGeneration.Interfaces
 						yield break;
 					}
 
-					ProcessFeature(i, tile, tempLayerProperties, layer.Extent);
-
 					if (IsCoroutineBucketFull && !(Application.isEditor && !Application.isPlaying))
 					{
 						//Reset bucket..
 						_entityInCurrentCoroutine = 0;
 						yield return null;
 					}
+
+					ProcessFeature(i, tile, tempLayerProperties, layer.Extent);
 				}
 				// move processing to next stage.
 				tempLayerProperties.featureProcessingStage++;

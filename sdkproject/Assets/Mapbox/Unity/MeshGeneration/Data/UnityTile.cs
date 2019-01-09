@@ -256,15 +256,18 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				}
 
 				var relativeScale = useRelative ? _relativeScale : 1f;
+				var factor = relativeScale * heightMultiplier;
 				for (int xx = 0; xx < 256; ++xx)
 				{
 					for (int yy = 0; yy < 256; ++yy)
 					{
-						float r = rgbData[(xx * 256 + yy) * 4 + 1];
-						float g = rgbData[(xx * 256 + yy) * 4 + 2];
-						float b = rgbData[(xx * 256 + yy) * 4 + 3];
+						int hi = (xx * 256 + yy);
+						int i = hi * 4;
+						float r = rgbData[i + 1];
+						float g = rgbData[i + 2];
+						float b = rgbData[i + 3];
 						//the formula below is the same as Conversions.GetAbsoluteHeightFromColor but it's inlined for performance
-						HeightData[xx * 256 + yy] = relativeScale * heightMultiplier * (-10000f + ((r * 65536f + g * 256f + b) * 0.1f));
+						HeightData[hi] = factor * (-10000f + ((r * 65536f + g * 256f + b) * 0.1f));
 					}
 				}
 
@@ -274,6 +277,57 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				}
 
 				HeightDataState = TilePropertyState.Loaded;
+			}
+		}
+
+		public void SetHeightTexture(Texture2D texture, float heightMultiplier = 1f, bool useRelative = false, bool addCollider = false)
+		{
+			if (HeightDataState != TilePropertyState.Unregistered)
+			{
+				_heightTexture = texture;
+
+				byte[] rgbData = _heightTexture.GetRawTextureData();
+				_heightTexture.LoadImage(null);
+				var relativeScale = useRelative ? _relativeScale : 1f;
+				var factor = relativeScale * heightMultiplier;
+
+				if (HeightData == null)
+				{
+					HeightData = new float[256 * 256];
+				}
+
+				for (int xx = 0; xx < 256; ++xx)
+				{
+					for (int yy = 0; yy < 256; ++yy)
+					{
+						int hi = (xx * 256 + yy);
+						int i = hi * 4;
+						float r = rgbData[i + 1];
+						float g = rgbData[i + 2];
+						float b = rgbData[i + 3];
+						//the formula below is the same as Conversions.GetAbsoluteHeightFromColor but it's inlined for performance
+						HeightData[hi] = factor * (-10000f + ((r * 65536f + g * 256f + b) * 0.1f));
+					}
+				}
+
+				if (addCollider && gameObject.GetComponent<MeshCollider>() == null)
+				{
+					gameObject.AddComponent<MeshCollider>();
+				}
+
+				HeightDataState = TilePropertyState.Loaded;
+			}
+		}
+
+		public void SetRasterTexture(Texture2D texture)
+		{
+			if (RasterDataState != TilePropertyState.Unregistered)
+			{
+				_rasterData = texture;
+
+				MeshRenderer.sharedMaterial.mainTexture = texture;
+
+				RasterDataState = TilePropertyState.Loaded;
 			}
 		}
 

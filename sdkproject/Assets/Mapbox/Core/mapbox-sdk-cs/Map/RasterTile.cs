@@ -4,6 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using Mapbox.Platform;
+using UnityEngine;
+
 namespace Mapbox.Map
 {
 	/// <summary>
@@ -53,6 +56,8 @@ namespace Mapbox.Map
 			}
 		}
 
+		public Texture2D Texture { get; private set; }
+
 		public override TileResource MakeTileResource(string styleUrl)
 		{
 			return TileResource.MakeRaster(Id, styleUrl);
@@ -64,6 +69,21 @@ namespace Mapbox.Map
 			this.data = data;
 
 			return true;
+		}
+
+		protected override void HandleTileResponse(Response response)
+		{
+			if (!response.HasError)
+			{
+				TextureResponse textureResponse = response as TextureResponse;
+
+				if (null != textureResponse && null != textureResponse.Texture)
+				{
+					Texture = textureResponse.Texture;
+				}
+			}
+
+			base.HandleTileResponse(response);
 		}
 	}
 }

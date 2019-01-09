@@ -7,6 +7,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 	using Mapbox.Unity.MeshGeneration.Data;
 	using Assets.Mapbox.Unity.MeshGeneration.Modifiers.MeshModifiers;
 	using System;
+	using Vector2d = Mapbox.Utils.Vector2d;
 
 	/// <summary>
 	/// Polygon modifier creates the polygon (vertex&triangles) using the original vertex list.
@@ -111,6 +112,8 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 				md.Normals.Capacity = md.Normals.Count + polygonVertexCount;
 				md.Edges.Capacity = md.Edges.Count + polygonVertexCount * 2;
 				var _size = md.TileRect.Size;
+				Vector2d invSize = new Vector2d(1.0 / _size.x, 1.0 / _size.y);
+				float invScale = 1f / tile.TileScale;
 
 				for (int j = 0; j < polygonVertexCount; j++)
 				{
@@ -123,8 +126,8 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 					if (_options.style == StyleTypes.Satellite)
 					{
 						var fromBottomLeft = new Vector2(
-							(float) (((sub[j].x + md.PositionInTile.x) / tile.TileScale + _size.x / 2) / _size.x),
-							(float) (((sub[j].z + md.PositionInTile.z) / tile.TileScale + _size.x / 2) / _size.x));
+							(float) (((sub[j].x + md.PositionInTile.x) * invScale + _size.x * 0.5) * invSize.x),
+							(float) (((sub[j].z + md.PositionInTile.z) * invScale + _size.x * 0.5) * invSize.x));
 						md.UV[0].Add(fromBottomLeft);
 					}
 					else if (_options.texturingType == UvMapType.Tiled)
@@ -167,14 +170,14 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 						maxy = _vertexRelativePos.z;
 				}
 
-				var width = maxx - minx;
-				var height = maxy - miny;
+				var invWidth = 1f / (maxx - minx);
+				var invHeight = 1f / (maxy - miny);
 
 				for (int i = 0; i < md.Vertices.Count; i++)
 				{
 					md.UV[0].Add(new Vector2(
-						(((_textureUvCoordinates[i].x - minx) / width) * _currentFacade.TextureRect.width) + _currentFacade.TextureRect.x,
-						(((_textureUvCoordinates[i].y - miny) / height) * _currentFacade.TextureRect.height) + _currentFacade.TextureRect.y));
+						(((_textureUvCoordinates[i].x - minx) * invWidth) * _currentFacade.TextureRect.width) + _currentFacade.TextureRect.x,
+						(((_textureUvCoordinates[i].y - miny) * invHeight) * _currentFacade.TextureRect.height) + _currentFacade.TextureRect.y));
 				}
 			}
 

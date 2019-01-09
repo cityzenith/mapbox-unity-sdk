@@ -12,6 +12,7 @@ namespace Mapbox.Unity
 	using Mapbox.MapMatching;
 	using Mapbox.Tokens;
 	using Mapbox.Platform.TilesetTileJSON;
+	using UnityEngine.Networking;
 
 	/// <summary>
 	/// Object for retrieving an API token and making http requests.
@@ -225,9 +226,10 @@ namespace Mapbox.Unity
 			, int timeout = 10
 			, CanonicalTileId tileId = new CanonicalTileId()
 			, string mapId = null
+			, DownloadHandler handler = null
 		)
 		{
-			return _fileSource.Request(url, callback, _configuration.DefaultTimeout, tileId, mapId);
+			return _fileSource.Request(url, callback, _configuration.DefaultTimeout, tileId, mapId, handler);
 		}
 
 

@@ -17,6 +17,7 @@ namespace Mapbox.Platform
 	using UnityEngine;
 #if !NETFX_CORE
 	using System.Security.Cryptography.X509Certificates;
+	using UnityEngine.Networking;
 #endif
 
 	/// <summary>
@@ -72,6 +73,7 @@ namespace Mapbox.Platform
 			, int timeout = 10
 			, CanonicalTileId tileId = new CanonicalTileId()
 			, string mapId = null
+			, DownloadHandler handler = null
 		)
 		{
 			if (!string.IsNullOrEmpty(_accessToken))

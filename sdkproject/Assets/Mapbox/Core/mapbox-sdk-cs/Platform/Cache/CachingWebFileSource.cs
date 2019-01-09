@@ -7,7 +7,7 @@
 	using Mapbox.Map;
 	using System.Collections;
 	using System.Linq;
-
+	using UnityEngine.Networking;
 
 	public class CachingWebFileSource : IFileSource, IDisposable
 	{
@@ -114,6 +114,7 @@
 			, int timeout = 10
 			, CanonicalTileId tileId = new CanonicalTileId()
 			, string mapId = null
+			, DownloadHandler handler = null
 		)
 		{
 
@@ -166,7 +167,7 @@
 				if (_autoRefreshCache)
 				{
 					// check if tile on the web is newer than the one we already have locally
-					IAsyncRequestFactory.CreateRequest(
+					IAsyncRequestFactory.CreateUnityRequest(
 						finalUrl,
 						(Response headerOnly) =>
 						{
@@ -210,11 +211,12 @@
 									);
 
 								// request updated tile and pass callback to return new data to subscribers
-								requestTileAndCache(finalUrl, mapId, tileId, timeout, callback);
+								requestTileAndCache(finalUrl, mapId, tileId, timeout, callback, handler);
 							}
 						}
 						, timeout
 						, HttpRequestType.Head
+						, handler
 					);
 				}
 
@@ -226,14 +228,14 @@
 #if MAPBOX_DEBUG_CACHE
 				UnityEngine.Debug.LogFormat("{0} {1} {2} not cached", methodName, mapId, tileId);
 #endif
-				return requestTileAndCache(finalUrl, mapId, tileId, timeout, callback);
+				return requestTileAndCache(finalUrl, mapId, tileId, timeout, callback, handler);
 			}
 		}
 
 
-		private IAsyncRequest requestTileAndCache(string url, string mapId, CanonicalTileId tileId, int timeout, Action<Response> callback)
+		private IAsyncRequest requestTileAndCache(string url, string mapId, CanonicalTileId tileId, int timeout, Action<Response> callback, DownloadHandler handler)
 		{
-			return IAsyncRequestFactory.CreateRequest(
+			return IAsyncRequestFactory.CreateUnityRequest(
 				url,
 				(Response r) =>
 				{
@@ -280,7 +282,7 @@
 						r.IsUpdate = true;
 						callback(r);
 					}
-				}, timeout);
+				}, timeout, downloadHandler: handler);
 		}
 
 

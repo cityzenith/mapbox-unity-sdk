@@ -34,7 +34,7 @@ namespace Mapbox.Unity.Utilities
 
 		// TODO: simplify timeout for Unity 5.6+
 		// https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest-timeout.html
-		public HTTPRequest(string url, Action<Response> callback, int timeout, HttpRequestType requestType = HttpRequestType.Get)
+		public HTTPRequest(string url, Action<Response> callback, int timeout, HttpRequestType requestType = HttpRequestType.Get, DownloadHandler downloadHandler = null)
 		{
 			IsCompleted = false;
 			_requestType = requestType;
@@ -52,6 +52,9 @@ namespace Mapbox.Unity.Utilities
 					break;
 			}
 
+			bool isImage = null != downloadHandler && downloadHandler is DownloadHandlerTexture;
+			_request.downloadHandler = null != downloadHandler ? downloadHandler : new DownloadHandlerBuffer();
+
 			_request.timeout = timeout;
 			_callback = callback;
 
@@ -60,7 +63,7 @@ namespace Mapbox.Unity.Utilities
 				Runnable.EnableRunnableInEditor();
 			}
 
-			Runnable.Run(DoRequest());
+			Runnable.Run(DoRequest(isImage));
 		}
 
 		public void Cancel()
@@ -71,9 +74,9 @@ namespace Mapbox.Unity.Utilities
 			}
 		}
 
-		private IEnumerator DoRequest()
+		private IEnumerator DoRequest(bool isImage)
 		{
-			if (MapboxHelper.IsEditor)
+			/*if (MapboxHelper.IsEditor)
 			{
 				// otherwise requests don't work in Edit mode, eg geocoding
 				// also lot of EditMode tests fail otherwise
@@ -87,9 +90,19 @@ namespace Mapbox.Unity.Utilities
 #pragma warning disable 0618
 				yield return _request.Send();
 #pragma warning restore 0618
+			}*/
+
+			yield return _request.SendWebRequest();
+
+			if (null != _request.downloadHandler)
+			{
+				while (!_request.downloadHandler.isDone)
+					yield return null;
 			}
 
-			var response = Response.FromWebResponse(this, _request, null);
+			var response = isImage ? TextureResponse.FromWebResponse(this, _request, null): Response.FromWebResponse(this, _request, null);
+
+			//var response = Response.FromWebResponse(this, _request, null);
 
 			_callback(response);
 			_request.Dispose();

@@ -458,6 +458,11 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 		{
 			foreach (var sublayer in _properties.vectorSubLayers)
 			{
+				if (sublayer.performanceOptions.isEnabled != _properties.performanceOptions.isEnabled)
+				{
+					sublayer.performanceOptions = _properties.performanceOptions;
+				}
+
 				AddVectorLayerVisualizer(sublayer);
 			}
 		}

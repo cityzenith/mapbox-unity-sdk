@@ -8,6 +8,7 @@ namespace Mapbox.Platform
 {
 	using Mapbox.Map;
 	using System;
+	using UnityEngine.Networking;
 
 	/// <summary>
 	///     A data source abstraction. Used by classes that need to fetch data but really
@@ -25,6 +26,6 @@ namespace Mapbox.Platform
 		///     request. This handle can be completely ignored if there is no intention of ever
 		///     canceling the request.
 		/// </returns>
-		IAsyncRequest Request(string uri, Action<Response> callback, int timeout = 10, CanonicalTileId tileId = new CanonicalTileId(), string mapId = null);
+		IAsyncRequest Request(string uri, Action<Response> callback, int timeout = 10, CanonicalTileId tileId = new CanonicalTileId(), string mapId = null, DownloadHandler handler = null);
 	}
 }

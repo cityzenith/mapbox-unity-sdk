@@ -22,10 +22,10 @@ namespace Mapbox.Platform
 	{
 
 
-		private Response() { }
+		protected Response() { }
 
 
-		public IAsyncRequest Request { get; private set; }
+		public IAsyncRequest Request { get; protected set; }
 
 
 		public bool RateLimitHit

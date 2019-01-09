@@ -12,6 +12,7 @@ namespace Mapbox.Map
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using Mapbox.Unity.Utilities;
+	using UnityEngine.Networking;
 
 
 	/// <summary>
@@ -134,14 +135,14 @@ namespace Mapbox.Map
 			_request = param.Fs.Request(MakeTileResource(param.MapId).GetUrl(), HandleTileResponse, tileId: _id, mapId: param.MapId);
 		}
 
-		public void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p)
+		public void Initialize(IFileSource fileSource, CanonicalTileId canonicalTileId, string mapId, Action p, DownloadHandler handler = null)
 		{
 			Cancel();
 
 			_state = State.Loading;
 			_id = canonicalTileId;
 			_callback = p;
-			_request = fileSource.Request(MakeTileResource(mapId).GetUrl(), HandleTileResponse, tileId: _id, mapId: mapId);
+			_request = fileSource.Request(MakeTileResource(mapId).GetUrl(), HandleTileResponse, tileId: _id, mapId: mapId, handler: handler);
 		}
 
 		/// <summary>
@@ -207,7 +208,7 @@ namespace Mapbox.Map
 		// on the desktop, Android, etc) we can use worker threads and when building for
 		// the browser, we keep it single-threaded.
 		List<string> ids = new List<string>();
-		private void HandleTileResponse(Response response)
+		protected virtual void HandleTileResponse(Response response)
 		{
 
 			if (response.HasError)
