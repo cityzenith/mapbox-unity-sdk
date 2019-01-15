@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mapbox.IO.Compression, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\vs\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.IO.Compression.dll</HintPath>
+      <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.IO.Compression.dll</HintPath>
     </Reference>
     <Reference Include="Mapbox.Json, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\vs\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
+      <HintPath>..\packages\Mapbox.Dependencies.1.0.0\lib\net35\Mapbox.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,10 +44,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\vs\packages\UnityEngine.dll.1.1.0\lib\net35\UnityEngine.dll</HintPath>
+      <HintPath>..\packages\UnityEngine.dll.1.1.0\lib\net35\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\vs\packages\UnityEngine.UI.dll.1.1.0\lib\net35\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\packages\UnityEngine.UI.dll.1.1.0\lib\net35\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +215,9 @@
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\SQLite\SQLite.cs">
       <Link>Core\SDK\Platform\SQLite\SQLite.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\TextureResponse.cs">
+      <Link>Core\SDK\Platform\TextureResponse.cs</Link>
     </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Platform\TileJSON\TileJSON.cs">
       <Link>Core\SDK\Platform\TileJson\TileJSON.cs</Link>
@@ -1011,6 +1014,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="package.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
