@@ -58,7 +58,7 @@ namespace Mapbox.Unity.Utilities
 			_request.timeout = timeout;
 			_callback = callback;
 
-			if (!EditorHelper.EditorIsPlaying)
+			if (MapboxHelper.IsEditor && !EditorHelper.EditorIsPlaying)
 			{
 				Runnable.EnableRunnableInEditor();
 			}

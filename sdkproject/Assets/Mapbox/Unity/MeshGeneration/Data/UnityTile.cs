@@ -105,7 +105,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			{
 				return _rasterDataState;
 			}
-			internal set
+			set
 			{
 				if (_rasterDataState != value)
 				{
@@ -122,7 +122,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			{
 				return _heightDataState;
 			}
-			internal set
+			set
 			{
 				if (_heightDataState != value)
 				{
@@ -139,7 +139,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			{
 				return _vectorDataState;
 			}
-			internal set
+			set
 			{
 				if (_vectorDataState != value)
 				{
