@@ -634,6 +634,11 @@ namespace Mapbox.Unity.Map
 			_mapVisualizer.DisposeTile(tileId);
 		}
 
+        protected virtual void TileProvider_OnTileDisabled(UnwrappedTileId tileId)
+        {
+            _mapVisualizer.DisableTile(tileId);
+        }
+
 		protected virtual void TileProvider_OnTileRepositioned(UnwrappedTileId tileId)
 		{
 			_mapVisualizer.RepositionTile(tileId);
@@ -839,8 +844,10 @@ namespace Mapbox.Unity.Map
 
 			foreach (var t2r in _toRemove)
 			{
-				TileProvider_OnTileRemoved(t2r);
-			}
+                //disable tile instead of removing 
+                TileProvider_OnTileDisabled(t2r);
+                //TileProvider_OnTileRemoved(t2r);
+            }
 
 			foreach (var tile in _activeTiles)
 			{

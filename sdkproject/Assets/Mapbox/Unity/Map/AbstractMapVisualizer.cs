@@ -29,9 +29,27 @@ namespace Mapbox.Unity.Map
 		[FormerlySerializedAs("_factories")]
 		public List<AbstractTileFactory> Factories;
 
+		public class DisabledTile {
+			public float deactivatedTime;
+			public UnityTile unityTile;
+
+			public DisabledTile(float t, UnityTile u)
+			{
+				deactivatedTime = t;
+				unityTile = u;
+			}
+		}
+
+
 		protected IMapReadable _map;
 		protected Dictionary<UnwrappedTileId, UnityTile> _activeTiles = new Dictionary<UnwrappedTileId, UnityTile>();
 		protected Queue<UnityTile> _inactiveTiles = new Queue<UnityTile>();
+
+		//this variable can be exposed in user setting
+		//depending on system configration user can increase decrease buffer
+		public float timeToTrash = 30; //in secs
+		protected Dictionary<UnwrappedTileId, DisabledTile> _disabledTiles = new Dictionary<UnwrappedTileId, DisabledTile>();
+        
 		private int _counter;
 
 		private ModuleState _state;
@@ -192,6 +210,16 @@ namespace Mapbox.Unity.Map
 		/// <param name="tileId"></param>
 		public virtual UnityTile LoadTile(UnwrappedTileId tileId)
 		{
+            //first check if available in disabled Tiles pool 
+            if (_disabledTiles.ContainsKey(tileId))
+            {
+                EnableDisabledTile(tileId);
+                return ActiveTiles[tileId]; 
+            }
+
+			//refresh disabled tile pool ??is there a better time to invoke this than on new tile load
+			RefreshDisabledTilePool();
+
 			UnityTile unityTile = null;
 
 			if (_inactiveTiles.Count > 0)
@@ -227,6 +255,98 @@ namespace Mapbox.Unity.Map
 			}
 
 			return unityTile;
+		}
+
+		private bool IsTileDataLoaded(UnityTile tile)
+		{
+			bool rasterDone = (tile.RasterDataState == TilePropertyState.None ||
+								tile.RasterDataState == TilePropertyState.Loaded);
+
+			bool terrainDone = (tile.HeightDataState == TilePropertyState.None ||
+								tile.HeightDataState == TilePropertyState.Loaded);
+
+			//?? do we need to consider vector data as well or can we rely on coroutines ?
+			if(rasterDone && terrainDone)
+			{
+				return true;
+			}
+
+			return false; 
+		}
+
+        public virtual void DisableTile(UnwrappedTileId tileId)
+        {
+            //??? handle if tile is not present 
+            var unityTile = ActiveTiles[tileId];
+
+			if (!IsTileDataLoaded(unityTile))
+			{
+				DisposeTile(tileId);
+				return;
+			}
+
+            //disable Tile in unity scene
+            unityTile.gameObject.SetActive(false);
+
+            //Naah it kills the coroutines // what if the tile hasn't finished drawing 
+            ////disable factories, cause we are done with the drawing
+            //foreach (var factory in Factories)
+            //{
+            //    factory.Unregister(unityTile);
+            //}
+
+            //store for reuse
+            _disabledTiles.Add(tileId, new DisabledTile(Time.time, unityTile));
+            ActiveTiles.Remove(tileId);
+        }
+
+        //enables tile that is already part of scene but disabled
+        public virtual void EnableDisabledTile(UnwrappedTileId tileId)
+        {
+            //??? handle if tile is not present 
+            var unityTile = _disabledTiles[tileId].unityTile;
+
+            //disable Tile in unity scene
+            unityTile.gameObject.SetActive(true);
+
+            //store for reuse
+            ActiveTiles.Add(tileId, unityTile);
+            _disabledTiles.Remove(tileId);
+        }
+
+		float refreshTileTime = Time.time;
+		float refreshTimeOffset = 5; //in secs
+
+		private void RefreshDisabledTilePool()
+		{
+			if(Time.time > refreshTileTime)
+			{
+				refreshTileTime = Time.time + refreshTimeOffset;
+			}
+			else
+			{
+				return;
+			}
+
+			foreach(UnwrappedTileId tileID  in _disabledTiles.Keys.ToList())
+			{
+				if(Time.time > _disabledTiles[tileID].deactivatedTime + timeToTrash)
+				{
+					DisposeDeactivatedTile(_disabledTiles[tileID].unityTile);
+					_disabledTiles.Remove(tileID);					
+				}
+			}
+		}
+
+		public virtual void DisposeDeactivatedTile(UnityTile unityTile)
+		{
+			foreach (var factory in Factories)
+			{
+				factory.Unregister(unityTile);
+			}
+
+			unityTile.Recycle();
+			_inactiveTiles.Enqueue(unityTile);
 		}
 
 		public virtual void DisposeTile(UnwrappedTileId tileId)
