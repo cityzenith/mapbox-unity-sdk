@@ -532,7 +532,7 @@ MonoBehaviour:
         isActive: 1
         layerSource:
           Name: Streets
-          Id: http://ecn.t0.tiles.virtualearth.net/tiles/r{quadkey}.jpeg?g=7038&mkt=en-US&shading=hill
+          Id: https://maps.tilehosting.com/styles/darkmatter?png?key=M5fYrAs6rDU728IMT3fG
           Modified: 
           UserName: 
       rasterOptions:
