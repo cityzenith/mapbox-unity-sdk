@@ -187,7 +187,8 @@ namespace Mapbox.Map
 
 			return (_isStyleOptimized) ?
 				TileResource.MakeStyleOptimizedVector(Id, mapId, _optimizedStyleId, _modifiedDate)
-			  : TileResource.MakeVector(Id, mapId);
+			  //: TileResource.MakeVector(Id, mapId);
+			  : TileResource.MakeMapTilerVector(Id, mapId);
 		}
 
 

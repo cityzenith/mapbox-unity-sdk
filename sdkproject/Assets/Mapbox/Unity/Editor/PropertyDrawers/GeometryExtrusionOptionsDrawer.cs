@@ -96,6 +96,9 @@
 					EditorGUILayout.PropertyField(extrusionGeometryType, extrusionGeometryGUI);
 					EditorGUILayout.PropertyField(maxHeightProperty, new GUIContent { text = "Height" });
 					break;
+				case Unity.Map.ExtrusionType.MapTiler:
+					EditorGUILayout.PropertyField(extrusionGeometryType, extrusionGeometryGUI);
+					break;
 				default:
 					break;
 			}

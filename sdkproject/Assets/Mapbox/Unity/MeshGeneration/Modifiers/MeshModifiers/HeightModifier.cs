@@ -39,6 +39,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 	[CreateAssetMenu(menuName = "Mapbox/Modifiers/Height Modifier")]
 	public class HeightModifier : MeshModifier
 	{
+		public const string MapTilerHeightProperty = "render_height";
 		private float _scale = 1;
 
 		GeometryExtrusionOptions _options;
@@ -172,6 +173,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 				{
 					case ExtrusionType.None:
 						break;
+					case ExtrusionType.MapTiler:
 					case ExtrusionType.PropertyHeight:
 						for (int i = 0; i < _counter; i++)
 						{
@@ -219,6 +221,8 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 		{
 			minHeight = 0.0f;
 			maxHeight = 0.0f;
+
+			Debug.LogWarning(_options.extrusionType);
 
 			switch (_options.extrusionType)
 			{
@@ -277,6 +281,25 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 					break;
 				case ExtrusionType.AbsoluteHeight:
 					maxHeight = _options.maximumHeight;
+					break;
+				case ExtrusionType.MapTiler:
+					if (feature.Properties.ContainsKey(MapTilerHeightProperty))
+					{
+						try
+						{
+							maxHeight = Convert.ToSingle(feature.Properties[MapTilerHeightProperty]);
+						}
+						catch (Exception)
+						{
+							Debug.LogError("Property: '" + MapTilerHeightProperty + "' must contain a numerical value for extrusion.");
+							return;
+						}
+
+						if (feature.Properties.ContainsKey("render_min_height"))
+						{
+							minHeight = Convert.ToSingle(feature.Properties["render_min_height"]);
+						}
+					}
 					break;
 				default:
 					break;

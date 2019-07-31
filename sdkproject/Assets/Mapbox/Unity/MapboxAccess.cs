@@ -23,6 +23,7 @@ namespace Mapbox.Unity
 		ITelemetryLibrary _telemetryLibrary;
 		CachingWebFileSource _fileSource;
 
+		public static bool UseExternalSources;
 		public delegate void TokenValidationEvent(MapboxTokenStatus response);
 		public event TokenValidationEvent OnTokenValidation;
 
@@ -38,6 +39,7 @@ namespace Mapbox.Unity
 				if (_instance == null)
 				{
 					_instance = new MapboxAccess();
+					Debug.Log("started");
 				}
 				return _instance;
 			}
@@ -63,7 +65,7 @@ namespace Mapbox.Unity
 		MapboxAccess()
 		{
 			LoadAccessToken();
-			if (null == _configuration || string.IsNullOrEmpty(_configuration.AccessToken))
+			if (!UseExternalSources && (null == _configuration || string.IsNullOrEmpty(_configuration.AccessToken)))
 			{
 				Debug.LogError(_tokenNotSetErrorMessage);
 			}
@@ -71,37 +73,54 @@ namespace Mapbox.Unity
 
 		public void SetConfiguration(MapboxConfiguration configuration, bool throwExecptions = true)
 		{
-			if (configuration == null)
+			if (!UseExternalSources)
 			{
-				if (throwExecptions)
+				if (configuration == null)
 				{
-					throw new InvalidTokenException(_tokenNotSetErrorMessage);
+					if (throwExecptions)
+					{
+						throw new InvalidTokenException(_tokenNotSetErrorMessage);
+					}
+
 				}
 
-			}
+				if (null == configuration || string.IsNullOrEmpty(configuration.AccessToken))
+				{
+					Debug.LogError(_tokenNotSetErrorMessage);
+				}
+				else
+				{
+					TokenValidator.Retrieve(configuration.AccessToken, (response) =>
+					{
+						if (OnTokenValidation != null)
+						{
+							OnTokenValidation(response.Status);
+						}
 
-			if (null == configuration || string.IsNullOrEmpty(configuration.AccessToken))
-			{
-				Debug.LogError(_tokenNotSetErrorMessage);
+						if (response.Status != MapboxTokenStatus.TokenValid
+						   && throwExecptions)
+						{
+							configuration.AccessToken = string.Empty;
+							Debug.LogError(new InvalidTokenException(response.Status.ToString().ToString()));
+						}
+					});
+
+					_configuration = configuration;
+
+					ConfigureFileSource();
+					ConfigureTelemetry();
+
+					Configured = true;
+				}
 			}
 			else
 			{
-				TokenValidator.Retrieve(configuration.AccessToken, (response) =>
+				_configuration = new MapboxConfiguration()
 				{
-					if (OnTokenValidation != null)
-					{
-						OnTokenValidation(response.Status);
-					}
-
-					if (response.Status != MapboxTokenStatus.TokenValid
-					   && throwExecptions)
-					{
-						configuration.AccessToken = string.Empty;
-						Debug.LogError(new InvalidTokenException(response.Status.ToString().ToString()));
-					}
-				});
-
-				_configuration = configuration;
+					MemoryCacheSize = 1000,
+					FileCacheSize = 3000,
+					DefaultTimeout = 30
+				};
 
 				ConfigureFileSource();
 				ConfigureTelemetry();
@@ -148,7 +167,7 @@ namespace Mapbox.Unity
 			if (string.IsNullOrEmpty(ConfigurationJSON))
 			{
 				TextAsset configurationTextAsset = Resources.Load<TextAsset>(Constants.Path.MAPBOX_RESOURCES_RELATIVE);
-				if (null == configurationTextAsset)
+				if (!UseExternalSources && null == configurationTextAsset)
 				{
 					throw new InvalidTokenException(_tokenNotSetErrorMessage);
 				}

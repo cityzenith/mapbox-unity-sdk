@@ -60,7 +60,8 @@ namespace Mapbox.Map
 
 		public override TileResource MakeTileResource(string styleUrl)
 		{
-			return TileResource.MakeRaster(Id, styleUrl);
+			//return TileResource.MakeRaster(Id, styleUrl);
+			return TileResource.MakeCustomRaster(Id, "https://maps.tilehosting.com/data/satellite/");
 		}
 
 		public override bool ParseTileData(byte[] data)

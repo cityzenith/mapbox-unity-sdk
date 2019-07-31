@@ -73,6 +73,23 @@ namespace Mapbox.Unity.MeshGeneration.Factories.TerrainStrategies
 					BuildQuad(tile);
 				}
 			}
+
+			if (_elevationOptions.colliderOptions.addCollider)
+			{
+				BoxCollider boxCollider = tile.Collider as BoxCollider;
+				if (null == boxCollider)
+				{
+					boxCollider = tile.gameObject.AddComponent<BoxCollider>();
+
+					Vector3 center = boxCollider.center;
+					center.y = -0.25f;
+					boxCollider.center = center;
+
+					Vector3 size = boxCollider.size;
+					size.y = 0.5f;
+					boxCollider.size = size;
+				}
+			}
 		}
 
 		private void BuildQuad(UnityTile tile)

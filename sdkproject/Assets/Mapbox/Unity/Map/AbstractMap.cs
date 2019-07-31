@@ -567,6 +567,7 @@ namespace Mapbox.Unity.Map
 
 		protected IEnumerator SetupAccess()
 		{
+			MapboxAccess.UseExternalSources = true;
 			_fileSource = MapboxAccess.Instance;
 
 			yield return new WaitUntil(() => MapboxAccess.Configured);

@@ -16,7 +16,8 @@ namespace Mapbox.Map
 	{
 		public override TileResource MakeTileResource(string mapId)
 		{
-			return TileResource.MakeClassicRetinaRaster(Id, mapId);
+			//return TileResource.MakeClassicRetinaRaster(Id, mapId);
+			return TileResource.MakeMapTileResource(Id, mapId, true);
 		}
 	}
 }

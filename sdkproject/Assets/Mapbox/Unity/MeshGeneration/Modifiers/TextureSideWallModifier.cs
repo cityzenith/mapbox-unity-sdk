@@ -481,6 +481,7 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 				{
 					case ExtrusionType.None:
 						break;
+					case ExtrusionType.MapTiler:
 					case ExtrusionType.PropertyHeight:
 						for (int i = 0; i < _counter; i++)
 						{
@@ -577,6 +578,25 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 					break;
 				case ExtrusionType.AbsoluteHeight:
 					maxHeight = _options.maximumHeight;
+					break;
+				case ExtrusionType.MapTiler:
+					if (feature.Properties.ContainsKey(HeightModifier.MapTilerHeightProperty))
+					{
+						try
+						{
+							maxHeight = Convert.ToSingle(feature.Properties[HeightModifier.MapTilerHeightProperty]);
+						}
+						catch (Exception)
+						{
+							Debug.LogError("Property: '" + HeightModifier.MapTilerHeightProperty + "' must contain a numerical value for extrusion.");
+							return;
+						}
+
+						if (feature.Properties.ContainsKey("render_min_height"))
+						{
+							minHeight = Convert.ToSingle(feature.Properties["render_min_height"]);
+						}
+					}
 					break;
 				default:
 					break;

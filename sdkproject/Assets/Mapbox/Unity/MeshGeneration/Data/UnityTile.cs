@@ -226,6 +226,43 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			_tiles.Clear();
 		}
 
+		public void SetHeightCustomData(float[] data, float heightMultiplier = 1f, bool useRelative = false, bool addCollider = false)
+		{
+			if (HeightDataState != TilePropertyState.Unregistered)
+			{
+				//reset height data
+				if (data == null)
+				{
+					HeightData = new float[256 * 256];
+					HeightDataState = TilePropertyState.None;
+					return;
+				}
+
+				if (HeightData == null)
+				{
+					HeightData = new float[256 * 256];
+				}
+
+				var relativeScale = useRelative ? _relativeScale : 1f;
+				var factor = relativeScale * heightMultiplier;
+				for (int xx = 0; xx < 256; ++xx)
+				{
+					for (int yy = 0; yy < 256; ++yy)
+					{
+						int hi = (xx * 256 + yy);
+						HeightData[hi] = factor * data[hi];
+					}
+				}
+
+				if (addCollider && gameObject.GetComponent<MeshCollider>() == null)
+				{
+					gameObject.AddComponent<MeshCollider>();
+				}
+
+				HeightDataState = TilePropertyState.Loaded;
+			}
+		}
+
 		public void SetHeightData(byte[] data, float heightMultiplier = 1f, bool useRelative = false, bool addCollider = false)
 		{
 			if (HeightDataState != TilePropertyState.Unregistered)

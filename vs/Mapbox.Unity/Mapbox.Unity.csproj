@@ -237,6 +237,9 @@
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\BearingFilter.cs">
       <Link>Core\SDK\Utils\BearingFilter.cs</Link>
     </Compile>
+    <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\Bing\TileSystem.cs">
+      <Link>Core\SDK\Utils\Bing\TileSystem.cs</Link>
+    </Compile>
     <Compile Include="..\..\sdkproject\Assets\Mapbox\Core\mapbox-sdk-cs\Utils\CircularBuffer.cs">
       <Link>Core\SDK\Utils\CircularBuffer.cs</Link>
     </Compile>
@@ -1014,7 +1017,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="package.nuspec" />
+    <None Include="package.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

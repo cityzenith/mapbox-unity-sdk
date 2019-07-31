@@ -240,8 +240,10 @@
 		[Description("Extrude all features using the fixed value.")]
 #endif
 		AbsoluteHeight,
-
-
+#if !ENABLE_WINMD_SUPPORT
+		[Description("Extrude all features using the fixed value.")]
+#endif
+		MapTiler,
 	}
 
 	public enum ExtrusionGeometryType

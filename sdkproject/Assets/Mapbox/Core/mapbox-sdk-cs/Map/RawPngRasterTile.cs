@@ -28,9 +28,12 @@ namespace Mapbox.Map
 	/// </example>
 	public sealed class RawPngRasterTile : RasterTile
 	{
+		public float[] HeightData { get; private set; }
+
 		public override TileResource MakeTileResource(string mapId)
 		{
-			return TileResource.MakeRawPngRaster(Id, mapId);
+			//return TileResource.MakeRawPngRaster(Id, mapId);
+			return TileResource.MakeCustomRawPngRaster(Id, "https://maps.tilehosting.com/data/terrain-rgb/");
 		}
 	}
 }
