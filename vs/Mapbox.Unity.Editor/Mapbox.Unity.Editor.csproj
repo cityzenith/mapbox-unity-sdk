@@ -293,4 +293,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>python $(SolutionDir)PostBuildEditor.py $(TargetDir) $(SolutionDir)..\sdkDllProject\Assets\Assemblies\Editor</PostBuildEvent>
+  </PropertyGroup>
 </Project>

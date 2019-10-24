@@ -1036,4 +1036,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>python $(SolutionDir)PostBuild.py $(TargetDir) $(SolutionDir)..\sdkDllProject\Assets\Assemblies</PostBuildEvent>
+  </PropertyGroup>
 </Project>
